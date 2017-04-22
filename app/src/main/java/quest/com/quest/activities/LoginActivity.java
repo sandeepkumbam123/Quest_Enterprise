@@ -107,6 +107,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onFailure(int requestId, Throwable error) {
                 dataBinding.pbProgresbar.setVisibility(View.INVISIBLE);
+                QuestDialog.showOkDialog(LoginActivity.this,"Connectivity Error",error.getMessage());
+
                 Log.d(TAG,error+"");
             }
         });
