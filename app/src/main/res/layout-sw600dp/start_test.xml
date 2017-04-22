@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="fragment"
+            type="quest.com.quest.fragments.StartTestFragment"/>
+    </data>
+<LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/dp_20"
+    >
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="181dp"
+    android:background="@drawable/ic_examtype_bg"
+    />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_exam_code"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp_35"
+        android:gravity="center"
+        android:layout_weight="0.48" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_entercode"
+        android:layout_width="@dimen/dp_300"
+        android:layout_gravity="center_horizontal|center"
+        android:layout_margin="@dimen/dp_2"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/input_enter_code"
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:hint="Enter the exam code"
+            android:inputType="text"
+            android:textSize="@dimen/sp_24"
+            android:textColor="@color/colorFadeWhite"
+            android:singleLine="true"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:layout_width="@dimen/dp_500"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:textAllCaps="false"
+        android:paddingRight="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_20"
+        fontPath="fonts/Ubuntu-M.ttf"
+        android:background="@color/colorOrange"
+        android:textSize="@dimen/sp_35"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center_horizontal"
+        android:onClick="@{fragment::startTest}"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:text="@string/start_test"/>
+
+</LinearLayout>
+</layout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/dp_20">
+        <TextView
+            android:id="@+id/tv_exam_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp_30"
+            android:textColor="@android:color/black"
+            android:text=" Q1. Where does the butterfly come from out of hatched
+          eggs or as a mammal does?"
+            android:padding="@dimen/dp_10"/>
+        <TextView
+            android:id="@+id/tv_answer_attempted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_30"
+            android:text="out of hatched eggs."
+            android:textSize="@dimen/dp_20"
+            fontPath="fonts/Ubuntu-B.ttf"
+            android:drawableRight="@drawable/ic_tickcircle"
+            android:drawablePadding="@dimen/dp_20"/>
+    </LinearLayout>
+</layout>

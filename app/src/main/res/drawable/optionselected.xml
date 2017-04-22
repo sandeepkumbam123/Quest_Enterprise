@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <stroke android:width="@dimen/dp_2"
+                android:color="@color/colorlimegreen"/>
+            <solid android:color="@color/coloransSelectedBG"/>
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/ic_tickcircle"
+        android:gravity="right"
+        android:left="@dimen/dp_20"
+        android:right="@dimen/dp_20"
+        android:top="@dimen/dp_20"
+        android:bottom="@dimen/dp_20"/>
+
+</layer-list>
+<!--
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    >
+    <corners
+        android:radius="0dp" />
+    <solid
+        android:color="@color/coloransSelectedBG"
+        />
+    <stroke
+        android:width="2dp"
+        android:color="@color/colorlimegreen" />
+</shape>-->

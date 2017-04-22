@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="fragment"
+            type="quest.com.quest.Teacher.ExamEnableDisableFragment"/>
+    </data>
+<LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<TextView
+    android:id="@+id/tv_title_of_exam"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    fontPath="fonts/Ubuntu-B.ttf"
+    android:text="Exam name"
+    android:textSize="@dimen/sp_35"
+    android:textColor="@android:color/black"
+    android:layout_gravity="center_horizontal"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:paddingTop="@dimen/dp_20"
+    android:gravity="center">
+    <TextView
+        android:id="@+id/enable_exam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Enable Exam"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:padding="@dimen/dp_20"
+        android:textColor="@android:color/white"
+        fontPath ="fonts/Ubuntu-B.ttf"
+        android:textSize="@dimen/sp_35"
+        android:onClick="@{fragment::enableClick}"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="@color/colorOrange"/>
+    <TextView
+        android:id="@+id/disable_exam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Disable Exam"
+        android:onClick="@{fragment::disableClick}"
+        android:layout_marginLeft="@dimen/dp_20"
+      android:padding="@dimen/dp_20"
+        android:textSize="@dimen/sp_35"
+        android:textColor="@android:color/white"
+        fontPath ="fonts/Ubuntu-B.ttf"
+        android:background="@color/colorOrange"/>
+</LinearLayout>
+</LinearLayout>
+</layout>

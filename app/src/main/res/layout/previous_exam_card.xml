@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    android:id="@+id/ll_exam_layout"
+    android:background="@drawable/rectangular_lime_green">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/teacher_exam_ic"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorlimegreen"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/exam_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exam title goes here"
+            fontPath="fonts/Ubuntu-B.ttf"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_35"
+            android:padding="@dimen/dp_15"/>
+        <TextView
+            android:id="@+id/class_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Class name"
+            fontPath="fonts/Ubuntu-Regular.ttf"
+            android:textSize="@dimen/sp_24"
+            android:padding="@dimen/dp_15"/>
+        <TextView
+            android:id="@+id/exam_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feb 05,2017"
+            android:textSize="@dimen/sp_24"
+            fontPath="fonts/Ubuntu-Regular.ttf"
+            android:padding="@dimen/dp_15"/>
+    </LinearLayout>
+</LinearLayout>

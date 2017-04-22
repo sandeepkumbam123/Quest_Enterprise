@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_20">
+    <TextView
+        android:id="@+id/tv_create_Exam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Create Exam"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:textColor="@android:color/white"
+        fontPath ="fonts/Ubuntu-B.ttf"
+        android:background="@color/colorOrange"/>
+    <android.support.v17.leanback.widget.HorizontalGridView
+        android:id="@+id/exams_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        ></android.support.v17.leanback.widget.HorizontalGridView>
+
+</LinearLayout>
+</layout>

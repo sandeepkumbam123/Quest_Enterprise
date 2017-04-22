@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <group
+            android:id="@+id/group"
+            android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title=""
+            app:actionLayout="@layout/home_layout"/>
+        <item
+            android:id="@+id/nav_previous_exams"
+            app:actionLayout="@layout/previous_exams_layout"
+            android:title="" />
+        <item
+            android:id="@+id/nav_student_Data"
+            app:actionLayout="@layout/student_data_layout"
+            android:title="" />
+        <item
+            android:id="@+id/nav_logout"
+            app:actionLayout="@layout/logut_layout"
+            android:title=""/>
+</group>
+</menu>

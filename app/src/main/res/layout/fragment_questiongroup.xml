@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@android:color/white">
+        <TextView
+            android:layout_width="@dimen/dp_700"
+            android:layout_height="wrap_content"
+            android:text="What is Quest?"
+            android:textSize="@dimen/sp_40"
+            android:textColor="@android:color/black"/>
+
+        <RadioGroup
+            android:layout_width="@dimen/dp_700"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/option_A"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radio_button_selector"
+                android:button="@android:color/transparent"
+                android:padding="@dimen/dp_20"
+                android:checked="true"
+                android:textSize="@dimen/sp_35"
+                android:text="RadioButton1" />
+            <RadioButton
+                android:id="@+id/option_B"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radio_button_selector"
+                android:button="@android:color/transparent"
+                android:checked="false"
+                android:textSize="@dimen/sp_35"
+                android:padding="@dimen/dp_20"
+                android:text="RadioButton1" />
+            <RadioButton
+                android:id="@+id/option_C"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radio_button_selector"
+                android:button="@android:color/transparent"
+                android:checked="false"
+                android:textSize="@dimen/sp_35"
+                android:padding="@dimen/dp_20"
+                android:text="RadioButton1" />
+            <RadioButton
+                android:id="@+id/option_D"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radio_button_selector"
+                android:button="@android:color/transparent"
+                android:checked="false"
+                android:textSize="@dimen/sp_35"
+                android:padding="@dimen/dp_20"
+                android:text="RadioButton1" />
+        </RadioGroup>
+
+    </LinearLayout>
+</LinearLayout>
+</layout>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="fragment"
+            type="quest.com.quest.fragments.PremiumExamsFragment"/>
+    </data>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+        </LinearLayout>
+          <ScrollView
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Exam on Quantum Physics"
+                    android:gravity="center_vertical"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_24"
+                    android:padding="@dimen/dp_10"/>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:background="@color/colorLightBlue"
+                    android:layout_margin="@dimen/dp_10"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:padding="@dimen/dp_20"
+                   android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="16"
+                        android:gravity="center"
+                        fontPath="fonts/Ubuntu-M.ttf"
+                        android:textSize="@dimen/sp_24"
+                        android:textColor="@android:color/black"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="THU"
+                        android:gravity="center"
+                        android:textSize="@dimen/sp_24"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_24"
+                    android:padding="@dimen/dp_15"
+                    android:drawableLeft="@drawable/ic_time"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:text="20 Min"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_24"
+                    android:padding="@dimen/dp_15"
+                    android:drawableLeft="@drawable/ic_question"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:text="30 Questions"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="@dimen/dp_15"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_24"
+                    android:drawableLeft="@drawable/ic_marks"
+                    android:text="30 Marks"
+                    android:drawablePadding="@dimen/dp_10"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_24"
+                    android:padding="@dimen/dp_15"
+                    android:background="@drawable/background_blue"
+                    android:text="Computer"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_24"
+                    android:padding="@dimen/dp_15"
+                    android:background="@drawable/background_blue"
+                    android:text="Computer Basics"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_15"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_24"
+                    android:background="@drawable/background_blue"
+                    android:text="Language"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/topic"
+                android:textSize="@dimen/sp_24"
+                android:textColor="@android:color/black"
+                android:padding="@dimen/dp_10"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="topic  description"
+                android:textColor="@color/colorGray"
+                android:textSize="@dimen/sp_24"
+                android:padding="@dimen/dp_10"/>
+
+            <Button
+                android:layout_width="379dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:padding="@dimen/dp_20"
+                fontPath="fonts/Ubuntu-M.ttf"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/colorOrange"
+                android:textSize="@dimen/sp_35"
+                android:onClick="@{fragment::startExam}"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/start_test"
+                android:id="@+id/button" />
+
+        </LinearLayout>
+
+</ScrollView>
+
+    </LinearLayout>
+</layout>
