@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.2.0_f27462b75274fb80f6e226ec9807e391603393ae\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\kumbh\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.1.0\2de7cd8b95b7021b1d597f049bcb422055119f2c\retrofit-2.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2de7cd8b95b7021b1d597f049bcb422055119f2c">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\retrofit-2.1.0_fe433550ea8f1f6d416b983438fc9296142ed557\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a2705110e54e8604e591170f99025082753e0ca2">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_fa28cd036eaffc6852c31c10c09849fd241c8b57\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.2.0_42b0e14447175f0a7902ad318649c897c1a3606f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\design\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ea6a989b83d19b1b461281e0475a6cd6514897f8">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.2.0_d3cafc90658df4fa0ffa399f5aa78ad824a4d3ca\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\transition\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e51c2f662bb72419632af5192553c37e33890a99">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.2.0_dfa6a04b68d2674863830a0535ae2700562c30fc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\kumbh\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.2.0\support-annotations-25.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.2.0_4c72cedc53a9a79b0cb1498cb0961af11a0e49ac\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\kumbh\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp-urlconnection\3.1.2\3faa9f13fb83326b8524a3f751c7c17181f9d3b3\okhttp-urlconnection-3.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3faa9f13fb83326b8524a3f751c7c17181f9d3b3">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-urlconnection-3.1.2_a16a0ed0dd36967ef2ea68b5b7cc26a80aa4d07b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.2.0_c89381ebcd4a652bed5921debcec13c9ca157b41\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\uk.co.chrisjenx\calligraphy\2.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ebcb0bcf52fab7c586f39717f7cb8de91748b1b1">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\uk.co.chrisjenx-calligraphy-2.2.0_b2262680e77fef1e51873f307f07d6e96d4d7ad4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Program Files\Android\Android Studio1\gradle\m2repository\com\android\databinding\baseLibrary\2.2.3\baseLibrary-2.2.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b4b51d1925cdfda98fd861230c1ecb5855500129">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\baseLibrary-2.2.3_2e490a2129aa5c503e0b8a475ae64c327ffac144\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.2.0_82781f05f6e94ab684a069bce476f9f243f16a3a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\leanback-v17\23.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="555d27ee3451fd34f0de714c39ac240da0d27d7f">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-leanback-v17-23.1.0_90f8a0cac2c8c540e11ff93b91e6f594c3361d44\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\kumbh\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.0.2\f8d87f15b94b8d74e7ccf61d7eedb558811cdb30\converter-gson-2.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f8d87f15b94b8d74e7ccf61d7eedb558811cdb30">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\converter-gson-2.0.2_9db426f32d47f10746d39b4b4d33e6a319b5cdc6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.2.0_59407ac523a79acbd5c19b3578731a8bd8a98ffd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.2.0_bf152d2a465ef15b84aee87ef038097d34671b3a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_3c79e78a8d639c082c775c81285018e9fe311ddb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\kumbh\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.6.1\b9d63507329a7178e026fc334f87587ee5070ac5\gson-2.6.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b9d63507329a7178e026fc334f87587ee5070ac5">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.6.1_e6c4c6610a1133ef134bbf06248c8c62f8f7355e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\kumbh\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.3.0\2b802460eea20f8f2ad9c08c74e0f14718e88aa9\okhttp-3.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2b802460eea20f8f2ad9c08c74e0f14718e88aa9">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-3.3.0_9fcf05fbf90e9a41295c7641bb621962c9ef231a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.databinding\library\1.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="957dc30b1495f8689271e00d56ab09cc9192df02">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.databinding-library-1.2.1_f4f3b1b46ae10f429d5f962d3123862abbb02352\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.2.0_c74a3c77532c85c2d8cb211cbef80762443e0ce3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.2.0_f9445f4aa2fd0190706eb1f9de564e2d646449e3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.2.0_04bd2d83148b3c0a01cd6fa39a9bb833995479ad\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.databinding\adapters\1.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c56d29136c2257f63f08c29c4e739efb03b06c7d">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.databinding-adapters-1.2.1_3ea8142a22cbe0bb2297e16a42b4f0f8a5374de8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\kumbh\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.8.0\5ea7af56cc7c567ed9856d99efb30740e9b17ff\okio-1.8.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="05ea7af56cc7c567ed9856d99efb30740e9b17ff">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.8.0_28964f43a848aba8620daf7f5aa9b26b1f0678b6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8899b6841ac046dd03e08eda3f6ff68b560f08ce">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_72b748cf1433aabe4362a4917f4148290d107ed9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-21.0.3_8606e9214f76737b26e809d8cc63f22160aafcb5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="D:\Android\Startup\CollegeApp-EnterPrise\progress\04042017\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.2.0_0eac245accb928df0f25f897e7595ccd3f6d5e8d\classes.dex" />
+    </item>
+
+</items>
