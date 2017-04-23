@@ -37,6 +37,7 @@ public class StudentStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         dataBinding = DataBindingUtil.bind(inflater.inflate(R.layout.student_status_fragment,container,false));
         gridView = dataBinding.viewStatusLayout;
+        setToolBar();
         return dataBinding.getRoot();
     }
 
@@ -61,5 +62,10 @@ public class StudentStatsFragment extends Fragment {
                         .commit();
             }
         });
+    }
+    private void setToolBar() {
+
+        ((TeacherDashBoardActivity) getActivity())
+                .setToolbarTitle("Sandeep","Student Status");
     }
 }

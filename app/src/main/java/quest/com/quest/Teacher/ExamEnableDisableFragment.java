@@ -28,9 +28,9 @@ public class ExamEnableDisableFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       dataBinding = DataBindingUtil.bind(inflater.inflate(R.layout.enable_disable_exam,container,false));
-         dataBinding.setFragment(this);
-
+        dataBinding = DataBindingUtil.bind(inflater.inflate(R.layout.enable_disable_exam,container,false));
+        dataBinding.setFragment(this);
+        setToolBar();
         return dataBinding.getRoot();
     }
 
@@ -48,5 +48,10 @@ public class ExamEnableDisableFragment extends Fragment {
 
     public void disableClick(View v){
         Toast.makeText(getActivity(), "This exam is disabled", Toast.LENGTH_SHORT).show();
+    }
+    private void setToolBar() {
+
+        ((TeacherDashBoardActivity) getActivity())
+                .setToolbarTitle("Sandeep","Exam Properties");
     }
 }

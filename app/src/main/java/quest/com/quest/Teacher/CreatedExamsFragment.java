@@ -25,13 +25,14 @@ import quest.com.quest.models.CreatedExamsModel;
 public class CreatedExamsFragment  extends Fragment implements View.OnClickListener,GridAdapter.examClick{
 
     private HorizontalGridView mGrid;
-//    private GridView mGrid;
+    //    private GridView mGrid;
     private FragmentCreatedExamsBinding fragmentCreatedExamsBinding;
     private GridAdapter adapter;
     private List<CreatedExamsModel> examsCreated;
 
     public  static CreatedExamsFragment getInstance(Activity activity ,Bundle bundle){
         CreatedExamsFragment fragment = new CreatedExamsFragment();
+
         return fragment;
     }
 
@@ -41,7 +42,7 @@ public class CreatedExamsFragment  extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentCreatedExamsBinding = DataBindingUtil.bind(inflater.inflate( R.layout.fragment_created_exams,container,false));
         mGrid = fragmentCreatedExamsBinding.examsGridView;
-
+        setToolBar();
 
         return fragmentCreatedExamsBinding.getRoot();
     }
@@ -59,7 +60,7 @@ public class CreatedExamsFragment  extends Fragment implements View.OnClickListe
         adapter = new GridAdapter(getActivity(),examsCreated,this);
 
         mGrid.setAdapter(adapter);
-        mGrid.setNumRows(1);
+        mGrid.setNumRows(2);
       /*  mGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -80,10 +81,15 @@ public class CreatedExamsFragment  extends Fragment implements View.OnClickListe
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.teacher_frame,ExamEnableDisableFragment.getInstance(getActivity(),new Bundle()))
-        .commit();
+                .commit();
     }
 
     private void createExam(View v){
         //open webView page content of the screen
+    }
+    private void setToolBar() {
+
+        ((TeacherDashBoardActivity) getActivity())
+                .setToolbarTitle("Sandeep","Created Exams");
     }
 }

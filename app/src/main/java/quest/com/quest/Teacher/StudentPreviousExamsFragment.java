@@ -42,7 +42,7 @@ public class StudentPreviousExamsFragment extends Fragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentCreatedExamsBinding = DataBindingUtil.bind(inflater.inflate( R.layout.fragment_created_exams,container,false));
         mGrid = fragmentCreatedExamsBinding.examsGridView;
-
+setToolBar();
 
         return fragmentCreatedExamsBinding.getRoot();
     }
@@ -87,5 +87,9 @@ public class StudentPreviousExamsFragment extends Fragment implements View.OnCli
     private void createExam(View v){
         //open webView page content of the screen
     }
+    private void setToolBar() {
 
+        ((TeacherDashBoardActivity) getActivity())
+                .setToolbarTitle("Sandeep","Previous Exams");
+    }
 }

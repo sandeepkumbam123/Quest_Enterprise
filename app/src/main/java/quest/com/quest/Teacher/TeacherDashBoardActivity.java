@@ -37,14 +37,23 @@ public class TeacherDashBoardActivity extends BaseActivity
     private ActivityTeacherDashBoardBinding dataBinding;
     private static final String TAG = TeacherDashBoardActivity.class.getSimpleName();
     private DrawerLayout drawer;
+    private TextView userName;
+    private TextView fragmentName;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataBinding = DataBindingUtil.setContentView(this,R.layout.activity_teacher_dash_board);
         initView();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        //init toolbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        userName = (TextView) findViewById(R.id.tv_user_name);
+        fragmentName = (TextView) findViewById(R.id.tv_header);
+
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -146,6 +155,9 @@ navigatetoNextActivity(this,new LoginActivity());
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-
+    public  void setToolbarTitle(String userName,String fragmentName){
+        this.userName.setText(userName);
+        this.fragmentName.setText(fragmentName);
+    }
 
 }

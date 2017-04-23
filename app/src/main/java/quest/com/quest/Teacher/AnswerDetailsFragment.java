@@ -2,16 +2,19 @@ package quest.com.quest.Teacher;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
+import android.databinding.repacked.org.antlr.v4.Tool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import quest.com.quest.R;
+import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.AnswersListLayoutBinding;
 
 /**
@@ -36,7 +39,13 @@ public class AnswerDetailsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerAnswersList.setLayoutManager(layoutManager);
         adapter = new AnswersRecyclerAdapter(getActivity());
+        setToolBar();
         recyclerAnswersList.setAdapter(adapter);
         return dataBinding.getRoot();
+    }
+    private void setToolBar() {
+
+        ((TeacherDashBoardActivity) getActivity())
+                .setToolbarTitle("Sandeep","Answers");
     }
 }

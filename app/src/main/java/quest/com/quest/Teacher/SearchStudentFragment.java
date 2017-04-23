@@ -30,7 +30,7 @@ public class SearchStudentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         dataBinding= DataBindingUtil.bind(inflater.inflate(R.layout.search_student_data,container,false));
         dataBinding.setFragment(this);
-
+        setToolBar();
         return dataBinding.getRoot();
     }
 
@@ -46,5 +46,10 @@ public class SearchStudentFragment extends Fragment {
                    .replace(R.id.teacher_frame,StudentStatsFragment.getInstance(getActivity(),new Bundle()))
                    .commit();
         }
+    }
+    private void setToolBar() {
+
+        ((TeacherDashBoardActivity) getActivity())
+                .setToolbarTitle("Sandeep","Search Student");
     }
 }
