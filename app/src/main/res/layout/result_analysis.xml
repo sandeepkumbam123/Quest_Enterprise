@@ -129,6 +129,11 @@
                                 android:paddingTop="@dimen/dp_10"
                                 android:textColor="@android:color/black"
                                 android:gravity="center"/>
+                            <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/pie_chart"
+                                android:layout_width="300dip"
+                                android:layout_height="200dip"/>
+
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"

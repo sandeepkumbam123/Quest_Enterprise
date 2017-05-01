@@ -2,7 +2,6 @@ package quest.com.quest.Teacher;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
-import android.databinding.repacked.org.antlr.v4.Tool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

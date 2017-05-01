@@ -44,6 +44,9 @@
                     android:background="@android:color/white"
                     android:elevation="@dimen/dp_10"
                     card_view:cardCornerRadius="@dimen/dp_10">
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -68,7 +71,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <TextView
@@ -79,7 +82,6 @@
                                 android:background="@drawable/circle_green"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/sp_40"
-                                android:gravity="center"
                                 android:id="@+id/textView3" />
 
                             <TextView
@@ -136,6 +138,11 @@
                                 android:paddingLeft="@dimen/dp_10"
                                 android:textColor="@android:color/black"
                                 android:gravity="center"/>
+                            <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/pie_chart"
+                                android:layout_gravity="center"
+                                android:layout_width="500dip"
+                                android:layout_height="200dip"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -207,6 +214,7 @@
                         </LinearLayout>
 
                     </LinearLayout>
+                    </ScrollView>
                 </android.support.v7.widget.CardView>
 
 
