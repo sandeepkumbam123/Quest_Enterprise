@@ -13,7 +13,7 @@ import retrofit2.http.Body;
 public class RetrofitRequestHandler implements RetrofitAPIRequests {
 
     private Context mContext;
-
+//Constructor
     public RetrofitRequestHandler(Context mContext) {
         this.mContext = mContext;
     }
