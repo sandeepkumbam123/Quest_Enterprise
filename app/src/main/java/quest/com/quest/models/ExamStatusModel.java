@@ -32,7 +32,7 @@ public class ExamStatusModel {
         this.is_success = is_success;
     }
 
-    public Object getErrorCode() {
+    public int getErrorCode() {
         return ErrorCode;
     }
 
