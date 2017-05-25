@@ -35,6 +35,7 @@ public class BaseActivity extends AppCompatActivity {
         double y = Math.pow(dm.heightPixels / dm.ydpi, 2);
         double screenInches = Math.sqrt(x + y);
         return screenInches >= 6.7;
+        // This is my change
     }
     public static boolean isNetworkConnected(Context activity) {
         ConnectivityManager cm =

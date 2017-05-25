@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 
+import quest.com.quest.models.ExamStatusModel;
+import quest.com.quest.models.ListofExams;
 import quest.com.quest.models.LoginResponseModel;
 
 @SuppressWarnings("unchecked")
@@ -21,10 +23,25 @@ public class RetrofitResParser <T> {
                 return parseLoginResponse(response);
             case RequestConstants.REQ_FORGOT_PASSWORD:
                     return parseforgotPasswordResponse(response);
+            case RequestConstants.REQ_ENABLE_EXAM:
+                return parseEnableExamResponse(response);
+            case RequestConstants.REQ_DISABLE_EXAM:
+                return parseDisableExamResponse(response);
+            case RequestConstants.REQ_START_EXAM:
+                return parseStartExam(response);
+            case RequestConstants.REQ_SUBMIT_EXAM:
+                return parseSubmitExam(response);
+            case RequestConstants.REQ_EXAMS_LIST:
+                return parseExamsList(response);
             default: return (T) response;
 
         }
 
+    }
+
+    private T parseExamsList(String response) {
+        ListofExams examsList = ListofExams.objectFromData(response);
+     return (T) examsList;
     }
 
 
@@ -34,38 +51,29 @@ public class RetrofitResParser <T> {
         return (T) modelData;
     }
 
-    /*private T parseNavigationCategories(String response) {
-       *//* JSONObject json ;
-        List<CategoriesGoupModel> allUserses = null;
-        try {
-            json = new JSONObject(response);
-            JSONArray jsonarray = json.getJSONArray("ParentCategories");
-            Type listType = new TypeToken<ArrayList<CategoriesGoupModel>>() {
-            }.getType();
-            allUserses =
-                    new GsonBuilder().create().fromJson(jsonarray.toString(), listType);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return (T) allUserses;*//*
-        return null;
-    }*/
 
     private T parseforgotPasswordResponse(String response) {
-        /*JSONObject json;
-        List<Categories> allUserses = null;
-        try {
-            json = new JSONObject(response);
-            JSONArray jsonarray = json.getJSONArray("ParentCategories");
-            Type listType = new TypeToken<ArrayList<Categories>>() {
-            }.getType();
-            allUserses =
-                    new GsonBuilder().create().fromJson(jsonarray.toString(), listType);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-*/
+
+        return null;
+    }
+
+
+    private T parseEnableExamResponse(String response){
+        ExamStatusModel enableResponse = ExamStatusModel.objectFromData(response);
+        return (T) enableResponse;
+    }
+
+    private T parseDisableExamResponse(String response){
+        ExamStatusModel disableResponse = ExamStatusModel.objectFromData(response);
+
+        return (T) disableResponse;
+    }
+
+    private T parseStartExam(String response){
+        return null;
+    }
+
+    private T parseSubmitExam(String response){
         return null;
     }
 }

@@ -38,12 +38,10 @@ public class RetrofitRequestUtil {
             @Override
             public void onResponse(Call<Object> call, retrofit2.Response<Object> response) {
                 //int statusCode = response.code();
-//                LogUtils.LOGD("TAG1", new Gson().toJson(response));
                 try {
                     String res = new Gson().toJson(response.body());
                     //JSONObject jsonRes = new JSONObject(res);
                     Headers headers = response.headers();
-                    //LogUtils.LOGD("Sravanthi", ""+headers);
                     mReqListener.onResponse(requestID, headers, res);
 
                 } catch (Exception e) {
@@ -67,19 +65,27 @@ public class RetrofitRequestUtil {
         Call<Object> call = null;
         switch (requestID) {
             case RequestConstants.REQ_LOGIN_USER:
-                //call = apiService.checkLogin(params);
-
                 call = apiService.loginUser(params/*, CookieManager.getInstance().getCookie(Constants.APPLICATION_WEB_URL)*/);
                 break;
             case RequestConstants.REQ_FORGOT_PASSWORD:
                 call = apiService.forgotPassword(params);
                 break;
-            /*case RequestConstants.REQ_REGISTER:
-                call = apiService.registerUser(params);
+
+            case RequestConstants.REQ_ENABLE_EXAM:
+                call = apiService.enableExam(params);
                 break;
-            case RequestConstants.GET_LOGIN_STATUS:
-                call =apiService.LoginStatus(CookieManager.getInstance().getCookie(Constants.APPLICATION_WEB_URL));
-                break;*/
+            case RequestConstants.REQ_DISABLE_EXAM:
+                call = apiService.disableExam(params/*, CookieManager.getInstance().getCookie(Constants.APPLICATION_WEB_URL)*/);
+                break;
+            case RequestConstants.REQ_START_EXAM:
+                call = apiService.startExam(params);
+                break;
+            case RequestConstants.REQ_SUBMIT_EXAM:
+                call = apiService.submitExam(params);
+                break;
+            case RequestConstants.REQ_EXAMS_LIST:
+                call = apiService.examsList(params);
+                break;
         }
         return call;
     }

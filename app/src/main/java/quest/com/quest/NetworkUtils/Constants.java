@@ -11,6 +11,14 @@ public class Constants {
     public static final String FORGOT_PASSWORD ="";
 
 
+    public static final String ENABLE_EXAM ="exam/enable";
+    public static final String DISABLE_EXAM ="exam/disable";
+    public static final String START_EXAM ="exam/start-exam";
+    public static final String SUBMIT_EXAM ="exam/submit-exam";
+
+    public static final String EXAMS ="exams";
+
+
 
 
 

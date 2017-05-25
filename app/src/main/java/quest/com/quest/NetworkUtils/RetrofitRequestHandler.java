@@ -56,6 +56,87 @@ public class RetrofitRequestHandler implements RetrofitAPIRequests {
         return null;
     }
 
+    @Override
+    public Call<Object> enableExam(int requestID, @Body Map<String, String> params, ResponseListener responseListener) {
+        return null;
+    }
+
+    @Override
+    public Call<Object> disableExam(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+        RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
+
+            @Override
+            public void onResponse(int requestId, Headers responseHeaders, String response) {
+                responseListener.onSuccess(requestId, responseHeaders,new RetrofitResParser().parseResponse(requestId,response));
+            }
+
+            @Override
+            public void onErrorResponse(int requestId, Throwable error) {
+                responseListener.onFailure(requestId, error);
+
+            }
+        };
+        new RetrofitRequestUtil(mContext).retrofitEnqueueCall(requestID, "url", "POST",null, params, reqListener);
+        return null;
+    }
+
+    @Override
+    public Call<Object> startExam(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+        RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
+
+            @Override
+            public void onResponse(int requestId, Headers responseHeaders, String response) {
+                responseListener.onSuccess(requestId, responseHeaders,new RetrofitResParser().parseResponse(requestId,response));
+            }
+
+            @Override
+            public void onErrorResponse(int requestId, Throwable error) {
+                responseListener.onFailure(requestId, error);
+
+            }
+        };
+        new RetrofitRequestUtil(mContext).retrofitEnqueueCall(requestID, "url", "POST",null, params, reqListener);
+        return null;
+    }
+
+    @Override
+    public Call<Object> submitExam(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+        RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
+
+            @Override
+            public void onResponse(int requestId, Headers responseHeaders, String response) {
+                responseListener.onSuccess(requestId, responseHeaders,new RetrofitResParser().parseResponse(requestId,response));
+            }
+
+            @Override
+            public void onErrorResponse(int requestId, Throwable error) {
+                responseListener.onFailure(requestId, error);
+
+            }
+        };
+        new RetrofitRequestUtil(mContext).retrofitEnqueueCall(requestID, "url", "POST",null, params, reqListener);
+        return null;
+    }
+
+    @Override
+    public Call<Object> examsList(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+        RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
+
+            @Override
+            public void onResponse(int requestId, Headers responseHeaders, String response) {
+                responseListener.onSuccess(requestId, responseHeaders,new RetrofitResParser().parseResponse(requestId,response));
+            }
+
+            @Override
+            public void onErrorResponse(int requestId, Throwable error) {
+                responseListener.onFailure(requestId, error);
+
+            }
+        };
+        new RetrofitRequestUtil(mContext).retrofitEnqueueCall(requestID, "url", "POST",null, params, reqListener);
+        return null;
+    }
+
    /* @Override
     public Call<Object> checkLogin(int requestID, @Body Map<String, String> params, final RetrofitAPIRequests.ResponseListener responseListener) {
 
@@ -115,24 +196,6 @@ public class RetrofitRequestHandler implements RetrofitAPIRequests {
         new RetrofitRequestUtil(mContext).retrofitEnqueueCall(requestID, "url", "POST",null, params, reqListener);
         return null;
     }
-
-    @Override
-    public Call<Object> getLoginStatus(int requestID, @Body Map<String, String> params, HashMap<String,String> requestHeaders, final ResponseListener responseListener) {
-        RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
-
-            @Override
-            public void onResponse(int requestId, Headers responseHeaders, String response) {
-                responseListener.onSuccess(requestId, responseHeaders,response);
-            }
-
-            @Override
-            public void onErrorResponse(int requestId, Throwable error) {
-                responseListener.onFailure(requestId, error);
-
-            }
-        };
-        new RetrofitRequestUtil(mContext).retrofitEnqueueCall(requestID, "url", "POST",requestHeaders, params, reqListener);
-        return null;
-    }
 */
+
 }

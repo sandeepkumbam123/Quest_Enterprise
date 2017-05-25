@@ -23,7 +23,20 @@ public interface GraysAPIRequests {
     //Call<Object> checkLogin(@Body Map<String,String> jsonObj);
 
 
+    @POST(Constants.ENABLE_EXAM)
+    Call<Object> enableExam(@Body Map<String,String> jsonObj);
 
+    @POST(Constants.DISABLE_EXAM)
+    Call<Object> disableExam(@Body Map<String,String> jsonObj);
+
+    @POST(Constants.START_EXAM)
+    Call<Object> startExam(@Body Map<String,String> jsonObj);
+
+    @POST(Constants.SUBMIT_EXAM)
+    Call<Object> submitExam(@Body Map<String,String> jsonObj);
+
+    @POST(Constants.EXAMS)
+    Call<Object> examsList(@Body Map<String,String> jsonObj);
 
 
 
