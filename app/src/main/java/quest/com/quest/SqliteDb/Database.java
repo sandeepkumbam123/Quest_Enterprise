@@ -124,7 +124,7 @@ public class Database extends SQLiteOpenHelper {
        columnValues.put(COLUMN_HAS_IMAGES,false);
        columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
        columnValues.put(COLUMN_ANSWER_ATTEMPTED,model.getAttemptedAnswer());
-       columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimetakentoAttempt());
+       columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimeTakentoAttempt());
        mDB.insert(TABLE_ANSWERS_ATTEMPTED,null,columnValues);
        mDB.close();
    }
@@ -142,7 +142,7 @@ public class Database extends SQLiteOpenHelper {
        columnValues.put(COLUMN_HAS_IMAGES,false);
        columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
        columnValues.put(COLUMN_ANSWER_ATTEMPTED,model.getAttemptedAnswer());
-       columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimetakentoAttempt());
+       columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimeTakentoAttempt());
 
        mDB.update(TABLE_ANSWERS_ATTEMPTED,columnValues,COLUMN_EXAM_ID,new String[]{model.getExamId()});
    }
