@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import quest.com.quest.models.ExamStatusModel;
 import quest.com.quest.models.ListofExams;
 import quest.com.quest.models.LoginResponseModel;
+import quest.com.quest.models.StartExamModel;
 
 @SuppressWarnings("unchecked")
 public class RetrofitResParser <T> {
@@ -70,7 +71,8 @@ public class RetrofitResParser <T> {
     }
 
     private T parseStartExam(String response){
-        return null;
+        StartExamModel startExamResponse = StartExamModel.objectFromData(response);
+        return (T) startExamResponse;
     }
 
     private T parseSubmitExam(String response){

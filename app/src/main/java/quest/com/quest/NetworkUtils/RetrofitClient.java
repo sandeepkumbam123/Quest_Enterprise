@@ -3,6 +3,7 @@ package quest.com.quest.NetworkUtils;
 
 
 import java.security.cert.CertificateException;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -26,8 +27,10 @@ public class RetrofitClient {
                 OkHttpClient client = getUnsafeOkHttpClient();
 
                 Retrofit.Builder builder = new Retrofit.Builder()
-                        .baseUrl(Constants.APPLICATION_BASE_URL).addConverterFactory(GsonConverterFactory.create());
-                retrofit = builder.client(client).build();
+                        .baseUrl(Constants.APPLICATION_BASE_URL).
+                                addConverterFactory(GsonConverterFactory.create());
+                retrofit = builder.client(client)
+                        .build();
             }
         return retrofit;
     }
@@ -66,7 +69,7 @@ public class RetrofitClient {
                     return true;
                 }
             });
-
+                builder.connectTimeout(20, TimeUnit.SECONDS);
             return builder.build();
         } catch (Exception e) {
             throw new RuntimeException(e);
