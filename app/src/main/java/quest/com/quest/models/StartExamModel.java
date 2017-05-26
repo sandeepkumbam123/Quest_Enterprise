@@ -28,9 +28,15 @@ public class StartExamModel {
     private int NegativeMarks;
     private String Critical_level;
     private boolean isSuccess;
+<<<<<<< HEAD
     private boolean ErrorCode;
     private boolean ErrorMessage;
     private List<?> QuestionsList;
+=======
+    private int ErrorCode;
+    private String ErrorMessage;
+    private List<QuestionModel> QuestionsList;
+>>>>>>> bc3f810af174a3c3656e831f1b0a14cec3a1a445
 
     public static StartExamModel objectFromData(String str) {
 
@@ -85,6 +91,7 @@ public class StartExamModel {
         this.isSuccess = isSuccess;
     }
 
+<<<<<<< HEAD
     public boolean isErrorCode() {
         return ErrorCode;
     }
@@ -109,3 +116,135 @@ public class StartExamModel {
         this.QuestionsList = QuestionsList;
     }
 }
+=======
+    public int getErrorCode() {
+        return ErrorCode;
+    }
+
+    public void setErrorCode(int ErrorCode) {
+        this.ErrorCode = ErrorCode;
+    }
+
+    public String getErrorMessage() {
+        return ErrorMessage;
+    }
+
+    public void setErrorMessage(String ErrorMessage) {
+        this.ErrorMessage = ErrorMessage;
+    }
+
+    public List<QuestionModel> getQuestionsList() {
+        return QuestionsList;
+    }
+
+    public void setQuestionsList(List<QuestionModel> QuestionsList) {
+        this.QuestionsList = QuestionsList;
+    }
+
+    public class QuestionModel {
+        private String questionId;
+        private String examId;
+        private String questionNumber;
+        private String question;
+
+
+
+        private String optionA;
+        private String optionB;
+        private String optionC;
+        private String optionD;
+        private int correctAnswer;
+        private int answerMark;
+        private int negativeMark;
+
+        public String getQuestionId() {
+            return questionId;
+        }
+
+        public void setQuestionId(String questionId) {
+            this.questionId = questionId;
+        }
+
+        public String getExamId() {
+            return examId;
+        }
+
+        public void setExamId(String examId) {
+            this.examId = examId;
+        }
+
+        public String getQuestionNumber() {
+            return questionNumber;
+        }
+
+        public void setQuestionNumber(String questionNumber) {
+            this.questionNumber = questionNumber;
+        }
+
+        public String getQuestion() {
+            return question;
+        }
+
+        public void setQuestion(String question) {
+            this.question = question;
+        }
+
+        public String getOptionA() {
+            return optionA;
+        }
+
+        public void setOptionA(String optionA) {
+            this.optionA = optionA;
+        }
+
+        public String getOptionB() {
+            return optionB;
+        }
+
+        public void setOptionB(String optionB) {
+            this.optionB = optionB;
+        }
+
+        public String getOptionC() {
+            return optionC;
+        }
+
+        public void setOptionC(String optionC) {
+            this.optionC = optionC;
+        }
+
+        public String getOptionD() {
+            return optionD;
+        }
+
+        public void setOptionD(String optionD) {
+            this.optionD = optionD;
+        }
+
+        public int getCorrectAnswer() {
+            return correctAnswer;
+        }
+
+        public void setCorrectAnswer(int correctAnswer) {
+            this.correctAnswer = correctAnswer;
+        }
+
+        public int getAnswerMark() {
+            return answerMark;
+        }
+
+        public void setAnswerMark(int answerMark) {
+            this.answerMark = answerMark;
+        }
+
+        public int getNegativeMark() {
+            return negativeMark;
+        }
+
+        public void setNegativeMark(int negativeMark) {
+            this.negativeMark = negativeMark;
+        }
+    }
+}
+
+>>>>>>> bc3f810af174a3c3656e831f1b0a14cec3a1a445

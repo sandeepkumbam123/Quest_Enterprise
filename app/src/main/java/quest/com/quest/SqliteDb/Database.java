@@ -1,9 +1,15 @@
 package quest.com.quest.SqliteDb;
 
+import android.content.ContentValues;
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.List;
+
+import quest.com.quest.models.AttemptedQuestionModel;
+import quest.com.quest.models.StartExamModel;
+
 
 /**
  * Created by kumbh on 16-04-2017.
@@ -42,18 +48,18 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-     String EXAM_QUESTION_TABLE ="CREATE TABLE "+DATABASE_STUDENT_QUESTION_TABLE+
-             "( "+COLUMN_EXAM_ID+"  INTEGER NOT NULL UNIQUE ,"+
-             COLUMN_NUMBER_OF_QUESTION+" INTEGER NOT NULL , "+
-             COLUMN_QUESTION+" TEXT NOT NULL , "+
-             COLUMN_QUESTION_OPTION_A+" TEXT NOT NULL ,"+
-             COLUMN_QUESTION_OPTION_B+" TEXT NOT NULL ,"+
-             COLUMN_QUESTION_OPTION_C+" TEXT NOT NULL ,"+
-             COLUMN_QUESTION_OPTION_D+" TEXT NOT NULL ,"+
-             COLUMN_HAS_IMAGES +" BOOLEAN NOT NULL , "+
-             COLUMN_CORRECT_ANSWER+" INTEGER NOT NULL )";
+        String EXAM_QUESTION_TABLE ="CREATE TABLE "+DATABASE_STUDENT_QUESTION_TABLE+
+                "( "+COLUMN_EXAM_ID+"  INTEGER NOT NULL UNIQUE ,"+
+                COLUMN_NUMBER_OF_QUESTION+" INTEGER NOT NULL , "+
+                COLUMN_QUESTION+" TEXT NOT NULL , "+
+                COLUMN_QUESTION_OPTION_A+" TEXT NOT NULL ,"+
+                COLUMN_QUESTION_OPTION_B+" TEXT NOT NULL ,"+
+                COLUMN_QUESTION_OPTION_C+" TEXT NOT NULL ,"+
+                COLUMN_QUESTION_OPTION_D+" TEXT NOT NULL ,"+
+                COLUMN_HAS_IMAGES +" BOOLEAN NOT NULL , "+
+                COLUMN_CORRECT_ANSWER+" INTEGER NOT NULL )";
 
-        String EXAM_ANSWERS_ATTEMPTED_TABLE ="CREATE TABLE "+DATABASE_STUDENT_QUESTION_TABLE+
+        String EXAM_ANSWERS_ATTEMPTED_TABLE ="CREATE TABLE "+TABLE_ANSWERS_ATTEMPTED+
                 "( "+COLUMN_EXAM_ID+"  INTEGER NOT NULL UNIQUE ,"+
                 COLUMN_NUMBER_OF_QUESTION+" INTEGER NOT NULL , "+
                 COLUMN_QUESTION+" TEXT NOT NULL , "+
@@ -80,5 +86,65 @@ public class Database extends SQLiteOpenHelper {
 
 
     }
+
+    public void insertQuestionsintoTable(Database database,List<StartExamModel.QuestionModel> modelList){
+        SQLiteDatabase mDB = database.getWritableDatabase();
+        for (StartExamModel.QuestionModel model: modelList){
+            ContentValues columnValues = new ContentValues();
+            columnValues.put(COLUMN_EXAM_ID,model.getExamId());
+            columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
+            columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
+            columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
+            columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
+            columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
+            columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
+            columnValues.put(COLUMN_HAS_IMAGES,false);
+            columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
+            mDB.insert(DATABASE_STUDENT_QUESTION_TABLE,null,columnValues);
+        }
+        mDB.close();
+    }
+
+    public void deleteQuestionsListFromTable(Database db){
+        SQLiteDatabase mDB = db.getWritableDatabase();
+        mDB.delete(DATABASE_STUDENT_QUESTION_TABLE,null,null);
+        mDB.close();
+    }
+
+   public void insertQuestionintoAttemptedTable(Database database, AttemptedQuestionModel model){
+       SQLiteDatabase mDB = database.getWritableDatabase();
+         ContentValues columnValues = new ContentValues();
+       columnValues.put(COLUMN_EXAM_ID,model.getExamId());
+       columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
+       columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
+       columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
+       columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
+       columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
+       columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
+       columnValues.put(COLUMN_HAS_IMAGES,false);
+       columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
+       columnValues.put(COLUMN_ANSWER_ATTEMPTED,model.getAttemptedAnswer());
+       columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimetakentoAttempt());
+       mDB.insert(TABLE_ANSWERS_ATTEMPTED,null,columnValues);
+       mDB.close();
+   }
+
+   public void updateAttemptedAnswer(Database database ,AttemptedQuestionModel model){
+       SQLiteDatabase mDB = database.getWritableDatabase();
+       ContentValues columnValues = new ContentValues();
+       columnValues.put(COLUMN_EXAM_ID,model.getExamId());
+       columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
+       columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
+       columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
+       columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
+       columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
+       columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
+       columnValues.put(COLUMN_HAS_IMAGES,false);
+       columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
+       columnValues.put(COLUMN_ANSWER_ATTEMPTED,model.getAttemptedAnswer());
+       columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimetakentoAttempt());
+
+       mDB.update(TABLE_ANSWERS_ATTEMPTED,columnValues,COLUMN_EXAM_ID,new String[]{model.getExamId()});
+   }
 
 }
