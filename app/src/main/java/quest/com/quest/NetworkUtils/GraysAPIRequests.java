@@ -39,5 +39,4 @@ public interface GraysAPIRequests {
     Call<Object> examsList(@Body Map<String,String> jsonObj);
 
 
-
 }

@@ -215,7 +215,7 @@ public class ListofExams {
             private int subjectID;
             private int class_names_classID;
             private String subject;
-            private Object created_by;
+            private String created_by;
             private String created_at;
             private String deleted_at;
             private String updated_at;
@@ -249,11 +249,11 @@ public class ListofExams {
                 this.subject = subject;
             }
 
-            public Object getCreated_by() {
+            public String getCreated_by() {
                 return created_by;
             }
 
-            public void setCreated_by(Object created_by) {
+            public void setCreated_by(String created_by) {
                 this.created_by = created_by;
             }
 
