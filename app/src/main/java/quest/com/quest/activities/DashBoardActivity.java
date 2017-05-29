@@ -43,17 +43,6 @@ public class DashBoardActivity extends BaseActivity
         containerFrame =(FrameLayout)findViewById(R.id.fl_container);
         getSupportFragmentManager().beginTransaction().add(R.id.fl_container,new DashboardFragment()).commit();
 
-
-      /*  DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);*/
     }
 
     @Override
@@ -67,6 +56,7 @@ public class DashBoardActivity extends BaseActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
+
                             getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.fl_container,new DashboardFragment())

@@ -6,7 +6,7 @@ package quest.com.quest.NetworkUtils;
 
 public class Constants {
 
-    public static final String APPLICATION_BASE_URL ="http://localhost/Quest/api/";
+    public static final String APPLICATION_BASE_URL ="http://localhost:8080/Quest/api/";
     public static final String LOGIN_URL ="login";
     public static final String FORGOT_PASSWORD ="";
 

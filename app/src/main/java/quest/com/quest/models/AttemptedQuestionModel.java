@@ -23,6 +23,15 @@ public class AttemptedQuestionModel implements Parcelable {
     private int totalMarks;
     private int negativeMarks;
     private String criticality;
+    private int answerMark;
+
+    public int getAnswerMark() {
+        return answerMark;
+    }
+
+    public void setAnswerMark(int answerMark) {
+        this.answerMark = answerMark;
+    }
 
     protected AttemptedQuestionModel(Parcel in) {
         questionNumber = in.readString();
@@ -100,7 +109,7 @@ public class AttemptedQuestionModel implements Parcelable {
                                   String optionC, String optionD, int attemptedAnswer, int correctAnswer,
                                   int timeTakentoAttempt,
                                   String examTitle, int examDuration, int totalMarks,
-                                  int negativeMarks, String criticality) {
+                                  int negativeMarks, String criticality , int answerMark) {
         this.questionNumber = questionNumber;
         this.examId = examId;
         this.optionA = optionA;
@@ -115,6 +124,7 @@ public class AttemptedQuestionModel implements Parcelable {
         this.totalMarks = totalMarks;
         this.negativeMarks = negativeMarks;
         this.criticality = criticality;
+        this.answerMark = answerMark;
     }
 
     public void setCriticality(String criticality) {

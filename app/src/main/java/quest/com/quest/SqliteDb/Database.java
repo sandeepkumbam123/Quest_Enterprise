@@ -43,6 +43,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_NEGATIVE_MARKS ="NEGATIVE_MARKS";
     private static final String COLUMN_TOTAL_MARKS ="TOTAL_MARKS";
     private static final String COLUMN_TITLE = "TITLE";
+    private static final String COLUMN_ANSWER_MARK = "ANSWER_MARK";
     private static final String COLUMN_DURATION = "DURATION";
 
 
@@ -82,8 +83,9 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_DURATION +" INTEGER , "+
                 COLUMN_NEGATIVE_MARKS +" INTEGER  , "+
                 COLUMN_CRITICALITY +" TEXT , " +
-                COLUMN_TOTAL_MARKS + "INTEGER , "+
-                COLUMN_TITLE+" TEXT NOT NULL , "+")";
+                COLUMN_TOTAL_MARKS + " INTEGER , "+
+                COLUMN_ANSWER_MARK + " INTEGER , "+
+                COLUMN_TITLE+" TEXT NOT NULL  "+")";
 
 
 
@@ -118,7 +120,7 @@ public class Database extends SQLiteOpenHelper {
             mDB.insert(DATABASE_STUDENT_QUESTION_TABLE,null,columnValues);
 
             insertQuestionintoAttemptedTable(database,model ,modelList.getCritical_level(),modelList.getDuration()
-            ,modelList.getExamTitle(),modelList.getTotalMarks() , model.getNegativeMark());
+            ,modelList.getExamTitle(),modelList.getTotalMarks() , model.getNegativeMark(),model.getAnswerMark());
         }
         mDB.close();
     }
@@ -130,7 +132,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void insertQuestionintoAttemptedTable(Database database , StartExamModel.QuestionModel model,
-                                                 String criticality,int duration, String title ,int totalMarks , int negativeMarks){
+                                                 String criticality,int duration, String title ,int totalMarks , int negativeMarks ,int answerMark){
         SQLiteDatabase mDB = database.getWritableDatabase();
         ContentValues columnValues = new ContentValues();
         columnValues.put(COLUMN_EXAM_ID,model.getExamId());
@@ -149,7 +151,9 @@ public class Database extends SQLiteOpenHelper {
         columnValues.put(COLUMN_TITLE , title);
         columnValues.put(COLUMN_TOTAL_MARKS ,totalMarks);
         columnValues.put(COLUMN_NEGATIVE_MARKS,negativeMarks);
+        columnValues.put(COLUMN_ANSWER_MARK, answerMark);
         mDB.insert(TABLE_ANSWERS_ATTEMPTED,null,columnValues);
+
         mDB.close();
     }
 
@@ -172,7 +176,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void updateAttemptedAnswer(Database database ,AttemptedQuestionModel model,
-                                      String criticality,int duration, String title ,int totalMarks , int negativeMarks){
+                                      String criticality,int duration, String title ,int totalMarks , int negativeMarks ){
         SQLiteDatabase mDB = database.getWritableDatabase();
         ContentValues columnValues = new ContentValues();
         columnValues.put(COLUMN_EXAM_ID,model.getExamId());
@@ -218,10 +222,11 @@ public class Database extends SQLiteOpenHelper {
             int totalMarks = c.getInt(c.getColumnIndex(COLUMN_TOTAL_MARKS));
             int duration = c.getInt(c.getColumnIndex(COLUMN_DURATION));
             String criticality = c.getString(c.getColumnIndex(COLUMN_CRITICALITY));
+            int answerMark = c.getInt(c.getColumnIndex(COLUMN_ANSWER_MARK));
 
             AttemptedQuestionModel model = new AttemptedQuestionModel(question,examId,optionA,
                     optionB,optionC,optionD,answerAttempted,correctAnswer,timetakentoAttempt ,title,
-                    duration,totalMarks,negativeMarks,criticality);
+                    duration,totalMarks,negativeMarks,criticality ,answerMark);
             questionModels.add(model);
         }while ( (c.moveToNext()));
         }

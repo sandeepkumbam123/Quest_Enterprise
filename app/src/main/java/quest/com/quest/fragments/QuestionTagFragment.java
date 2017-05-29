@@ -32,6 +32,7 @@ private FragmentQuestiongroupBinding mBinding;
     private RadioButton optionB;
     private RadioButton optionC;
     private RadioButton optionD;
+    private long startTime;
 
 
     public static QuestionTagFragment getInstance(AttemptedQuestionModel model){
@@ -57,7 +58,7 @@ private FragmentQuestiongroupBinding mBinding;
 
         mBinding = DataBindingUtil.bind(inflater.inflate(R.layout.fragment_questiongroup,container,false));
 
-
+       startTime = System.currentTimeMillis();
         initViews();
 
         return mBinding.getRoot();
@@ -84,6 +85,7 @@ private FragmentQuestiongroupBinding mBinding;
     @Override
     public void onanswerSubmitted() {
         int answer =0;
+       long time = countTime(startTime,System.currentTimeMillis());
         if(optionA.isSelected()){
             answer =1;
         }
@@ -96,15 +98,23 @@ private FragmentQuestiongroupBinding mBinding;
         else  if(optionD.isSelected()){
             answer =4;
         }
-        int time = 5;
+        else {
+            answer =0;
+            time =0;
+        }
         if(model.getTimeTakentoAttempt()!=0){
-            model.setTimeTakentoAttempt(model.getTimeTakentoAttempt()+time);
+            model.setTimeTakentoAttempt(model.getTimeTakentoAttempt()+(int)time);
         }
         else
-        model.setTimeTakentoAttempt(time);
+        model.setTimeTakentoAttempt((int)time);
         model.setAttemptedAnswer(answer);
         mDB.updateAttemptedAnswer(mDB,model,model.getCriticality(),model.getExamDuration()
         ,model.getExamTitle(),model.getTotalMarks(),model.getNegativeMarks());
 
+    }
+
+
+    private long countTime(long start ,long end){
+       return   (end - start);
     }
 }

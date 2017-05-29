@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import quest.com.quest.R;
 import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.ResultAnalysisBinding;
+import quest.com.quest.models.ResultData;
 
 /**
  * Created by skumbam on 03-03-2017.
@@ -31,11 +32,24 @@ public class ResultsFragment extends Fragment {
 
 private ResultAnalysisBinding dataBinding;
     private PieChart mOverallStatsGraph;
+    private ResultData resultModel;
+private static final String RESULT_DATA = "RESULT_DATA";
 
-
-    public static ResultsFragment getInstance(){
+    public static ResultsFragment getInstance(ResultData model){
         ResultsFragment fragment = new ResultsFragment();
+        Bundle b = new Bundle();
+        b.putParcelable(RESULT_DATA,model);
+        fragment.setArguments(b);
         return fragment;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(getArguments().getParcelable(RESULT_DATA)!= null){
+            resultModel = getArguments().getParcelable(RESULT_DATA);
+        }
     }
 
     @Override
@@ -60,9 +74,9 @@ private ResultAnalysisBinding dataBinding;
 
     private  void addDatatoGraph(){
         ArrayList<PieEntry> mPieChartData = new ArrayList<>();
-        mPieChartData.add(new PieEntry(4, 0));
-        mPieChartData.add(new PieEntry(1, 1));
-        mPieChartData.add(new PieEntry(2, 2));
+        mPieChartData.add(new PieEntry(resultModel.getNumberofCorrectAnswers(), 0));
+        mPieChartData.add(new PieEntry(resultModel.getNumberofAttemptedAnswers()-resultModel.getNumberofCorrectAnswers(), 1));
+        mPieChartData.add(new PieEntry(resultModel.getTotalQuestions() - resultModel.getNumberofAttemptedAnswers(), 2));
 
 
         PieDataSet dataset = new PieDataSet(mPieChartData, "");
@@ -89,6 +103,6 @@ private ResultAnalysisBinding dataBinding;
 
 
     public void getSolutions(View v){
-        Toast.makeText(getActivity(), "Waiting for the screens", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Waiting for the screens", Toast.LENGTH_SHORT).show();
     }
 }

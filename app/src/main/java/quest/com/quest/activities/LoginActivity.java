@@ -19,6 +19,7 @@ import quest.com.quest.NetworkUtils.RetrofitRequestHandler;
 import quest.com.quest.R;
 import quest.com.quest.Teacher.SearchStudentFragment;
 import quest.com.quest.Teacher.TeacherDashBoardActivity;
+import quest.com.quest.Utils.PrefUtils;
 import quest.com.quest.databinding.ActivitityLoginBinding;
 import quest.com.quest.dialog.QuestDialog;
 import quest.com.quest.models.LoginResponseModel;
@@ -92,15 +93,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onSuccess(int requestId, Headers headers, LoginResponseModel response) {
                 dataBinding.pbProgresbar.setVisibility(View.INVISIBLE);
-                Toast.makeText(LoginActivity.this,response.getStatus()+" status , success : "+response.is_$Issuccess127(), Toast.LENGTH_SHORT).show();
-               if(response.is_$Issuccess127()) {
-                   if (!isTeacher)
+                Toast.makeText(LoginActivity.this,response.getSession_id()+" status , success : "+response.isIs_success(), Toast.LENGTH_SHORT).show();
+               if(response.isIs_success()) {
+                   PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
+                           PrefUtils.getInstance(getApplicationContext()),ApiConstants.USER_ID,response.getRole_id());
+                   PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
+                           PrefUtils.getInstance(getApplicationContext()),ApiConstants.BRANCH_ID,response.getBranch_id());
+                   if (!response.getRole().equalsIgnoreCase("admin"))
                        navigatetoNextActivity(LoginActivity.this, new DashBoardActivity());
                    else
                        navigatetoNextActivity(LoginActivity.this, new TeacherDashBoardActivity());
                }
                 else{
-                   QuestDialog.showOkDialog(LoginActivity.this,"Error",response.getStatus());
+                   QuestDialog.showOkDialog(LoginActivity.this,"Error",response.getSession_id());
                }
             }
 
@@ -108,7 +113,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             public void onFailure(int requestId, Throwable error) {
                 dataBinding.pbProgresbar.setVisibility(View.INVISIBLE);
                 QuestDialog.showOkDialog(LoginActivity.this,"Connectivity Error",error.getMessage());
-//                navigatetoNextActivity(LoginActivity.this, new DashBoardActivity());
+                navigatetoNextActivity(LoginActivity.this, new DashBoardActivity());
 
                 Log.d(TAG,error+"");
             }
