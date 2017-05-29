@@ -2,12 +2,15 @@ package quest.com.quest.SqliteDb;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import quest.com.quest.models.AttemptedQuestionModel;
+import quest.com.quest.models.QuestionModel;
 import quest.com.quest.models.StartExamModel;
 
 
@@ -36,6 +39,11 @@ public class Database extends SQLiteOpenHelper {
     private static final String TABLE_ANSWERS_ATTEMPTED ="TABLE_ANSWERS_ATTEMPTED";
     private static final String COLUMN_TIME_TAKEN_TO_ATTEMPT ="TIME_TAKEN_TO_ATTEMPT_QUESTION";
     private static final String COLUMN_ANSWER_ATTEMPTED="ANSWER_ATTEMPTED";
+    private static final String COLUMN_CRITICALITY = "CRITICALITY";
+    private static final String COLUMN_NEGATIVE_MARKS ="NEGATIVE_MARKS";
+    private static final String COLUMN_TOTAL_MARKS ="TOTAL_MARKS";
+    private static final String COLUMN_TITLE = "TITLE";
+    private static final String COLUMN_DURATION = "DURATION";
 
 
     private static final int DATABASE_TABLE_VERSION =1;
@@ -67,10 +75,15 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_QUESTION_OPTION_B+" TEXT NOT NULL ,"+
                 COLUMN_QUESTION_OPTION_C+" TEXT NOT NULL ,"+
                 COLUMN_QUESTION_OPTION_D+" TEXT NOT NULL ,"+
-                COLUMN_HAS_IMAGES +" BOOLEAN NOT NULL , "+
+                COLUMN_HAS_IMAGES +" BOOLEAN  , "+
                 COLUMN_ANSWER_ATTEMPTED+" INTEGER , "+
                 COLUMN_TIME_TAKEN_TO_ATTEMPT+" INTEGER ,"+
-                COLUMN_CORRECT_ANSWER+" INTEGER NOT NULL )";
+                COLUMN_CORRECT_ANSWER+" INTEGER NOT NULL ,"+
+                COLUMN_DURATION +" INTEGER , "+
+                COLUMN_NEGATIVE_MARKS +" INTEGER  , "+
+                COLUMN_CRITICALITY +" TEXT , " +
+                COLUMN_TOTAL_MARKS + "INTEGER , "+
+                COLUMN_TITLE+" TEXT NOT NULL , "+")";
 
 
 
@@ -87,9 +100,10 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void insertQuestionsintoTable(Database database,List<StartExamModel.QuestionModel> modelList){
+    public void insertQuestionsintoTable(Database database,StartExamModel modelList){
         SQLiteDatabase mDB = database.getWritableDatabase();
-        for (StartExamModel.QuestionModel model: modelList){
+
+        for (StartExamModel.QuestionModel model: modelList.getQuestionsList()){
             ContentValues columnValues = new ContentValues();
             columnValues.put(COLUMN_EXAM_ID,model.getExamId());
             columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
@@ -100,7 +114,11 @@ public class Database extends SQLiteOpenHelper {
             columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
             columnValues.put(COLUMN_HAS_IMAGES,false);
             columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
+
             mDB.insert(DATABASE_STUDENT_QUESTION_TABLE,null,columnValues);
+
+            insertQuestionintoAttemptedTable(database,model ,modelList.getCritical_level(),modelList.getDuration()
+            ,modelList.getExamTitle(),modelList.getTotalMarks() , model.getNegativeMark());
         }
         mDB.close();
     }
@@ -111,40 +129,104 @@ public class Database extends SQLiteOpenHelper {
         mDB.close();
     }
 
-   public void insertQuestionintoAttemptedTable(Database database, AttemptedQuestionModel model){
-       SQLiteDatabase mDB = database.getWritableDatabase();
-         ContentValues columnValues = new ContentValues();
-       columnValues.put(COLUMN_EXAM_ID,model.getExamId());
-       columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
-       columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
-       columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
-       columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
-       columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
-       columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
-       columnValues.put(COLUMN_HAS_IMAGES,false);
-       columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
-       columnValues.put(COLUMN_ANSWER_ATTEMPTED,model.getAttemptedAnswer());
-       columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimeTakentoAttempt());
-       mDB.insert(TABLE_ANSWERS_ATTEMPTED,null,columnValues);
-       mDB.close();
-   }
+    public void insertQuestionintoAttemptedTable(Database database , StartExamModel.QuestionModel model,
+                                                 String criticality,int duration, String title ,int totalMarks , int negativeMarks){
+        SQLiteDatabase mDB = database.getWritableDatabase();
+        ContentValues columnValues = new ContentValues();
+        columnValues.put(COLUMN_EXAM_ID,model.getExamId());
+        columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
+        columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
+        columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
+        columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
+        columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
+        columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
+        columnValues.put(COLUMN_HAS_IMAGES,false);
+        columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
+        columnValues.put(COLUMN_ANSWER_ATTEMPTED,0);
+        columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,0);
+        columnValues.put(COLUMN_CRITICALITY ,criticality);
+        columnValues.put(COLUMN_DURATION ,duration);
+        columnValues.put(COLUMN_TITLE , title);
+        columnValues.put(COLUMN_TOTAL_MARKS ,totalMarks);
+        columnValues.put(COLUMN_NEGATIVE_MARKS,negativeMarks);
+        mDB.insert(TABLE_ANSWERS_ATTEMPTED,null,columnValues);
+        mDB.close();
+    }
 
-   public void updateAttemptedAnswer(Database database ,AttemptedQuestionModel model){
-       SQLiteDatabase mDB = database.getWritableDatabase();
-       ContentValues columnValues = new ContentValues();
-       columnValues.put(COLUMN_EXAM_ID,model.getExamId());
-       columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
-       columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
-       columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
-       columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
-       columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
-       columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
-       columnValues.put(COLUMN_HAS_IMAGES,false);
-       columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
-       columnValues.put(COLUMN_ANSWER_ATTEMPTED,model.getAttemptedAnswer());
-       columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimeTakentoAttempt());
+    public void insertQuestionintoAttemptedTable(Database database, AttemptedQuestionModel model){
+        SQLiteDatabase mDB = database.getWritableDatabase();
+        ContentValues columnValues = new ContentValues();
+        columnValues.put(COLUMN_EXAM_ID,model.getExamId());
+        columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
+        columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
+        columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
+        columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
+        columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
+        columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
+        columnValues.put(COLUMN_HAS_IMAGES,false);
+        columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
+        columnValues.put(COLUMN_ANSWER_ATTEMPTED,model.getAttemptedAnswer());
+        columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimeTakentoAttempt());
+        mDB.insert(TABLE_ANSWERS_ATTEMPTED,null,columnValues);
+        mDB.close();
+    }
 
-       mDB.update(TABLE_ANSWERS_ATTEMPTED,columnValues,COLUMN_EXAM_ID,new String[]{model.getExamId()});
-   }
+    public void updateAttemptedAnswer(Database database ,AttemptedQuestionModel model,
+                                      String criticality,int duration, String title ,int totalMarks , int negativeMarks){
+        SQLiteDatabase mDB = database.getWritableDatabase();
+        ContentValues columnValues = new ContentValues();
+        columnValues.put(COLUMN_EXAM_ID,model.getExamId());
+        columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
+        columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
+        columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
+        columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
+        columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
+        columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
+        columnValues.put(COLUMN_HAS_IMAGES,false);
+        columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
+        columnValues.put(COLUMN_ANSWER_ATTEMPTED,model.getAttemptedAnswer());
+        columnValues.put(COLUMN_TIME_TAKEN_TO_ATTEMPT,model.getTimeTakentoAttempt());
+        columnValues.put(COLUMN_CRITICALITY ,criticality);
+        columnValues.put(COLUMN_DURATION ,duration);
+        columnValues.put(COLUMN_TITLE , title);
+        columnValues.put(COLUMN_TOTAL_MARKS ,totalMarks);
+        columnValues.put(COLUMN_NEGATIVE_MARKS,negativeMarks);
+        mDB.update(TABLE_ANSWERS_ATTEMPTED,columnValues,COLUMN_EXAM_ID,new String[]{model.getExamId()});
+        mDB.close();
+    }
+
+
+    public List<AttemptedQuestionModel> getQuestions(Database database ){
+        SQLiteDatabase mDB = database.getReadableDatabase();
+        String selectQuery = "Select * from "+TABLE_ANSWERS_ATTEMPTED;
+        Cursor c = mDB.rawQuery(selectQuery,null);
+        List<AttemptedQuestionModel> questionModels = new ArrayList<>();
+        if(c.moveToFirst()){
+        do{
+          String examId = c.getString(c.getColumnIndex(COLUMN_EXAM_ID));
+            String questionNumber = c.getString(c.getColumnIndex(COLUMN_NUMBER_OF_QUESTION));
+            String question = c.getString(c.getColumnIndex(COLUMN_QUESTION));
+            String optionA = c.getString(c.getColumnIndex(COLUMN_QUESTION_OPTION_A));
+            String optionB = c.getString(c.getColumnIndex(COLUMN_QUESTION_OPTION_B));
+            String optionC = c.getString(c.getColumnIndex(COLUMN_QUESTION_OPTION_C));
+            String optionD = c.getString(c.getColumnIndex(COLUMN_QUESTION_OPTION_D));
+            int correctAnswer = c.getInt(c.getColumnIndex(COLUMN_CORRECT_ANSWER));
+            int answerAttempted = c.getInt(c.getColumnIndex(COLUMN_ANSWER_ATTEMPTED));
+            int timetakentoAttempt = c.getInt(c.getColumnIndex(COLUMN_TIME_TAKEN_TO_ATTEMPT));
+            int negativeMarks = c.getInt(c.getColumnIndex(COLUMN_NEGATIVE_MARKS));
+            String title = c.getString(c.getColumnIndex(COLUMN_TITLE));
+            int totalMarks = c.getInt(c.getColumnIndex(COLUMN_TOTAL_MARKS));
+            int duration = c.getInt(c.getColumnIndex(COLUMN_DURATION));
+            String criticality = c.getString(c.getColumnIndex(COLUMN_CRITICALITY));
+
+            AttemptedQuestionModel model = new AttemptedQuestionModel(question,examId,optionA,
+                    optionB,optionC,optionD,answerAttempted,correctAnswer,timetakentoAttempt ,title,
+                    duration,totalMarks,negativeMarks,criticality);
+            questionModels.add(model);
+        }while ( (c.moveToNext()));
+        }
+        mDB.close();
+        return questionModels;
+    }
 
 }

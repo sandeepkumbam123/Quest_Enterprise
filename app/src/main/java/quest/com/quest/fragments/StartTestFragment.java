@@ -75,7 +75,7 @@ public class StartTestFragment extends Fragment {
                     @Override
                     public void onSuccess(int requestId, Headers headers, StartExamModel response) {
                         if(response.isIsSuccess()){
-                            mDB.insertQuestionsintoTable(mDB,response.getQuestionsList());
+                            mDB.insertQuestionsintoTable(mDB,response);
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.fl_container,new QuestionFragment())
