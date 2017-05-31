@@ -64,7 +64,7 @@ public class StartTestFragment extends Fragment {
     }
     public void startTest(View v){
         Map<String,String> startTestRequestData = new HashMap<>();
-        startTestRequestData.put(ApiConstants.EXAM_ID, String.valueOf(PrefUtils.getExamIdDetailsfromSP(getContext(),ApiConstants.EXAM_ID)));
+        startTestRequestData.put(ApiConstants.EXAM_ID, dataBinding.inputEnterCode.getText().toString().trim()+"");
         startTest(startTestRequestData);
     }
 
