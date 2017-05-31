@@ -3,7 +3,9 @@ package quest.com.quest.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kumbh on 30-05-2017.
@@ -22,10 +24,12 @@ public class ResultData implements Parcelable{
     private int totalQuestions;
     private String subject;
     private List<FastestAnswersModel> fastestAttemptedAnswers;
+    private Map<Integer , Integer> listofAnswersAttempted ;
 
     public ResultData(String examId, String examTitle, int examDuration, int examTotalMarks,
                       int obtainedMarks, int numberofAttemptedAnswers, int numberofCorrectAnswers,
-                      String subject, List<FastestAnswersModel> fastestAttemptedAnswers , int totalQuestions) {
+                      String subject, List<FastestAnswersModel> fastestAttemptedAnswers , int totalQuestions ,
+                      Map<Integer , Integer> listofAnswersAttempted) {
         this.examId = examId;
         this.examTitle = examTitle;
         this.examDuration = examDuration;
@@ -36,6 +40,7 @@ public class ResultData implements Parcelable{
         this.subject = subject;
         this.fastestAttemptedAnswers = fastestAttemptedAnswers;
         this.totalQuestions = totalQuestions;
+        this.listofAnswersAttempted =listofAnswersAttempted;
     }
 
     protected ResultData(Parcel in) {
@@ -87,6 +92,14 @@ public class ResultData implements Parcelable{
 
     public int getExamTotalMarks() {
         return examTotalMarks;
+    }
+
+    public Map<Integer, Integer> getListofAnswersAttempted() {
+        return listofAnswersAttempted;
+    }
+
+    public void setListofAnswersAttempted(Map<Integer, Integer> listofAnswersAttempted) {
+        this.listofAnswersAttempted = listofAnswersAttempted;
     }
 
     public void setExamTotalMarks(int examTotalMarks) {

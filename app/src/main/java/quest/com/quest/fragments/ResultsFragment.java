@@ -3,6 +3,7 @@ package quest.com.quest.fragments;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,10 +17,20 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import okhttp3.Headers;
+import quest.com.quest.NetworkUtils.ApiConstants;
+import quest.com.quest.NetworkUtils.RequestConstants;
+import quest.com.quest.NetworkUtils.RetrofitAPIRequests;
+import quest.com.quest.NetworkUtils.RetrofitRequestHandler;
 import quest.com.quest.R;
+import quest.com.quest.Utils.PrefUtils;
+import quest.com.quest.Utils.Utilities;
 import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.ResultAnalysisBinding;
 import quest.com.quest.models.ResultData;
@@ -49,6 +60,14 @@ private static final String RESULT_DATA = "RESULT_DATA";
         super.onStart();
         if(getArguments().getParcelable(RESULT_DATA)!= null){
             resultModel = getArguments().getParcelable(RESULT_DATA);
+            Map<String ,String> remoteRequestData = new HashMap<>();
+            remoteRequestData.put(ApiConstants.STUDENT_ID,String.valueOf(PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID)));
+            remoteRequestData.put(ApiConstants.IS_PASS ,String.valueOf(resultModel.getObtainedMarks()/resultModel.getExamTotalMarks() >= .35  ));
+            remoteRequestData.put(ApiConstants.CREATED_AT, Utilities.returnDatefromMillis(System.currentTimeMillis()));
+            remoteRequestData.put(ApiConstants.UPDATED_AT , Utilities.returnDatefromMillis(System.currentTimeMillis()));
+            remoteRequestData.put(ApiConstants.EXAM_ID,resultModel.getExamId());
+            remoteRequestData.put(ApiConstants.USer_ANSWER_DATA,resultModel.getListofAnswersAttempted().toString());
+            submitDatatoRemote(remoteRequestData);
         }
     }
 
@@ -104,5 +123,22 @@ private static final String RESULT_DATA = "RESULT_DATA";
 
     public void getSolutions(View v){
 //        Toast.makeText(getActivity(), "Waiting for the screens", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    private void submitDatatoRemote(Map<String,String> params){
+        new RetrofitRequestHandler(getActivity()).submitExam(RequestConstants.REQ_SUBMIT_EXAM, params,
+                new RetrofitAPIRequests.ResponseListener() {
+                    @Override
+                    public void onSuccess(int requestId, Headers headers, Object response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(int requestId, Throwable error) {
+
+                    }
+                });
     }
 }

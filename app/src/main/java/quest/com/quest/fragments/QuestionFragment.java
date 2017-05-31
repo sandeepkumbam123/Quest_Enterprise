@@ -17,7 +17,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -124,7 +126,7 @@ public class QuestionFragment extends Fragment {
             dataBinding.btnPreviousquestion.setEnabled(false);
         }
         else
-        dataBinding.btnPreviousquestion.setEnabled(true);
+            dataBinding.btnPreviousquestion.setEnabled(true);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
         transaction.replace(R.id.fl_question_container, QuestionTagFragment.getInstance(models.get(questionPosition)));
@@ -143,7 +145,7 @@ public class QuestionFragment extends Fragment {
 
     public void submitResult(View v){
         countDownTimer.cancel();
-
+        answerSubmitted.onanswerSubmitted();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, ResultsFragment.getInstance(resultCalculation()))
                 .addToBackStack(null)
@@ -153,6 +155,7 @@ public class QuestionFragment extends Fragment {
 
     public void submitResult(){
         countDownTimer.cancel();
+        answerSubmitted.onanswerSubmitted();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, ResultsFragment.getInstance(resultCalculation()))
                 .addToBackStack(null)
@@ -189,48 +192,51 @@ public class QuestionFragment extends Fragment {
 
 
     public ResultData resultCalculation(){
-          List<AttemptedQuestionModel> modelList = database.getQuestions(database);
+        List<AttemptedQuestionModel> modelList = database.getQuestions(database);
         String examId = modelList.get(0).getExamId();
         String examTitle = modelList.get(0).getExamTitle();
+        Map<Integer,Integer> listofAnswersData = new HashMap<>();
+
         int correctAnswers = 0;
         int attemptedAnswers =0;
         int obtainedMarks =0;
         List<FastestAnswersModel> fastestCorrectAnswers = new ArrayList<>();
-         for(AttemptedQuestionModel model : modelList){
+        for(AttemptedQuestionModel model : modelList){
 
-             if(model.getAttemptedAnswer() == model.getCorrectAnswer()){
-                 correctAnswers = correctAnswers+1;
-                 attemptedAnswers = attemptedAnswers+1;
-                 obtainedMarks =model.getAnswerMark()+obtainedMarks;
-                 if(fastestCorrectAnswers.size()<5){
-                     FastestAnswersModel fastModel = new FastestAnswersModel(model.getQuestionNumber(),
-                             model.getTimeTakentoAttempt(),model.getQuestionNumber());
-                     fastestCorrectAnswers.add(fastModel);
+            if(model.getAttemptedAnswer() == model.getCorrectAnswer()){
+                correctAnswers = correctAnswers+1;
+                attemptedAnswers = attemptedAnswers+1;
+                obtainedMarks =model.getAnswerMark()+obtainedMarks;
+                if(fastestCorrectAnswers.size()<5){
+                    FastestAnswersModel fastModel = new FastestAnswersModel(model.getQuestionNumber(),
+                            model.getTimeTakentoAttempt(),model.getQuestionNumber());
+                    fastestCorrectAnswers.add(fastModel);
 
-                 }
-                 else {
-                     for(FastestAnswersModel fastavailablemodel :fastestCorrectAnswers){
-                         if(model.getTimeTakentoAttempt() < fastavailablemodel.getTimeDuration()){
-                             fastestCorrectAnswers.remove(fastavailablemodel);
-                             fastestCorrectAnswers.add(new FastestAnswersModel(model.getQuestionNumber(),
-                                     model.getTimeTakentoAttempt(),model.getQuestionNumber()));
-                             break;
-                         }
-                     }
-                 }
-             }
-             else if(model.getAttemptedAnswer() != model.getCorrectAnswer()){
-                 attemptedAnswers=attemptedAnswers+1;
-                 obtainedMarks = obtainedMarks-model.getNegativeMarks();
+                }
+                else {
+                    for(FastestAnswersModel fastavailablemodel :fastestCorrectAnswers){
+                        if(model.getTimeTakentoAttempt() < fastavailablemodel.getTimeDuration()){
+                            fastestCorrectAnswers.remove(fastavailablemodel);
+                            fastestCorrectAnswers.add(new FastestAnswersModel(model.getQuestionNumber(),
+                                    model.getTimeTakentoAttempt(),model.getQuestionNumber()));
+                            break;
+                        }
+                    }
+                }
+            }
+            else if(model.getAttemptedAnswer() != model.getCorrectAnswer()){
+                attemptedAnswers=attemptedAnswers+1;
+                obtainedMarks = obtainedMarks-model.getNegativeMarks();
 
-             }
+            }
+            listofAnswersData.put(Integer.parseInt(model.getQuestionNumber()),model.getAttemptedAnswer());
 
 
 
-         }
+        }
 
         return  new ResultData(examId,examTitle,modelList.get(0).getExamDuration(),modelList.get(0).getTotalMarks(),obtainedMarks,attemptedAnswers,
-                correctAnswers,"",fastestCorrectAnswers , modelList.size());
+                correctAnswers,"",fastestCorrectAnswers , modelList.size(),listofAnswersData);
 
     }
 

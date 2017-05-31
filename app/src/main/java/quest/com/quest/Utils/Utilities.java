@@ -28,4 +28,12 @@ public  class Utilities {
 
         return time/60 +"mins";
     }
+
+    public static String returnDatefromMillis(long millis){
+            Date date = new Date();
+            date.setTime(millis);
+            String formattedDate=new SimpleDateFormat("yyyy-dd-mm hh:mm:ss").format(date);
+            return formattedDate;
+
+        }
 }
