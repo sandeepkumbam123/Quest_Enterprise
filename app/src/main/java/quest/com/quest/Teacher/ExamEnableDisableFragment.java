@@ -45,6 +45,7 @@ public class ExamEnableDisableFragment extends Fragment {
         dataBinding = DataBindingUtil.bind(inflater.inflate(R.layout.enable_disable_exam, container, false));
         dataBinding.setFragment(this);
         setToolBar();
+
         return dataBinding.getRoot();
     }
 

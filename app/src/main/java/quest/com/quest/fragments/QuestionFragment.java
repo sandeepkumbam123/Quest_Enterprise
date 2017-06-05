@@ -24,6 +24,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import quest.com.quest.NetworkUtils.ApiConstants;
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
 import quest.com.quest.activities.BaseActivity;
@@ -54,9 +55,22 @@ public class QuestionFragment extends Fragment {
     private TextView mExamId;
     private TextView mSubjectId;
 
+    private int examId;
+
+
+    public static QuestionFragment getInstance(Bundle bundle){
+        QuestionFragment fragment = new QuestionFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
+        if(getArguments().getInt(ApiConstants.EXAM_ID) !=0){
+            examId = getArguments().getInt(ApiConstants.EXAM_ID);
+            dataBinding.examId.setText(examId);
+        }
     }
 
     @Override

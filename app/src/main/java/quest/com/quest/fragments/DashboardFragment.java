@@ -33,7 +33,7 @@ public class DashboardFragment extends Fragment {
         dataBinding.setFragment(this);
         toolBar =(Toolbar) getActivity().findViewById(R.id.toolbar);
         toolBar.setTitle("DashBoard");
-        setToolBar();
+//        setToolBar();
         toolBar.setNavigationIcon(R.drawable.ic_back);
         setHasOptionsMenu(false);
         return dataBinding.getRoot();
@@ -47,7 +47,10 @@ public class DashboardFragment extends Fragment {
     }
 
     public  void startExam(View v){
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_container,new StartTestFragment()).commit();
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fl_container,new PremiumExamsFragment()).commit();
+//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_container,new StartTestFragment()).commit();
     }
 
     public void openPremiumExams(View v){

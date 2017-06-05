@@ -69,7 +69,7 @@ public class RetrofitClient {
                     return true;
                 }
             });
-                builder.connectTimeout(20, TimeUnit.SECONDS);
+                builder.connectTimeout(40, TimeUnit.SECONDS);
             return builder.build();
         } catch (Exception e) {
             throw new RuntimeException(e);

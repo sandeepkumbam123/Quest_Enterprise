@@ -30,6 +30,8 @@ import quest.com.quest.NetworkUtils.RetrofitAPIRequests;
 import quest.com.quest.NetworkUtils.RetrofitRequestHandler;
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
+import quest.com.quest.Utils.PrefUtils;
+import quest.com.quest.Utils.Utilities;
 import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.PremiumExamBinding;
 import quest.com.quest.dialog.QuestDialog;
@@ -39,7 +41,7 @@ import quest.com.quest.models.ListofExams;
  * Created by skumbam on 03-03-2017.
  */
 
-public class PremiumExamsFragment extends Fragment {
+public class PremiumExamsFragment extends Fragment implements  RecyclerAdapter.onExamDetailsClicked {
     public static final String TAG = PremiumExamsFragment.class.getSimpleName();
 private  PremiumExamBinding dataBinding;
     private RecyclerAdapter upcomingExamsListAdapter;
@@ -50,7 +52,7 @@ private  PremiumExamBinding dataBinding;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setToolBar();
+//        setToolBar();
         setHasOptionsMenu(false);
     }
 
@@ -64,6 +66,19 @@ private  PremiumExamBinding dataBinding;
         getExamsList(examListRequestData);
         return dataBinding.getRoot();
 
+    }
+
+    private void initViews(ListofExams.ListOfScheduledExamsBean examBean) {
+        dataBinding.examDate.setText(Utilities.returnDatefromString(examBean.getExam_date()).getDate());
+        dataBinding.examDay.setText(Utilities.returnDatefromString(examBean.getExam_date()).getDay());
+        dataBinding.examTitle.setText(examBean.getTitle());
+        dataBinding.duration.setText(examBean.getDuration());
+        dataBinding.topicsRelatedTo.setText(examBean.getTopics_covered());
+        dataBinding.topicName.setText(examBean.getTitle());
+        dataBinding.numberOfQuestions.setText(examBean.getNumber_of_questions()+" Questions");
+        dataBinding.numberOfMarks.setText(examBean.getTotal_marks()+" Marks");
+
+        PrefUtils.writeExamIdDetaisinSP(getActivity(),PrefUtils.getInstance(getActivity()),ApiConstants.EXAM_ID,Integer.parseInt(examBean.getExam_manualID()));
     }
 
     private void setUpcomingExams() {
@@ -82,7 +97,7 @@ private  PremiumExamBinding dataBinding;
         Drawable horizontalDivider = ContextCompat.getDrawable(getActivity(), R.drawable.horizontal_divider);
         horizontalDecoration.setDrawable(horizontalDivider);
         dataBinding.recyclerView.addItemDecoration(horizontalDecoration);
-        upcomingExamsListAdapter = new RecyclerAdapter(getActivity(),upComingExamsList);
+        upcomingExamsListAdapter = new RecyclerAdapter(getActivity(),upComingExamsList ,this);
         dataBinding.recyclerView.setAdapter(upcomingExamsListAdapter);
 
     }
@@ -95,9 +110,11 @@ private  PremiumExamBinding dataBinding;
 
 
     public void startExam(View v){
+        Bundle b = new Bundle();
+        b.putInt(ApiConstants.EXAM_ID , PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.EXAM_ID));
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fl_container,new QuestionFragment())
+                .replace(R.id.fl_container,QuestionFragment.getInstance(b))
                 .commit();
     }
 
@@ -120,4 +137,12 @@ private  PremiumExamBinding dataBinding;
             }
         });
     }
+
+
+    @Override
+    public void onClick(ListofExams.ListOfScheduledExamsBean examsBean) {
+        initViews(examsBean);
+    }
 }
+
+

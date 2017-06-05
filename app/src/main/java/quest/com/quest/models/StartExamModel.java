@@ -33,9 +33,19 @@ public class StartExamModel {
     private String ErrorMessage;
     private List<QuestionModel> QuestionsList;
 
-    public static StartExamModel objectFromData(String str) {
 
-        return new Gson().fromJson(str, StartExamModel.class);
+    public StartExamModel(int duration, int totalMarks,
+                          String examTitle, int negativeMarks, String critical_level, boolean isSuccess, int errorCode, String errorMessage,
+                          List<QuestionModel> questionsList) {
+        Duration = duration;
+        TotalMarks = totalMarks;
+        ExamTitle = examTitle;
+        NegativeMarks = negativeMarks;
+        Critical_level = critical_level;
+        this.isSuccess = isSuccess;
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
+        QuestionsList = questionsList;
     }
 
     public int getDuration() {
@@ -87,132 +97,291 @@ public class StartExamModel {
     }
 
 
-public int getErrorCode() {
+    public int getErrorCode() {
         return ErrorCode;
-        }
+    }
 
-public void setErrorCode(int ErrorCode) {
+    public void setErrorCode(int ErrorCode) {
         this.ErrorCode = ErrorCode;
-        }
+    }
 
-public String getErrorMessage() {
+    public String getErrorMessage() {
         return ErrorMessage;
-        }
+    }
 
-public void setErrorMessage(String ErrorMessage) {
+    public void setErrorMessage(String ErrorMessage) {
         this.ErrorMessage = ErrorMessage;
-        }
+    }
 
-public List<QuestionModel> getQuestionsList() {
+    public List<QuestionModel> getQuestionsList() {
         return QuestionsList;
-        }
+    }
 
-public void setQuestionsList(List<QuestionModel> QuestionsList) {
+    public void setQuestionsList(List<QuestionModel> QuestionsList) {
         this.QuestionsList = QuestionsList;
+    }
+
+    public  static class QuestionModel {
+        private int questionId;
+        private int examId;
+        private int questionNumber;
+        private String question;
+
+        private String criticallity;
+        private  boolean isImage;
+        private int subjectId;
+        private  int chapterId;
+        private int classId;
+        private String notes;
+
+        public    QuestionModel(int questionId, int examId, int questionNumber, String question, String criticallity, boolean isImage,
+                             int subjectId, int chapterId, int classId, String notes, String createAt, String updatedAt, String deletedAt,
+                             String updatedBy, String optionA, String optionB, String optionC, String optionD, boolean hasOption1Image,
+                             boolean hasOption2Image, boolean hasOption3Image, boolean hasOption4Image, int correctAnswer, String  answer,
+                             int negativeMark) {
+            this.questionId = questionId;
+            this.examId = examId;
+            this.questionNumber = questionNumber;
+            this.question = question;
+            this.criticallity = criticallity;
+            this.isImage = isImage;
+            this.subjectId = subjectId;
+            this.chapterId = chapterId;
+            this.classId = classId;
+            this.notes = notes;
+            this.createAt = createAt;
+            this.updatedAt = updatedAt;
+            this.deletedAt = deletedAt;
+            this.updatedBy = updatedBy;
+            this.optionA = optionA;
+            this.optionB = optionB;
+            this.optionC = optionC;
+            this.optionD = optionD;
+            this.hasOption1Image = hasOption1Image;
+            this.hasOption2Image = hasOption2Image;
+            this.hasOption3Image = hasOption3Image;
+            this.hasOption4Image = hasOption4Image;
+            this.correctAnswer = answer;
+            this.negativeMark = negativeMark;
         }
 
-public class QuestionModel {
-    private String questionId;
-    private String examId;
-    private String questionNumber;
-    private String question;
+        public String getCriticallity() {
+
+            return criticallity;
+        }
+
+        public void setCriticallity(String criticallity) {
+            this.criticallity = criticallity;
+        }
+
+        public boolean isImage() {
+            return isImage;
+        }
+
+        public void setImage(boolean image) {
+            isImage = image;
+        }
+
+        public int getSubjectId() {
+            return subjectId;
+        }
+
+        public void setSubjectId(int subjectId) {
+            this.subjectId = subjectId;
+        }
+
+        public int getChapterId() {
+            return chapterId;
+        }
+
+        public void setChapterId(int chapterId) {
+            this.chapterId = chapterId;
+        }
+
+        public int getClassId() {
+            return classId;
+        }
+
+        public void setClassId(int classId) {
+            this.classId = classId;
+        }
+
+        public String getNotes() {
+            return notes;
+        }
+
+        public void setNotes(String notes) {
+            this.notes = notes;
+        }
+
+        public String getCreateAt() {
+            return createAt;
+        }
+
+        public void setCreateAt(String createAt) {
+            this.createAt = createAt;
+        }
+
+        public String getUpdatedAt() {
+            return updatedAt;
+        }
+
+        public void setUpdatedAt(String updatedAt) {
+            this.updatedAt = updatedAt;
+        }
+
+        public String getDeletedAt() {
+            return deletedAt;
+        }
+
+        public void setDeletedAt(String deletedAt) {
+            this.deletedAt = deletedAt;
+        }
+
+        public String getUpdatedBy() {
+            return updatedBy;
+        }
+
+        public void setUpdatedBy(String updatedBy) {
+            this.updatedBy = updatedBy;
+        }
+
+        public boolean isHasOption1Image() {
+            return hasOption1Image;
+        }
+
+        public void setHasOption1Image(boolean hasOption1Image) {
+            this.hasOption1Image = hasOption1Image;
+        }
+
+        public boolean isHasOption2Image() {
+            return hasOption2Image;
+        }
+
+        public void setHasOption2Image(boolean hasOption2Image) {
+            this.hasOption2Image = hasOption2Image;
+        }
+
+        public boolean isHasOption3Image() {
+            return hasOption3Image;
+        }
+
+        public void setHasOption3Image(boolean hasOption3Image) {
+            this.hasOption3Image = hasOption3Image;
+        }
+
+        public boolean isHasOption4Image() {
+            return hasOption4Image;
+        }
+
+        public void setHasOption4Image(boolean hasOption4Image) {
+            this.hasOption4Image = hasOption4Image;
+        }
+
+        private String createAt;
+        private String updatedAt;
+        private String deletedAt;
+        private String updatedBy;
 
 
+        private String optionA;
+        private String optionB;
+        private String optionC;
+        private String optionD;
+        private boolean hasOption1Image;
+        private boolean hasOption2Image;
+        private boolean hasOption3Image;
+        private boolean hasOption4Image;
+        private String correctAnswer;
+        private int answerMark;
+        private int negativeMark;
 
-    private String optionA;
-    private String optionB;
-    private String optionC;
-    private String optionD;
-    private int correctAnswer;
-    private int answerMark;
-    private int negativeMark;
+        public int getQuestionId() {
+            return questionId;
+        }
 
-    public String getQuestionId() {
-        return questionId;
+        public void setQuestionId(int questionId) {
+            this.questionId = questionId;
+        }
+
+        public int getExamId() {
+            return examId;
+        }
+
+        public void setExamId(int examId) {
+            this.examId = examId;
+        }
+
+        public int getQuestionNumber() {
+            return questionNumber;
+        }
+
+        public void setQuestionNumber(int questionNumber) {
+            this.questionNumber = questionNumber;
+        }
+
+        public String getQuestion() {
+            return question;
+        }
+
+        public void setQuestion(String question) {
+            this.question = question;
+        }
+
+        public String getOptionA() {
+            return optionA;
+        }
+
+        public void setOptionA(String optionA) {
+            this.optionA = optionA;
+        }
+
+        public String getOptionB() {
+            return optionB;
+        }
+
+        public void setOptionB(String optionB) {
+            this.optionB = optionB;
+        }
+
+        public String getOptionC() {
+            return optionC;
+        }
+
+        public void setOptionC(String optionC) {
+            this.optionC = optionC;
+        }
+
+        public String getOptionD() {
+            return optionD;
+        }
+
+        public void setOptionD(String optionD) {
+            this.optionD = optionD;
+        }
+
+        public String getCorrectAnswer() {
+            return correctAnswer;
+        }
+
+        public void setCorrectAnswer(String correctAnswer) {
+            this.correctAnswer = correctAnswer;
+        }
+
+        public int getAnswerMark() {
+            return answerMark;
+        }
+
+        public void setAnswerMark(int answerMark) {
+            this.answerMark = answerMark;
+        }
+
+        public int getNegativeMark() {
+            return negativeMark;
+        }
+
+        public void setNegativeMark(int negativeMark) {
+            this.negativeMark = negativeMark;
+        }
     }
-
-    public void setQuestionId(String questionId) {
-        this.questionId = questionId;
-    }
-
-    public String getExamId() {
-        return examId;
-    }
-
-    public void setExamId(String examId) {
-        this.examId = examId;
-    }
-
-    public String getQuestionNumber() {
-        return questionNumber;
-    }
-
-    public void setQuestionNumber(String questionNumber) {
-        this.questionNumber = questionNumber;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getOptionA() {
-        return optionA;
-    }
-
-    public void setOptionA(String optionA) {
-        this.optionA = optionA;
-    }
-
-    public String getOptionB() {
-        return optionB;
-    }
-
-    public void setOptionB(String optionB) {
-        this.optionB = optionB;
-    }
-
-    public String getOptionC() {
-        return optionC;
-    }
-
-    public void setOptionC(String optionC) {
-        this.optionC = optionC;
-    }
-
-    public String getOptionD() {
-        return optionD;
-    }
-
-    public void setOptionD(String optionD) {
-        this.optionD = optionD;
-    }
-
-    public int getCorrectAnswer() {
-        return correctAnswer;
-    }
-
-    public void setCorrectAnswer(int correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
-
-    public int getAnswerMark() {
-        return answerMark;
-    }
-
-    public void setAnswerMark(int answerMark) {
-        this.answerMark = answerMark;
-    }
-
-    public int getNegativeMark() {
-        return negativeMark;
-    }
-
-    public void setNegativeMark(int negativeMark) {
-        this.negativeMark = negativeMark;
-    }
-}
 }

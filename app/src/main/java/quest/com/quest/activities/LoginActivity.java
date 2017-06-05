@@ -5,7 +5,9 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -99,7 +101,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                            PrefUtils.getInstance(getApplicationContext()),ApiConstants.USER_ID,response.getRole_id());
                    PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
                            PrefUtils.getInstance(getApplicationContext()),ApiConstants.BRANCH_ID,response.getBranch_id());
-                   if (!response.getRole().equalsIgnoreCase("admin"))
+                   if (response.getRole().equalsIgnoreCase("admin"))
                        navigatetoNextActivity(LoginActivity.this, new DashBoardActivity());
                    else
                        navigatetoNextActivity(LoginActivity.this, new TeacherDashBoardActivity());

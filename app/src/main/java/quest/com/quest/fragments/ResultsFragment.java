@@ -41,10 +41,10 @@ import quest.com.quest.models.ResultData;
 
 public class ResultsFragment extends Fragment {
 
-private ResultAnalysisBinding dataBinding;
+    private ResultAnalysisBinding dataBinding;
     private PieChart mOverallStatsGraph;
     private ResultData resultModel;
-private static final String RESULT_DATA = "RESULT_DATA";
+    private static final String RESULT_DATA = "RESULT_DATA";
 
     public static ResultsFragment getInstance(ResultData model){
         ResultsFragment fragment = new ResultsFragment();
@@ -122,7 +122,7 @@ private static final String RESULT_DATA = "RESULT_DATA";
 
 
     public void getSolutions(View v){
-//        Toast.makeText(getActivity(), "Waiting for the screens", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Will be available later", Toast.LENGTH_SHORT).show();
     }
 
 

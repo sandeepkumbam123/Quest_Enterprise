@@ -11,6 +11,13 @@ import java.util.List;
 
 public class ListofExams {
 
+    public ListofExams(boolean is_success, int errorCode, String errorMessage, List<ListOfScheduledExamsBean> listOfScheduledExams) {
+        this.is_success = is_success;
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
+        ListOfScheduledExams = listOfScheduledExams;
+    }
+
     /**
      * ListOfScheduledExams : [{"exam_manualID":"EXAM2017-1","class":"first year","class_id":1,"title":"","duration":3600,"exam_status":"true","number_of_questions":2,"total_marks":20,"topics_covered":"1,3","exam_date":"2017-05-31 00:00:00","usernote":"Exam level note","subjects":[{"subjectID":1,"class_names_classID":1,"subject":"branch one class one subject one","created_by":null,"created_at":"2017-05-20 19:54:55","deleted_at":"2017-05-20 20:21:56","updated_at":"2017-05-20 20:21:56"},{"subjectID":2,"class_names_classID":1,"subject":"branch one class one subject two","created_by":null,"created_at":"2017-05-20 20:32:25","deleted_at":null,"updated_at":"2017-05-20 21:02:45"}],"chapters":[{"chapterID":1,"subjects_subjectID":1,"chapter":"branch one class one subject one  chapter one","createdby":null,"created_at":null,"deleted_at":null,"updated_at":null},{"chapterID":3,"subjects_subjectID":1,"chapter":"branch one class one subject one  chapter two","createdby":null,"created_at":null,"deleted_at":null,"updated_at":null}]},{"exam_manualID":"EXAM2017-2","class":"first year","class_id":1,"title":"","duration":3600,"exam_status":"true","number_of_questions":2,"total_marks":20,"topics_covered":"1,3","exam_date":"2017-05-31 00:00:00","usernote":"Exam level note-2","subjects":[{"subjectID":1,"class_names_classID":1,"subject":"branch one class one subject one","created_by":null,"created_at":"2017-05-20 19:54:55","deleted_at":"2017-05-20 20:21:56","updated_at":"2017-05-20 20:21:56"},{"subjectID":2,"class_names_classID":1,"subject":"branch one class one subject two","created_by":null,"created_at":"2017-05-20 20:32:25","deleted_at":null,"updated_at":"2017-05-20 21:02:45"}],"chapters":[{"chapterID":1,"subjects_subjectID":1,"chapter":"branch one class one subject one  chapter one","createdby":null,"created_at":null,"deleted_at":null,"updated_at":null},{"chapterID":3,"subjects_subjectID":1,"chapter":"branch one class one subject one  chapter two","createdby":null,"created_at":null,"deleted_at":null,"updated_at":null}]}]
      * is_success : true
@@ -61,6 +68,26 @@ public class ListofExams {
     }
 
     public static class ListOfScheduledExamsBean {
+
+        public ListOfScheduledExamsBean(String exam_manualID, String classX, int class_id, String title, int duration, boolean exam_status,
+                                        int number_of_questions,
+                                        int total_marks, String topics_covered, String exam_date, String usernote, List<SubjectsBean> subjects,
+                                        List<ChaptersBean> chapters) {
+            this.exam_manualID = exam_manualID;
+            this.classX = classX;
+            this.class_id = class_id;
+            this.title = title;
+            this.duration = duration;
+            this.exam_status = exam_status;
+            this.number_of_questions = number_of_questions;
+            this.total_marks = total_marks;
+            this.topics_covered = topics_covered;
+            this.exam_date = exam_date;
+            this.usernote = usernote;
+            this.subjects = subjects;
+            this.chapters = chapters;
+        }
+
         /**
          * exam_manualID : EXAM2017-1
          * class : first year
@@ -83,7 +110,7 @@ public class ListofExams {
         private int class_id;
         private String title;
         private int duration;
-        private String exam_status;
+        private boolean exam_status;
         private int number_of_questions;
         private int total_marks;
         private String topics_covered;
@@ -137,11 +164,11 @@ public class ListofExams {
             this.duration = duration;
         }
 
-        public String getExam_status() {
+        public boolean getExam_status() {
             return exam_status;
         }
 
-        public void setExam_status(String exam_status) {
+        public void setExam_status(boolean exam_status) {
             this.exam_status = exam_status;
         }
 
@@ -202,6 +229,17 @@ public class ListofExams {
         }
 
         public static class SubjectsBean {
+            public SubjectsBean(int subjectID, int class_names_classID,
+                                String subject, String created_by, String created_at, String deleted_at, String updated_at) {
+                this.subjectID = subjectID;
+                this.class_names_classID = class_names_classID;
+                this.subject = subject;
+                this.created_by = created_by;
+                this.created_at = created_at;
+                this.deleted_at = deleted_at;
+                this.updated_at = updated_at;
+            }
+
             /**
              * subjectID : 1
              * class_names_classID : 1
@@ -283,6 +321,17 @@ public class ListofExams {
         }
 
         public static class ChaptersBean {
+            public ChaptersBean(int chapterID, int subjects_subjectID, String chapter,
+                                String createdby, String created_at, String deleted_at, String updated_at) {
+                this.chapterID = chapterID;
+                this.subjects_subjectID = subjects_subjectID;
+                this.chapter = chapter;
+                this.createdby = createdby;
+                this.created_at = created_at;
+                this.deleted_at = deleted_at;
+                this.updated_at = updated_at;
+            }
+
             /**
              * chapterID : 1
              * subjects_subjectID : 1
@@ -296,10 +345,10 @@ public class ListofExams {
             private int chapterID;
             private int subjects_subjectID;
             private String chapter;
-            private Object createdby;
-            private Object created_at;
-            private Object deleted_at;
-            private Object updated_at;
+            private String createdby;
+            private String created_at;
+            private String deleted_at;
+            private String updated_at;
 
             public static ChaptersBean objectFromData(String str) {
 
@@ -330,35 +379,35 @@ public class ListofExams {
                 this.chapter = chapter;
             }
 
-            public Object getCreatedby() {
+            public String getCreatedby() {
                 return createdby;
             }
 
-            public void setCreatedby(Object createdby) {
+            public void setCreatedby(String createdby) {
                 this.createdby = createdby;
             }
 
-            public Object getCreated_at() {
+            public String getCreated_at() {
                 return created_at;
             }
 
-            public void setCreated_at(Object created_at) {
+            public void setCreated_at(String created_at) {
                 this.created_at = created_at;
             }
 
-            public Object getDeleted_at() {
+            public String getDeleted_at() {
                 return deleted_at;
             }
 
-            public void setDeleted_at(Object deleted_at) {
+            public void setDeleted_at(String deleted_at) {
                 this.deleted_at = deleted_at;
             }
 
-            public Object getUpdated_at() {
+            public String getUpdated_at() {
                 return updated_at;
             }
 
-            public void setUpdated_at(Object updated_at) {
+            public void setUpdated_at(String updated_at) {
                 this.updated_at = updated_at;
             }
         }

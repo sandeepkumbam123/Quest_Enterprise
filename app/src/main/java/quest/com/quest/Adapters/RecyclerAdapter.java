@@ -19,11 +19,13 @@ import quest.com.quest.models.ListofExams;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.HolderView>{
     private Context ctx;
     private ListofExams listofExams;
+    private onExamDetailsClicked listener;
 
 
-    public RecyclerAdapter(Context context,ListofExams listofExams){
+    public RecyclerAdapter(Context context,ListofExams listofExams ,onExamDetailsClicked listener){
         this.ctx =context;
         this.listofExams =listofExams;
+        this.listener = listener;
     }
 
     @Override
@@ -42,12 +44,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
 
     @Override
     public void onBindViewHolder(HolderView holder, int position) {
-        ListofExams.ListOfScheduledExamsBean exambean = listofExams.getListOfScheduledExams().get(position);
+        final ListofExams.ListOfScheduledExamsBean exambean = listofExams.getListOfScheduledExams().get(position);
         holder.dateOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).getDate());
         holder.dayOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).getDay());
         holder.durationOfExam.setText(Utilities.returnDuration(exambean.getDuration()));
         holder.examCOde.setText(exambean.getExam_manualID());
         holder.examTitle.setText(exambean.getTitle());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(exambean);
+            }
+        });
+
+
     }
 
     @Override
@@ -68,5 +79,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         public HolderView(View itemView) {
             super(itemView);
         }
+    }
+
+
+    public interface onExamDetailsClicked{
+        void onClick(ListofExams.ListOfScheduledExamsBean examsBean);
     }
 }

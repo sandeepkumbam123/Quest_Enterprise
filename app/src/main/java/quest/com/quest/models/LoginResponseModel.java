@@ -2,12 +2,39 @@ package quest.com.quest.models;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by kumbh on 16-04-2017.
  */
 
 public class LoginResponseModel {
+    public LoginResponseModel(int user_id, int branch_id, String branch_name, String section, String classX, String subject,
+                              boolean is_success, String session_id, String user_name, String role, int role_id, int errorCode,
+                              String errorMessage) {
+        this.user_id = user_id;
+        this.branch_id = branch_id;
+        this.branch_name = branch_name;
+        this.section = section;
+        this.classX = classX;
+        this.subject = subject;
+        this.is_success = is_success;
+        this.session_id = session_id;
+        this.user_name = user_name;
+        this.role = role;
+        this.role_id = role_id;
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
+    }
+
     /**
      * user_id : 2
      * branch_id : 1
@@ -24,10 +51,11 @@ public class LoginResponseModel {
      * ErrorMessage : null
      */
 
+
     private int user_id;
     private int branch_id;
     private String branch_name;
-    private Object section;
+    private String section;
     @SerializedName("class")
     private String classX;
     private String subject;
@@ -39,10 +67,6 @@ public class LoginResponseModel {
     private int ErrorCode;
     private String ErrorMessage;
 
-    public static LoginResponseModel objectFromData(String str) {
-
-        return new Gson().fromJson(str, LoginResponseModel.class);
-    }
 
     public int getUser_id() {
         return user_id;
@@ -68,11 +92,11 @@ public class LoginResponseModel {
         this.branch_name = branch_name;
     }
 
-    public Object getSection() {
+    public String getSection() {
         return section;
     }
 
-    public void setSection(Object section) {
+    public void setSection(String section) {
         this.section = section;
     }
 

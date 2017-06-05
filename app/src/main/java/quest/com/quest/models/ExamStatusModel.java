@@ -9,6 +9,12 @@ import com.google.gson.Gson;
 public class ExamStatusModel {
 
 
+    public ExamStatusModel(boolean is_success, int errorCode, String errorMessage) {
+        this.is_success = is_success;
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
+    }
+
     /**
      * is_success : true
      * ErrorCode : null
