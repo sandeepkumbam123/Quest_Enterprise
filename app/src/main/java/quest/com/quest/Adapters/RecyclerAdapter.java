@@ -45,10 +45,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
     @Override
     public void onBindViewHolder(HolderView holder, int position) {
         final ListofExams.ListOfScheduledExamsBean exambean = listofExams.getListOfScheduledExams().get(position);
-        holder.dateOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).getDate());
-        holder.dayOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).getDay());
-        holder.durationOfExam.setText(Utilities.returnDuration(exambean.getDuration()));
-        holder.examCOde.setText(exambean.getExam_manualID());
+        holder.dateOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).getDate()+"");
+        holder.dayOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).getDay()+"");
+        holder.durationOfExam.setText(Utilities.returnDuration(exambean.getDuration())+"");
+        holder.examCOde.setText(exambean.getExam_manualID()+"");
         holder.examTitle.setText(exambean.getTitle());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,11 +70,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
 
     public  static  class HolderView extends RecyclerView.ViewHolder {
 
-        TextView dateOfExam;
-        TextView dayOfExam;
-        TextView examTitle;
-        TextView examCOde;
-        TextView durationOfExam;
+        public TextView dateOfExam;
+        public TextView dayOfExam;
+        public TextView examTitle;
+        public TextView examCOde;
+        public TextView durationOfExam;
 
         public HolderView(View itemView) {
             super(itemView);

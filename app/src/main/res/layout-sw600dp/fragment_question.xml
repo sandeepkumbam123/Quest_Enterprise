@@ -64,60 +64,66 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
             <FrameLayout
                 android:id="@+id/fl_question_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></FrameLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <Button
+                    android:id="@+id/bt_submitExam"
+
+                    android:layout_width="@dimen/dp_300"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:textAllCaps="false"
+                    android:padding="@dimen/dp_20"
+                    android:onClick="@{fragment::submitResult}"
+                    fontPath="fonts/Ubuntu-M.ttf"
+                    android:background="@color/colorOrange"
+                    android:textSize="@dimen/sp_35"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="@dimen/dp_30"
+                    android:text="Submit"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|center"
+                    android:layout_gravity="right"
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal"
+                    android:background="@drawable/ic_arrows_bg">
+                    <ImageButton
+                        android:id="@+id/btn_previousquestion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:paddingRight="@dimen/dp_20"
+                        android:enabled="false"
+                        android:onClick="@{fragment::getPreviousQuestion}"
+                        android:src="@drawable/previous_question_selector"/>
+                    <ImageButton
+                        android:id="@+id/btn_next_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:paddingLeft="@dimen/dp_20"
+                        android:enabled="true"
+                        android:onClick="@{fragment::getNextQuestion}"
+                        android:src="@drawable/next_question_selector"/>
+                </LinearLayout>
+            </RelativeLayout>
+            </LinearLayout>
         </ScrollView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <Button
-            android:id="@+id/bt_submitExam"
 
-            android:layout_width="@dimen/dp_300"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:textAllCaps="false"
-            android:padding="@dimen/dp_20"
-            android:onClick="@{fragment::submitResult}"
-            fontPath="fonts/Ubuntu-M.ttf"
-            android:background="@color/colorOrange"
-            android:textSize="@dimen/sp_35"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center_horizontal"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="@dimen/dp_30"
-            android:text="Submit"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal|center"
-            android:layout_gravity="right"
-            android:layout_alignParentRight="true"
-            android:orientation="horizontal"
-            android:background="@drawable/ic_arrows_bg">
-            <ImageButton
-                android:id="@+id/btn_previousquestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:paddingRight="@dimen/dp_20"
-                android:enabled="false"
-                android:onClick="@{fragment::getPreviousQuestion}"
-                android:src="@drawable/previous_question_selector"/>
-            <ImageButton
-                android:id="@+id/btn_next_question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:paddingLeft="@dimen/dp_20"
-                android:enabled="true"
-                android:onClick="@{fragment::getNextQuestion}"
-                android:src="@drawable/next_question_selector"/>
-        </LinearLayout>
-</RelativeLayout>
 
     </LinearLayout>
 </layout>

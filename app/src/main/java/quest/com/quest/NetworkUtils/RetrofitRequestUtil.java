@@ -31,7 +31,7 @@ public class RetrofitRequestUtil {
     }
 
 
-    public void retrofitEnqueueCall(final int requestID, String url, String method, HashMap<String,String> requestHeaders, @Body Map<String, String> params, final OnRetrofitReqListener mReqListener) {
+    public void retrofitEnqueueCall(final int requestID, String url, String method, HashMap<String,String> requestHeaders, @Body Map<String, Object> params, final OnRetrofitReqListener mReqListener) {
         Call<Object> call = getCallObject(requestID, params,requestHeaders);
         HttpUrl postUrl = call.request().url();
         call.enqueue(new Callback<Object>() {
@@ -59,7 +59,7 @@ public class RetrofitRequestUtil {
 
     }
 
-    private Call<Object> getCallObject(int requestID, @Body Map<String, String> params, HashMap<String,String> requestHeaders) {
+    private Call<Object> getCallObject(int requestID, @Body Map<String, Object> params, HashMap<String,String> requestHeaders) {
 
         GraysAPIRequests apiService = RetrofitClient.getClient().create(GraysAPIRequests.class);
         Call<Object> call = null;

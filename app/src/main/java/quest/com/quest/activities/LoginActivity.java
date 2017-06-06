@@ -68,8 +68,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private Map<String,String> inputParams() {
-        HashMap<String,String> params = new HashMap<>();
+    private Map<String,Object> inputParams() {
+        HashMap<String,Object> params = new HashMap<>();
         String email = dataBinding.inputUsername.getText().toString().trim();
         String password = dataBinding.inputPassword.getText().toString().trim();
         params.put(ApiConstants.EMAIL,email);
@@ -89,7 +89,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
          else return true;
     }
 
-    private void loginHit(Map<String,String> params) {
+    private void loginHit(Map<String,Object> params) {
 
         new RetrofitRequestHandler(this).loginUser(RequestConstants.REQ_LOGIN_USER, params, new RetrofitAPIRequests.ResponseListener<LoginResponseModel>() {
             @Override
@@ -101,7 +101,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                            PrefUtils.getInstance(getApplicationContext()),ApiConstants.USER_ID,response.getRole_id());
                    PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
                            PrefUtils.getInstance(getApplicationContext()),ApiConstants.BRANCH_ID,response.getBranch_id());
-                   if (response.getRole().equalsIgnoreCase("admin"))
+                   if (!response.getRole().equalsIgnoreCase("admin"))
                        navigatetoNextActivity(LoginActivity.this, new DashBoardActivity());
                    else
                        navigatetoNextActivity(LoginActivity.this, new TeacherDashBoardActivity());
@@ -114,8 +114,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onFailure(int requestId, Throwable error) {
                 dataBinding.pbProgresbar.setVisibility(View.INVISIBLE);
-                QuestDialog.showOkDialog(LoginActivity.this,"Connectivity Error",error.getMessage());
-//                navigatetoNextActivity(LoginActivity.this, new DashBoardActivity());
+                QuestDialog.showOkDialog(LoginActivity.this," Error",error.getMessage());
 
                 Log.d(TAG,error+"");
             }

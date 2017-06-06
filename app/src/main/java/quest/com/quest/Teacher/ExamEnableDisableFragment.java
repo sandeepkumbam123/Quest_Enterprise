@@ -58,14 +58,14 @@ public class ExamEnableDisableFragment extends Fragment {
 
 
     public void enableClick(View v) {
-        Map<String,String> enableExamRequestData = new HashMap<>();
+        Map<String,Object> enableExamRequestData = new HashMap<>();
         enableExamRequestData.put("exam_id",
                 String.valueOf(PrefUtils.getExamIdDetailsfromSP(getContext(),ApiConstants.EXAM_ID)));
         enableExam(enableExamRequestData);
     }
 
     public void disableClick(View v) {
-        Map<String,String> disableExamRequestData = new HashMap<>();
+        Map<String,Object> disableExamRequestData = new HashMap<>();
         disableExamRequestData.put("exam_id",
                 String.valueOf(PrefUtils.getExamIdDetailsfromSP(getContext(),ApiConstants.EXAM_ID)));
         disableExam(disableExamRequestData);
@@ -78,7 +78,7 @@ public class ExamEnableDisableFragment extends Fragment {
     }
 
 
-    private void enableExam(Map<String, String> params) {
+    private void enableExam(Map<String, Object> params) {
         new RetrofitRequestHandler(getActivity()).enableExam(RequestConstants.REQ_ENABLE_EXAM, params,
                 new RetrofitAPIRequests.ResponseListener<ExamStatusModel>() {
                     @Override
@@ -103,7 +103,7 @@ public class ExamEnableDisableFragment extends Fragment {
     }
 
 
-    private void disableExam(Map<String, String> params) {
+    private void disableExam(Map<String, Object> params) {
         new RetrofitRequestHandler(getActivity())
                 .disableExam(RequestConstants.REQ_DISABLE_EXAM, params,
                         new RetrofitAPIRequests.ResponseListener<ExamStatusModel>() {

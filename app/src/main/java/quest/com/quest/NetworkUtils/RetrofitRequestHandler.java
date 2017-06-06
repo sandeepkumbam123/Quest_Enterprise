@@ -19,7 +19,7 @@ public class RetrofitRequestHandler implements RetrofitAPIRequests {
     }
 
     @Override
-    public Call<Object> loginUser(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+    public Call<Object> loginUser(int requestID, @Body Map<String, Object> params, final ResponseListener responseListener) {
         RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
 
             @Override
@@ -38,7 +38,7 @@ public class RetrofitRequestHandler implements RetrofitAPIRequests {
     }
 
     @Override
-    public Call<Object> forgotPassword(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+    public Call<Object> forgotPassword(int requestID, @Body Map<String, Object> params, final ResponseListener responseListener) {
         RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
 
             @Override
@@ -57,12 +57,12 @@ public class RetrofitRequestHandler implements RetrofitAPIRequests {
     }
 
     @Override
-    public Call<Object> enableExam(int requestID, @Body Map<String, String> params, ResponseListener responseListener) {
+    public Call<Object> enableExam(int requestID, @Body Map<String, Object> params, ResponseListener responseListener) {
         return null;
     }
 
     @Override
-    public Call<Object> disableExam(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+    public Call<Object> disableExam(int requestID, @Body Map<String, Object> params, final ResponseListener responseListener) {
         RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
 
             @Override
@@ -81,7 +81,7 @@ public class RetrofitRequestHandler implements RetrofitAPIRequests {
     }
 
     @Override
-    public Call<Object> startExam(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+    public Call<Object> startExam(int requestID, @Body Map<String, Object> params, final ResponseListener responseListener) {
         RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
 
             @Override
@@ -100,7 +100,7 @@ public class RetrofitRequestHandler implements RetrofitAPIRequests {
     }
 
     @Override
-    public Call<Object> submitExam(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+    public Call<Object> submitExam(int requestID, @Body Map<String, Object> params, final ResponseListener responseListener) {
         RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
 
             @Override
@@ -119,7 +119,7 @@ public class RetrofitRequestHandler implements RetrofitAPIRequests {
     }
 
     @Override
-    public Call<Object> examsList(int requestID, @Body Map<String, String> params, final ResponseListener responseListener) {
+    public Call<Object> examsList(int requestID, @Body Map<String, Object> params, final ResponseListener responseListener) {
         RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
 
             @Override

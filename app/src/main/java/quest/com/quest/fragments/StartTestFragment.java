@@ -63,23 +63,25 @@ public class StartTestFragment extends Fragment {
         ((DashBoardActivity) getActivity()).setToolbarTitle("Sandeep","Take Exam");
     }
     public void startTest(View v){
-        Map<String,String> startTestRequestData = new HashMap<>();
+        Map<String,Object> startTestRequestData = new HashMap<>();
         startTestRequestData.put(ApiConstants.EXAM_ID, dataBinding.inputEnterCode.getText().toString().trim()+"");
         startTest(startTestRequestData);
     }
 
 
-    public void startTest(Map<String,String> params){
+    public void startTest(Map<String,Object> params){
         new RetrofitRequestHandler(getActivity()).startExam(RequestConstants.REQ_START_EXAM,
                 params, new RetrofitAPIRequests.ResponseListener<StartExamModel>() {
                     @Override
                     public void onSuccess(int requestId, Headers headers, StartExamModel response) {
                         if(response.isIsSuccess()){
-                            mDB.insertQuestionsintoTable(mDB,response);
+
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.fl_container,new QuestionFragment())
                                     .commit();
+                            mDB.deleteQuestionsListFromTable(mDB);
+                            mDB.insertQuestionsintoTable(mDB,response);
                         }else {
                             QuestDialog.showOkDialog(getActivity(),
                                     response.getErrorCode()+"",response.getErrorMessage());

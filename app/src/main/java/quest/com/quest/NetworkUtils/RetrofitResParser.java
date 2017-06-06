@@ -26,7 +26,7 @@ public class RetrofitResParser <T> {
             case RequestConstants.REQ_LOGIN_USER:
                 return parseLoginResponse(response);
             case RequestConstants.REQ_FORGOT_PASSWORD:
-                    return parseforgotPasswordResponse(response);
+                return parseforgotPasswordResponse(response);
             case RequestConstants.REQ_ENABLE_EXAM:
                 return parseEnableExamResponse(response);
             case RequestConstants.REQ_DISABLE_EXAM:
@@ -48,65 +48,68 @@ public class RetrofitResParser <T> {
         try {
             List<ListofExams.ListOfScheduledExamsBean> listofExamsBean = new ArrayList<>();
             ListofExams.ListOfScheduledExamsBean scheduledExamsBean = null;
-            JSONArray ListofScheduledExams = new JSONArray(response).getJSONObject(0).getJSONArray("ListOfScheduledExams");
-            int errorCode =new JSONArray(response).getJSONObject(0).optInt("ErrorCode");
-            String errorMessage = new JSONArray(response).getJSONObject(0).optString("ErrorMessage");
-            boolean isSuccess = new JSONArray(response).getJSONObject(0).optBoolean("is_success");
+            JSONArray ListofScheduledExams = new JSONArray(response).optJSONObject(0).optJSONArray("ListOfScheduledExams");
+            int errorCode =new JSONArray(response).optJSONObject(0).optInt("ErrorCode");
+            String errorMessage = new JSONArray(response).optJSONObject(0).optString("ErrorMessage");
+            boolean isSuccess = new JSONArray(response).optJSONObject(0).optBoolean("is_success");
 
 
             for(int i = 0;i<ListofScheduledExams.length();i++){
-                 String exam_mannual_Id = ListofScheduledExams.getJSONObject(i).getString("exam_manualID");
-                 String classname = ListofScheduledExams.getJSONObject(i).getString("class");
-                int class_id = ListofScheduledExams.getJSONObject(i).getInt("class_id");
-                String title = ListofScheduledExams.getJSONObject(i).getString("title");
-                int duration = ListofScheduledExams.getJSONObject(i).getInt("duration");
-                boolean exam_status = ListofScheduledExams.getJSONObject(i).getBoolean("exam_status");
-                int numberOfQuestions = ListofScheduledExams.getJSONObject(i).getInt("number_of_questions");
-                int totalMarks = ListofScheduledExams.getJSONObject(i).getInt("total_marks");
-                String topicCovered = ListofScheduledExams.getJSONObject(i).getString("topics_covered");
-                String examDate = ListofScheduledExams.getJSONObject(i).getString("exam_date");
-                String userNote = ListofScheduledExams.getJSONObject(i).getString("usernote");
+                String exam_mannual_Id = ListofScheduledExams.optJSONObject(i).optString("exam_manualID");
+                String classname = ListofScheduledExams.optJSONObject(i).optString("class");
+                int class_id = ListofScheduledExams.optJSONObject(i).optInt("class_id");
+                String title = ListofScheduledExams.optJSONObject(i).optString("title");
+                int duration = ListofScheduledExams.optJSONObject(i).optInt("duration");
+                boolean exam_status = ListofScheduledExams.optJSONObject(i).optBoolean("exam_status");
+                int numberOfQuestions = ListofScheduledExams.optJSONObject(i).optInt("number_of_questions");
+                int totalMarks = ListofScheduledExams.optJSONObject(i).optInt("total_marks");
+                String topicCovered = ListofScheduledExams.optJSONObject(i).optString("topics_covered");
+                String examDate = ListofScheduledExams.optJSONObject(i).optString("exam_date");
+                String userNote = ListofScheduledExams.optJSONObject(i).optString("usernote");
 
                 List<ListofExams.ListOfScheduledExamsBean.SubjectsBean> subjectList = new ArrayList<>();
-                JSONArray subjectsArray = ListofScheduledExams.getJSONObject(i).getJSONArray("subjects");
+                JSONArray subjectsArray = ListofScheduledExams.optJSONObject(i).optJSONArray("subjects");
                 for (int j =0 ;j< subjectsArray.length();j++) {
                     ListofExams.ListOfScheduledExamsBean.SubjectsBean subject = null;
-                       int subjectID =     subjectsArray.getJSONObject(i).getInt("subjectID");
-                       int subjectClassId = subjectsArray.getJSONObject(i).getInt("class_names_classID");
-                    String subjectName = subjectsArray.getJSONObject(i).optString("subject");
-                    String created_At = subjectsArray.getJSONObject(i).optString("created_at");
-                    String update_At = subjectsArray.getJSONObject(i).optString("updated_at");
-                    String created_by = subjectsArray.getJSONObject(i).optString("created_by");
-                    String deletedAt = subjectsArray.getJSONObject(i).optString("deleted_at");
-                  subject = new ListofExams.ListOfScheduledExamsBean.SubjectsBean(subjectID,subjectClassId,subjectName,created_by,created_At,deletedAt,update_At);
-                    subjectList.add(subject);
+                    if(subjectsArray.optJSONObject(j)!=null){
+                        int subjectID =     subjectsArray.optJSONObject(j).optInt("subjectID");
+                        int subjectClassId = subjectsArray.optJSONObject(j).optInt("class_names_classID");
+                        String subjectName = subjectsArray.optJSONObject(j).optString("subject");
+                        String created_At = subjectsArray.optJSONObject(j).optString("created_at");
+                        String update_At = subjectsArray.optJSONObject(j).optString("updated_at");
+                        String created_by = subjectsArray.optJSONObject(j).optString("created_by");
+                        String deletedAt = subjectsArray.optJSONObject(j).optString("deleted_at");
+                        subject = new ListofExams.ListOfScheduledExamsBean.SubjectsBean(subjectID,subjectClassId,subjectName,created_by,created_At,deletedAt,update_At);
+                        subjectList.add(subject);
+                    }
                 }
 
 
                 List<ListofExams.ListOfScheduledExamsBean.ChaptersBean> chaptersBeanList = new ArrayList<>();
-                JSONArray chapterArray = ListofScheduledExams.getJSONObject(i).getJSONArray("chapters");
+                JSONArray chapterArray = ListofScheduledExams.optJSONObject(i).optJSONArray("chapters");
                 for(int k =0;k<chapterArray.length();k++){
-                   ListofExams.ListOfScheduledExamsBean.ChaptersBean chaptersBean = null;
-                    int chapterId =     subjectsArray.getJSONObject(i).getInt("chapterID");
-                    int subjectSubjectId = subjectsArray.getJSONObject(i).getInt("subjects_subjectID");
-                    String chapterName = subjectsArray.getJSONObject(i).optString("chapter");
-                    String created_At = subjectsArray.getJSONObject(i).optString("created_at");
-                    String update_At = subjectsArray.getJSONObject(i).optString("updated_at");
-                    String created_by = subjectsArray.getJSONObject(i).optString("created_by");
-                    String deletedAt = subjectsArray.getJSONObject(i).optString("deleted_at");
+                    ListofExams.ListOfScheduledExamsBean.ChaptersBean chaptersBean = null;
+                    if( subjectsArray.optJSONObject(k)!=null){
+                        int chapterId =     subjectsArray.optJSONObject(k).optInt("chapterID");
+                        int subjectSubjectId = subjectsArray.optJSONObject(k).optInt("subjects_subjectID");
+                        String chapterName = subjectsArray.optJSONObject(k).optString("chapter");
+                        String created_At = subjectsArray.optJSONObject(k).optString("created_at");
+                        String update_At = subjectsArray.optJSONObject(k).optString("updated_at");
+                        String created_by = subjectsArray.optJSONObject(k).optString("created_by");
+                        String deletedAt = subjectsArray.optJSONObject(k).optString("deleted_at");
 
-                    chaptersBean = new ListofExams.ListOfScheduledExamsBean.ChaptersBean(chapterId,subjectSubjectId,chapterName,created_by
-                    ,created_At,deletedAt,update_At);
-                    chaptersBeanList.add(chaptersBean);
+                        chaptersBean = new ListofExams.ListOfScheduledExamsBean.ChaptersBean(chapterId,subjectSubjectId,chapterName,created_by
+                                ,created_At,deletedAt,update_At);
+                        chaptersBeanList.add(chaptersBean);}
                 }
-                 scheduledExamsBean = new ListofExams.ListOfScheduledExamsBean(exam_mannual_Id,classname ,class_id,title , duration , exam_status,
-                         numberOfQuestions,totalMarks,topicCovered,examDate,userNote,subjectList,chaptersBeanList);
+                scheduledExamsBean = new ListofExams.ListOfScheduledExamsBean(exam_mannual_Id,classname ,class_id,title , duration , exam_status,
+                        numberOfQuestions,totalMarks,topicCovered,examDate,userNote,subjectList,chaptersBeanList);
 
-
+                listofExamsBean.add(scheduledExamsBean);
 
             }
 
-            listofExamsBean.add(scheduledExamsBean);
+
 
             examsList = new ListofExams(isSuccess,errorCode,errorMessage,listofExamsBean);
 
@@ -127,7 +130,7 @@ public class RetrofitResParser <T> {
         LoginResponseModel modelData = null;
         try {
             JSONArray jsonData = new JSONArray(response);
-            JSONObject modelResponse = jsonData.getJSONObject(0);
+            JSONObject modelResponse = jsonData.optJSONObject(0);
             int user_ID = modelResponse.optInt("user_id");
             int branch_ID = modelResponse.optInt("branch_id");
             String branch_name = modelResponse.optString("branch_name");
@@ -190,52 +193,52 @@ public class RetrofitResParser <T> {
 
 
         try {
-            JSONObject questionModel = new JSONArray(response).getJSONObject(0);
-            int duration = questionModel.getInt("Duration");
-            int totalMarks = questionModel.getInt("TotalMarks");
-            String examTitle = questionModel.getString("ExamTitle");
-            int negativeMarks = questionModel.getInt("NegativeMarks");
-            String criticality = questionModel.getString("Critical_level");
-            boolean isSuccess = questionModel.getBoolean("isSuccess");
+            JSONObject questionModel = new JSONArray(response).optJSONObject(0);
+            int duration = questionModel.optInt("Duration");
+            int totalMarks = questionModel.optInt("TotalMarks");
+            String examTitle = questionModel.optString("ExamTitle");
+            int negativeMarks = questionModel.optInt("NegativeMarks");
+            String criticality = questionModel.optString("Critical_level");
+            boolean isSuccess = questionModel.optBoolean("isSuccess");
             int errorCode = questionModel.optInt("ErrorCode");
             String errorMessage = questionModel.optString("ErrorMessage");
 
             StartExamModel.QuestionModel questionList = null;
             List<StartExamModel.QuestionModel> listofQUestions = new ArrayList<>();
-            JSONArray questionArrayJSON = questionModel.getJSONArray("QuestionsList");
+            JSONArray questionArrayJSON = questionModel.optJSONArray("QuestionsList");
             for(int i = 0 ;i< questionArrayJSON.length() ; i++){
-                int questionId = questionArrayJSON.getJSONObject(i).getInt("questionID");
-                int subjectId = questionArrayJSON.getJSONObject(i).getInt("subjects_subjectID");
-                int chapterId = questionArrayJSON.getJSONObject(i).getInt("chapters_chapterID");
-                int classNameId = questionArrayJSON.getJSONObject(i).getInt("class_names_classID");
-                String question = questionArrayJSON.getJSONObject(i).getString("question");
-                int mark = questionArrayJSON.getJSONObject(i).getInt("mark");
-                int criticalLevel = questionArrayJSON.getJSONObject(i).getInt("critical_level");
-                boolean isImage = questionArrayJSON.getJSONObject(i).getBoolean("is_image");
-                String  createdBy = questionArrayJSON.getJSONObject(i).optString("createdby");
-                String  created_at = questionArrayJSON.getJSONObject(i).optString("created_at");
-                String  deletedAt = questionArrayJSON.getJSONObject(i).optString("deleted_at");
-                String  updateAt = questionArrayJSON.getJSONObject(i).optString("updated_at");
-                int question_optionsId = questionArrayJSON.getJSONObject(i).getInt("question_optionsID");
-                int question_questionsId = questionArrayJSON.getJSONObject(i).getInt("questions_questionID");
-                String option1 = questionArrayJSON.getJSONObject(i).getString("option1");
-                String option2 = questionArrayJSON.getJSONObject(i).getString("option2");
-                String option3 = questionArrayJSON.getJSONObject(i).getString("option3");
-                String option4 = questionArrayJSON.getJSONObject(i).getString("option4");
-                boolean isOptionImage1 = questionArrayJSON.getJSONObject(i).getBoolean("is_option1_image");
-                boolean isOptionImage2 = questionArrayJSON.getJSONObject(i).getBoolean("is_option2_image");
-                boolean isOptionImage3 = questionArrayJSON.getJSONObject(i).getBoolean("is_option3_image");
-                boolean isOptionImage4 = questionArrayJSON.getJSONObject(i).getBoolean("is_option4_image");
+                int questionId = questionArrayJSON.optJSONObject(i).optInt("questionID");
+                int subjectId = questionArrayJSON.optJSONObject(i).optInt("subjects_subjectID");
+                int chapterId = questionArrayJSON.optJSONObject(i).optInt("chapters_chapterID");
+                int classNameId = questionArrayJSON.optJSONObject(i).optInt("class_names_classID");
+                String question = questionArrayJSON.optJSONObject(i).optString("question");
+                int mark = questionArrayJSON.optJSONObject(i).optInt("mark");
+                int criticalLevel = questionArrayJSON.optJSONObject(i).optInt("critical_level");
+                boolean isImage = questionArrayJSON.optJSONObject(i).optBoolean("is_image");
+                String  createdBy = questionArrayJSON.optJSONObject(i).optString("createdby");
+                String  created_at = questionArrayJSON.optJSONObject(i).optString("created_at");
+                String  deletedAt = questionArrayJSON.optJSONObject(i).optString("deleted_at");
+                String  updateAt = questionArrayJSON.optJSONObject(i).optString("updated_at");
+                int question_optionsId = questionArrayJSON.optJSONObject(i).optInt("question_optionsID");
+                int question_questionsId = questionArrayJSON.optJSONObject(i).optInt("questions_questionID");
+                String option1 = questionArrayJSON.optJSONObject(i).optString("option1");
+                String option2 = questionArrayJSON.optJSONObject(i).optString("option2");
+                String option3 = questionArrayJSON.optJSONObject(i).optString("option3");
+                String option4 = questionArrayJSON.optJSONObject(i).optString("option4");
+                boolean isOptionImage1 = questionArrayJSON.optJSONObject(i).optBoolean("is_option1_image");
+                boolean isOptionImage2 = questionArrayJSON.optJSONObject(i).optBoolean("is_option2_image");
+                boolean isOptionImage3 = questionArrayJSON.optJSONObject(i).optBoolean("is_option3_image");
+                boolean isOptionImage4 = questionArrayJSON.optJSONObject(i).optBoolean("is_option4_image");
 
-                String answer = questionArrayJSON.getJSONObject(i).getString("answer");
-                String notes = questionArrayJSON.getJSONObject(i).getString("notes");
-              questionList = new StartExamModel.QuestionModel(questionId,questionId,question_questionsId,question,criticality,isImage,
-                      subjectId,chapterId,classNameId,notes,created_at,updateAt,deletedAt,createdBy,option1,option2,option3,option4,isOptionImage1,
-                      isOptionImage2,isOptionImage3,isOptionImage4,0,answer,negativeMarks);
+                String answer = questionArrayJSON.optJSONObject(i).optString("answer");
+                String notes = questionArrayJSON.optJSONObject(i).optString("notes");
+                questionList = new StartExamModel.QuestionModel(questionId,questionId,question_questionsId,question,criticality,isImage,
+                        subjectId,chapterId,classNameId,notes,created_at,updateAt,deletedAt,createdBy,option1,option2,option3,option4,isOptionImage1,
+                        isOptionImage2,isOptionImage3,isOptionImage4,0,answer,negativeMarks);
+                listofQUestions.add(questionList);
 
 
             }
-              listofQUestions.add(questionList);
 
             startExamResponse= new StartExamModel(duration,totalMarks,examTitle,negativeMarks,criticality,
                     isSuccess,errorCode,errorMessage,listofQUestions);

@@ -44,12 +44,18 @@ private FragmentQuestiongroupBinding mBinding;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        mDB = new Database(getActivity());
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if(getArguments().getParcelable(QUESTIONS_MODEL)!=null){
             model = getArguments().getParcelable(QUESTIONS_MODEL);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mDB = new Database(getActivity());
+
     }
 
     @Nullable

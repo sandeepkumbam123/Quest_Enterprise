@@ -33,7 +33,7 @@ public class DashboardFragment extends Fragment {
         dataBinding.setFragment(this);
         toolBar =(Toolbar) getActivity().findViewById(R.id.toolbar);
         toolBar.setTitle("DashBoard");
-//        setToolBar();
+        setToolBar();
         toolBar.setNavigationIcon(R.drawable.ic_back);
         setHasOptionsMenu(false);
         return dataBinding.getRoot();

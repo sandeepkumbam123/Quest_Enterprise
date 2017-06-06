@@ -16,8 +16,39 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorlimegreen"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:text="Welcome User"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/sp_24"
+                    android:textColor="@android:color/white"/>
+                <!--  <ImageView
+                      android:id="@+id/iv_back"
+                      android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:layout_centerVertical="true"
+                      android:src="@drawable/ic_back"/>-->
+                <TextView
+                    android:id="@+id/tv_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/sp_24"
+                    android:layout_alignParentLeft="true"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:text="Examination"
+                    android:textColor="@android:color/white"/>
+            </RelativeLayout>
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

@@ -10,7 +10,7 @@
     <item
         android:drawable="@drawable/ic_tickcircle"
         android:gravity="right"
-        android:left="@dimen/dp_20"
+        android:left="100dp"
         android:right="@dimen/dp_20"
         android:top="@dimen/dp_20"
         android:bottom="@dimen/dp_20"/>

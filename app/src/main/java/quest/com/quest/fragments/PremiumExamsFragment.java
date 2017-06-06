@@ -36,6 +36,7 @@ import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.PremiumExamBinding;
 import quest.com.quest.dialog.QuestDialog;
 import quest.com.quest.models.ListofExams;
+import quest.com.quest.models.StartExamModel;
 
 /**
  * Created by skumbam on 03-03-2017.
@@ -46,13 +47,15 @@ public class PremiumExamsFragment extends Fragment implements  RecyclerAdapter.o
 private  PremiumExamBinding dataBinding;
     private RecyclerAdapter upcomingExamsListAdapter;
     private ListofExams upComingExamsList;
-    private Map<String,String> examListRequestData = new HashMap<>();
+    private Map<String,Object> examListRequestData = new HashMap<>();
+    private Database mDB;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setToolBar();
+        setToolBar();
+        mDB = new Database(getActivity());
         setHasOptionsMenu(false);
     }
 
@@ -61,24 +64,24 @@ private  PremiumExamBinding dataBinding;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         dataBinding = DataBindingUtil.bind(inflater.inflate(R.layout.premium_exam,null,false));
         dataBinding.setFragment(this);
-        examListRequestData.put(ApiConstants.BRANCH_ID,String.valueOf(4));
-        examListRequestData.put(ApiConstants.EXAM_ID,String.valueOf(1));
+        examListRequestData.put(ApiConstants.BRANCH_ID,1);
+        examListRequestData.put(ApiConstants.USER_ID,4);
         getExamsList(examListRequestData);
         return dataBinding.getRoot();
 
     }
 
     private void initViews(ListofExams.ListOfScheduledExamsBean examBean) {
-        dataBinding.examDate.setText(Utilities.returnDatefromString(examBean.getExam_date()).getDate());
-        dataBinding.examDay.setText(Utilities.returnDatefromString(examBean.getExam_date()).getDay());
+        dataBinding.examDate.setText(Utilities.returnDatefromString(examBean.getExam_date()).getDate()+"");
+        dataBinding.examDay.setText(Utilities.returnDatefromString(examBean.getExam_date()).getDay()+"");
         dataBinding.examTitle.setText(examBean.getTitle());
-        dataBinding.duration.setText(examBean.getDuration());
+        dataBinding.duration.setText(examBean.getDuration()+"");
         dataBinding.topicsRelatedTo.setText(examBean.getTopics_covered());
         dataBinding.topicName.setText(examBean.getTitle());
         dataBinding.numberOfQuestions.setText(examBean.getNumber_of_questions()+" Questions");
         dataBinding.numberOfMarks.setText(examBean.getTotal_marks()+" Marks");
 
-        PrefUtils.writeExamIdDetaisinSP(getActivity(),PrefUtils.getInstance(getActivity()),ApiConstants.EXAM_ID,Integer.parseInt(examBean.getExam_manualID()));
+        PrefUtils.writeExamIdDetaisinSP(getActivity(),PrefUtils.getInstance(getActivity()),ApiConstants.EXAM_ID,examBean.getClass_id());
     }
 
     private void setUpcomingExams() {
@@ -110,16 +113,15 @@ private  PremiumExamBinding dataBinding;
 
 
     public void startExam(View v){
-        Bundle b = new Bundle();
-        b.putInt(ApiConstants.EXAM_ID , PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.EXAM_ID));
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fl_container,QuestionFragment.getInstance(b))
-                .commit();
+
+        HashMap<String , Object> params = new HashMap<>();
+        params.put(ApiConstants.EXAM_ID ,"EXAM2017-1");
+        startTest(params);
+
     }
 
 
-    private void getExamsList(Map<String,String> params){
+    private void getExamsList(Map<String,Object> params){
         new RetrofitRequestHandler(getActivity()).examsList(RequestConstants.REQ_EXAMS_LIST, params, new RetrofitAPIRequests.ResponseListener<ListofExams>() {
             @Override
             public void onSuccess(int requestId, Headers headers, ListofExams response) {
@@ -141,8 +143,38 @@ private  PremiumExamBinding dataBinding;
 
     @Override
     public void onClick(ListofExams.ListOfScheduledExamsBean examsBean) {
+
         initViews(examsBean);
     }
+
+    public void startTest(Map<String,Object> params){
+        new RetrofitRequestHandler(getActivity()).startExam(RequestConstants.REQ_START_EXAM,
+                params, new RetrofitAPIRequests.ResponseListener<StartExamModel>() {
+                    @Override
+                    public void onSuccess(int requestId, Headers headers, StartExamModel response) {
+                        if(response.isIsSuccess()){
+                            Bundle b = new Bundle();
+                            b.putInt(ApiConstants.EXAM_ID , PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.EXAM_ID));
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.fl_container,QuestionFragment.getInstance(b))
+                                    .commit();
+                            mDB.deleteQuestionsListFromTable(mDB);
+                            mDB.insertQuestionsintoTable(mDB,response);
+
+                        }else {
+                            QuestDialog.showOkDialog(getActivity(),
+                                    response.getErrorCode()+"",response.getErrorMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int requestId, Throwable error) {
+                        Log.d(TAG,error.toString());
+                    }
+                });
+    }
+
 }
 
 

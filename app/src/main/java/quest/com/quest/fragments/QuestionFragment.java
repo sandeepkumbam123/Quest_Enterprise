@@ -69,7 +69,7 @@ public class QuestionFragment extends Fragment {
         super.onStart();
         if(getArguments().getInt(ApiConstants.EXAM_ID) !=0){
             examId = getArguments().getInt(ApiConstants.EXAM_ID);
-            dataBinding.examId.setText(examId);
+            dataBinding.examId.setText(examId+"");
         }
     }
 
@@ -131,7 +131,7 @@ public class QuestionFragment extends Fragment {
         transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,  R.anim.enter_from_left, R.anim.exit_to_right);
         transaction.replace(R.id.fl_question_container,QuestionTagFragment.getInstance(models.get(questionPosition)));
         transaction.commit();
-        answerSubmitted.onanswerSubmitted();
+//        answerSubmitted.onanswerSubmitted();
     }
 
     public void getPreviousQuestion(View v){
@@ -145,7 +145,7 @@ public class QuestionFragment extends Fragment {
         transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
         transaction.replace(R.id.fl_question_container, QuestionTagFragment.getInstance(models.get(questionPosition)));
         transaction.commit();
-        answerSubmitted.onanswerSubmitted();
+//        answerSubmitted.onanswerSubmitted();
     }
 
     public  void createQuestionFragment(int position , AttemptedQuestionModel model){
@@ -159,7 +159,7 @@ public class QuestionFragment extends Fragment {
 
     public void submitResult(View v){
         countDownTimer.cancel();
-        answerSubmitted.onanswerSubmitted();
+//        answerSubmitted.onanswerSubmitted();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, ResultsFragment.getInstance(resultCalculation()))
                 .addToBackStack(null)
@@ -169,7 +169,7 @@ public class QuestionFragment extends Fragment {
 
     public void submitResult(){
         countDownTimer.cancel();
-        answerSubmitted.onanswerSubmitted();
+//        answerSubmitted.onanswerSubmitted();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, ResultsFragment.getInstance(resultCalculation()))
                 .addToBackStack(null)

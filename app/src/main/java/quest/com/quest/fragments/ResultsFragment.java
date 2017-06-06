@@ -60,13 +60,13 @@ public class ResultsFragment extends Fragment {
         super.onStart();
         if(getArguments().getParcelable(RESULT_DATA)!= null){
             resultModel = getArguments().getParcelable(RESULT_DATA);
-            Map<String ,String> remoteRequestData = new HashMap<>();
-            remoteRequestData.put(ApiConstants.STUDENT_ID,String.valueOf(PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID)));
-            remoteRequestData.put(ApiConstants.IS_PASS ,String.valueOf(resultModel.getObtainedMarks()/resultModel.getExamTotalMarks() >= .35  ));
+            Map<String ,Object> remoteRequestData = new HashMap<>();
+            remoteRequestData.put(ApiConstants.STUDENT_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID));
+            remoteRequestData.put(ApiConstants.IS_PASS ,(resultModel.getObtainedMarks()/resultModel.getExamTotalMarks() >= .35  ));
             remoteRequestData.put(ApiConstants.CREATED_AT, Utilities.returnDatefromMillis(System.currentTimeMillis()));
             remoteRequestData.put(ApiConstants.UPDATED_AT , Utilities.returnDatefromMillis(System.currentTimeMillis()));
-            remoteRequestData.put(ApiConstants.EXAM_ID,resultModel.getExamId());
-            remoteRequestData.put(ApiConstants.USer_ANSWER_DATA,resultModel.getListofAnswersAttempted().toString());
+            remoteRequestData.put(ApiConstants.EXAM_ID,Integer.parseInt(resultModel.getExamId()));
+            remoteRequestData.put(ApiConstants.USer_ANSWER_DATA,resultModel.getListofAnswersAttempted());
             submitDatatoRemote(remoteRequestData);
         }
     }
@@ -93,10 +93,12 @@ public class ResultsFragment extends Fragment {
 
     private  void addDatatoGraph(){
         ArrayList<PieEntry> mPieChartData = new ArrayList<>();
-        mPieChartData.add(new PieEntry(resultModel.getNumberofCorrectAnswers(), 0));
-        mPieChartData.add(new PieEntry(resultModel.getNumberofAttemptedAnswers()-resultModel.getNumberofCorrectAnswers(), 1));
-        mPieChartData.add(new PieEntry(resultModel.getTotalQuestions() - resultModel.getNumberofAttemptedAnswers(), 2));
+        if(resultModel!= null) {
+            mPieChartData.add(new PieEntry(resultModel.getNumberofCorrectAnswers(), 0));
 
+            mPieChartData.add(new PieEntry(resultModel.getNumberofAttemptedAnswers() - resultModel.getNumberofCorrectAnswers(), 1));
+            mPieChartData.add(new PieEntry(resultModel.getTotalQuestions() - resultModel.getNumberofAttemptedAnswers(), 2));
+        }
 
         PieDataSet dataset = new PieDataSet(mPieChartData, "");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
@@ -127,7 +129,7 @@ public class ResultsFragment extends Fragment {
 
 
 
-    private void submitDatatoRemote(Map<String,String> params){
+    private void submitDatatoRemote(Map<String,Object> params){
         new RetrofitRequestHandler(getActivity()).submitExam(RequestConstants.REQ_SUBMIT_EXAM, params,
                 new RetrofitAPIRequests.ResponseListener() {
                     @Override
