@@ -122,8 +122,13 @@ public class QuestionFragment extends Fragment {
         questionPosition = questionPosition +1;
         if(questionPosition <= models.size()){
             dataBinding.btnNextQuestion.setEnabled(true);
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,  R.anim.enter_from_left, R.anim.exit_to_right);
+            transaction.replace(R.id.fl_question_container,QuestionTagFragment.getInstance(models.get(questionPosition)));
+            transaction.commit();
         }else{
             dataBinding.btnNextQuestion.setEnabled(false);
+
         }
 
         if(models.size() == questionPosition){
@@ -131,10 +136,7 @@ public class QuestionFragment extends Fragment {
         }else {
             dataBinding.btSubmitExam.setVisibility(View.GONE);
         }
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,  R.anim.enter_from_left, R.anim.exit_to_right);
-        transaction.replace(R.id.fl_question_container,QuestionTagFragment.getInstance(models.get(questionPosition)));
-        transaction.commit();
+
 //        answerSubmitted.onanswerSubmitted();
     }
 
@@ -143,12 +145,13 @@ public class QuestionFragment extends Fragment {
         if(questionPosition<0){
             dataBinding.btnPreviousquestion.setEnabled(false);
         }
-        else
+        else {
             dataBinding.btnPreviousquestion.setEnabled(true);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-        transaction.replace(R.id.fl_question_container, QuestionTagFragment.getInstance(models.get(questionPosition)));
-        transaction.commit();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+            transaction.replace(R.id.fl_question_container, QuestionTagFragment.getInstance(models.get(questionPosition)));
+            transaction.commit();
+        }
 //        answerSubmitted.onanswerSubmitted();
     }
 

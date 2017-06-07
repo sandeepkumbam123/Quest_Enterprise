@@ -84,6 +84,23 @@ private FragmentQuestiongroupBinding mBinding;
             optionB.setText(model.getOptionB());
             optionC.setText(model.getOptionC());
             optionD.setText(model.getOptionD());
+
+             if(model.getAttemptedAnswer()!=0){
+                 switch (model.getAttemptedAnswer()){
+                     case 1:
+                         optionA.setChecked(true);
+                         break;
+                     case 2:
+                         optionB.setChecked(true);
+                         break;
+                     case 3:
+                         optionC.setChecked(true);
+                         break;
+                     case 4 :
+                         optionD.setChecked(true);
+                         break;
+                 }
+             }
         }
 
     }

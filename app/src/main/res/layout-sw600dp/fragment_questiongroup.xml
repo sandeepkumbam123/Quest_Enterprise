@@ -28,7 +28,7 @@
                 android:background="@drawable/radio_button_selector"
                 android:button="@android:color/transparent"
                 android:padding="@dimen/dp_20"
-                android:checked="true"
+                android:checked="false"
                 android:textSize="@dimen/sp_35"
                 android:text="RadioButton1" />
             <RadioButton
