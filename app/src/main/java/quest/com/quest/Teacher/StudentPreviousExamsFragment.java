@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +27,7 @@ import static android.view.View.GONE;
  */
 
 public class StudentPreviousExamsFragment extends Fragment implements View.OnClickListener,GridAdapter.examClick {
-    private HorizontalGridView mGrid;
-    //    private GridView mGrid;
+    private RecyclerView mGrid;
     private FragmentCreatedExamsBinding fragmentCreatedExamsBinding;
     private GridAdapter adapter;
     private List<CreatedExamsModel> examsCreated;
@@ -42,7 +43,8 @@ public class StudentPreviousExamsFragment extends Fragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentCreatedExamsBinding = DataBindingUtil.bind(inflater.inflate( R.layout.fragment_created_exams,container,false));
         mGrid = fragmentCreatedExamsBinding.examsGridView;
-setToolBar();
+        mGrid.setLayoutManager(new GridLayoutManager(getActivity(),4));
+        setToolBar();
 
         return fragmentCreatedExamsBinding.getRoot();
     }
@@ -53,14 +55,13 @@ setToolBar();
         fragmentCreatedExamsBinding.tvCreateExam.setVisibility(GONE);
         examsCreated = new ArrayList<>();
         for(int i=0;i<25;i++){
-            CreatedExamsModel model = new CreatedExamsModel("Physics","10th","Apr 01,2017");
+            CreatedExamsModel model = new CreatedExamsModel("Physics","10th","Apr 01,2017","");
             examsCreated.add(model);
         }
 
         adapter = new GridAdapter(getActivity(),examsCreated,this);
 
         mGrid.setAdapter(adapter);
-        mGrid.setNumRows(1);
       /*  mGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -84,9 +85,7 @@ setToolBar();
                 .commit();
     }
 
-    private void createExam(View v){
-        //open webView page content of the screen
-    }
+
     private void setToolBar() {
 
         ((TeacherDashBoardActivity) getActivity())

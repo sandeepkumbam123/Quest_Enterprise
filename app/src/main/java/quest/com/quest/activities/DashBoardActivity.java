@@ -10,16 +10,29 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import quest.com.quest.R;
+import quest.com.quest.SqliteDb.Database;
 import quest.com.quest.dialog.QuestDialog;
 import quest.com.quest.fragments.DashboardFragment;
+import quest.com.quest.fragments.QuestionTagFragment;
+import quest.com.quest.models.AttemptedQuestionModel;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DashBoardActivity extends BaseActivity
-      /*  implements NavigationView.OnNavigationItemSelectedListener */{
+      /*  implements NavigationView.OnNavigationItemSelectedListener */ implements QuestionTagFragment.DataChangedListener{
     private FrameLayout containerFrame ;
     private Toolbar toolbar;
     private TextView userName;
     private TextView fragmentName;
+    public  AttemptedQuestionModel attemptedQuestionModel;
+    public Database mDB;
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mDB = new Database(getApplicationContext());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +98,10 @@ public class DashBoardActivity extends BaseActivity
         return true;
     }
 
+    public  AttemptedQuestionModel getAttemptedModel(){
+        return attemptedQuestionModel;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -111,5 +128,12 @@ public class DashBoardActivity extends BaseActivity
     public  void setToolbarTitle(String userName,String fragmentName){
         this.userName.setText(userName);
         this.fragmentName.setText(fragmentName);
+    }
+
+    @Override
+    public void onDataChanged(AttemptedQuestionModel model) {
+        mDB.updateAttemptedAnswer(mDB,model,model.getCriticality(),model.getExamDuration()
+                ,model.getExamTitle(),model.getTotalMarks(),model.getNegativeMarks());
+        attemptedQuestionModel = model;
     }
 }

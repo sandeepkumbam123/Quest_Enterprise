@@ -98,13 +98,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Toast.makeText(LoginActivity.this,response.getSession_id()+" status , success : "+response.isIs_success(), Toast.LENGTH_SHORT).show();
                if(response.isIs_success()) {
                    PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
-                           PrefUtils.getInstance(getApplicationContext()),ApiConstants.USER_ID,response.getRole_id());
+                           PrefUtils.getInstance(getApplicationContext()),ApiConstants.USER_ID,response.getUser_id());
                    PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
                            PrefUtils.getInstance(getApplicationContext()),ApiConstants.BRANCH_ID,response.getBranch_id());
-                   if (!response.getRole().equalsIgnoreCase("admin"))
+                   if (!response.getRole().equalsIgnoreCase("teacher"))
                        navigatetoNextActivity(LoginActivity.this, new DashBoardActivity());
                    else
-                       navigatetoNextActivity(LoginActivity.this, new TeacherDashBoardActivity());
+                   navigatetoNextActivity(LoginActivity.this, new TeacherDashBoardActivity());
+
                }
                 else{
                    QuestDialog.showOkDialog(LoginActivity.this,"Error",response.getSession_id());

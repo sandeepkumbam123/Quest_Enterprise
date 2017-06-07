@@ -116,6 +116,17 @@ public class ResultsFragment extends Fragment {
         mOverallStatsGraph.setData(data);
         mOverallStatsGraph.setContentDescription("Overall Statistics of the Result");
         mOverallStatsGraph.setEntryLabelColor(Color.BLACK);
+
+        if(resultModel!=null){
+            dataBinding.tvExamtitle.setText(resultModel.getExamTitle());
+            dataBinding.timeSpent.setText(resultModel.getExamDuration());
+            dataBinding.obtainedMarks.setText(resultModel.getObtainedMarks()+" / "+resultModel.getExamTotalMarks());
+            int percentage = resultModel.getObtainedMarks()*100/resultModel.getExamTotalMarks();
+            dataBinding.percentageOfMarks.setText(""+percentage);
+            dataBinding.correctAnswers.setText(resultModel.getNumberofCorrectAnswers());
+            dataBinding.inCorrectAnswer.setText(""+(resultModel.getNumberofAttemptedAnswers()-resultModel.getNumberofCorrectAnswers()));
+            dataBinding.tvSkippedAnswer.setText((resultModel.getTotalQuestions()-resultModel.getNumberofAttemptedAnswers())+"");
+        }
     }
     private void setToolBar() {
 

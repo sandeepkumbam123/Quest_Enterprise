@@ -10,12 +10,23 @@ public class CreatedExamsModel {
     private String examTitle;
     private String classOfExam;
     private String dateofExam;
+    private String examId;
 
-    public   CreatedExamsModel(String examTitle,String classOfExam,String dateofExam){
+    public   CreatedExamsModel(String examTitle,String classOfExam,String dateofExam , String examId){
         this.examTitle = examTitle;
         this.classOfExam = classOfExam;
         this.dateofExam = dateofExam;
+        this.examId = examId ;
     }
+
+    public String getExamId() {
+        return examId;
+    }
+
+    public void setExamId(String examId) {
+        this.examId = examId;
+    }
+
     public String getExamTitle() {
         return examTitle;
     }

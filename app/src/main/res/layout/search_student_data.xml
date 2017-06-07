@@ -11,7 +11,8 @@
     <ImageView
         android:background="@drawable/ic_examtype_bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,8 +85,9 @@
         android:layout_width="@dimen/dp_300"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:padding="@dimen/dp_20"
+        android:padding="@dimen/dp_10"
         fontPath="fonts/Ubuntu-M.ttf"
+        android:layout_marginBottom="@dimen/dp_10"
         android:background="@color/colorOrange"
         android:textSize="@dimen/sp_35"
         android:textColor="@android:color/white"

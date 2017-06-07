@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
+import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.FragmentQuestiongroupBinding;
 import quest.com.quest.models.AttemptedQuestionModel;
 
@@ -20,7 +21,7 @@ import quest.com.quest.models.AttemptedQuestionModel;
  * Created by skumbam on 08-03-2017.
  */
 
-public class QuestionTagFragment extends Fragment implements QuestionFragment.AnswerSubmitted{
+public class QuestionTagFragment extends Fragment /*implements QuestionFragment.AnswerSubmitted*/{
 
 private FragmentQuestiongroupBinding mBinding;
     private AttemptedQuestionModel model;
@@ -33,6 +34,9 @@ private FragmentQuestiongroupBinding mBinding;
     private RadioButton optionC;
     private RadioButton optionD;
     private long startTime;
+
+    private DataChangedListener dataChangedListener;
+
 
 
     public static QuestionTagFragment getInstance(AttemptedQuestionModel model){
@@ -55,6 +59,7 @@ private FragmentQuestiongroupBinding mBinding;
     public void onStart() {
         super.onStart();
         mDB = new Database(getActivity());
+        dataChangedListener = (DashBoardActivity)getActivity();
 
     }
 
@@ -77,7 +82,38 @@ private FragmentQuestiongroupBinding mBinding;
         optionC = mBinding.optionC;
         optionD = mBinding.optionD;
 
+        mBinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int answer =0;
+                long time = countTime(startTime,System.currentTimeMillis());
+                if(optionA.isSelected()){
+                    answer =1;
+                }
+                else  if(optionB.isSelected()){
+                    answer =2;
+                }
+                else  if(optionC.isSelected()){
+                    answer =3;
+                }
+                else  if(optionD.isSelected()){
+                    answer =4;
+                }
+                else {
+                    answer =0;
+                    time =0;
+                }
+                if(model.getTimeTakentoAttempt()!=0){
+                    model.setTimeTakentoAttempt(model.getTimeTakentoAttempt()+(int)time);
+                }
+                else
+                    model.setTimeTakentoAttempt((int)time);
 
+              model.setAttemptedAnswer(answer);
+
+                dataChangedListener.onDataChanged(model);
+            }
+        });
         if(model!= null){
             questionText.setText(model.getQuestionNumber());
             optionA.setText(model.getOptionA());
@@ -97,7 +133,7 @@ private FragmentQuestiongroupBinding mBinding;
                          optionC.setChecked(true);
                          break;
                      case 4 :
-                         optionD.setChecked(true);
+                         optionA.setChecked(true);
                          break;
                  }
              }
@@ -105,7 +141,7 @@ private FragmentQuestiongroupBinding mBinding;
 
     }
 
-    @Override
+   /* @Override
     public void onanswerSubmitted() {
         int answer =0;
        long time = countTime(startTime,System.currentTimeMillis());
@@ -134,10 +170,15 @@ private FragmentQuestiongroupBinding mBinding;
         mDB.updateAttemptedAnswer(mDB,model,model.getCriticality(),model.getExamDuration()
         ,model.getExamTitle(),model.getTotalMarks(),model.getNegativeMarks());
 
-    }
+    }*/
 
 
     private long countTime(long start ,long end){
        return   (end - start);
+    }
+
+
+    public interface  DataChangedListener{
+        void onDataChanged(AttemptedQuestionModel model);
     }
 }

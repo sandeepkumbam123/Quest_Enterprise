@@ -47,7 +47,7 @@ public class StudentStatsFragment extends Fragment {
         super.onStart();
         modelList = new ArrayList<>();
         for(int i =0;i<25;i++){
-            CreatedExamsModel model = new CreatedExamsModel("Physics","IconA","March 05,2017");
+            CreatedExamsModel model = new CreatedExamsModel("Physics","IconA","March 05,2017" ,"");
             modelList.add(model);
         }
 

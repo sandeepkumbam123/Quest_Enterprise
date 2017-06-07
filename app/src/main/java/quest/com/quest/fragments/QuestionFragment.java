@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,9 @@ public class QuestionFragment extends Fragment {
     public final ObservableField<String> time =new ObservableField<>();
     CountDownTimer countDownTimer;
     public  int questionPosition =0;
-    private AnswerSubmitted answerSubmitted;
+    private AttemptedQuestionModel attemptedQuestionModel;
+
+    private Database mDB;
 
     private TextView mExamId;
     private TextView mSubjectId;
@@ -70,7 +73,9 @@ public class QuestionFragment extends Fragment {
         if(getArguments().getInt(ApiConstants.EXAM_ID) !=0){
             examId = getArguments().getInt(ApiConstants.EXAM_ID);
             dataBinding.examId.setText(examId+"");
+
         }
+        mDB = new Database(getActivity());
     }
 
     @Override
@@ -137,7 +142,6 @@ public class QuestionFragment extends Fragment {
             dataBinding.btSubmitExam.setVisibility(View.GONE);
         }
 
-//        answerSubmitted.onanswerSubmitted();
     }
 
     public void getPreviousQuestion(View v){
@@ -152,7 +156,6 @@ public class QuestionFragment extends Fragment {
             transaction.replace(R.id.fl_question_container, QuestionTagFragment.getInstance(models.get(questionPosition)));
             transaction.commit();
         }
-//        answerSubmitted.onanswerSubmitted();
     }
 
     public  void createQuestionFragment(int position , AttemptedQuestionModel model){
@@ -166,7 +169,11 @@ public class QuestionFragment extends Fragment {
 
     public void submitResult(View v){
         countDownTimer.cancel();
-//        answerSubmitted.onanswerSubmitted();
+        attemptedQuestionModel = ((DashBoardActivity)getActivity()).getAttemptedModel();
+        if(attemptedQuestionModel != null ) {
+            mDB.updateAttemptedAnswer(mDB, attemptedQuestionModel, attemptedQuestionModel.getCriticality(), attemptedQuestionModel.getExamDuration()
+                    , attemptedQuestionModel.getExamTitle(), attemptedQuestionModel.getTotalMarks(), attemptedQuestionModel.getNegativeMarks());
+        }
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, ResultsFragment.getInstance(resultCalculation()))
                 .addToBackStack(null)
@@ -175,8 +182,9 @@ public class QuestionFragment extends Fragment {
 
 
     public void submitResult(){
+
+
         countDownTimer.cancel();
-//        answerSubmitted.onanswerSubmitted();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, ResultsFragment.getInstance(resultCalculation()))
                 .addToBackStack(null)
@@ -262,7 +270,7 @@ public class QuestionFragment extends Fragment {
     }
 
 
-    public interface AnswerSubmitted{
-        void onanswerSubmitted();
-    }
+
+
+
 }

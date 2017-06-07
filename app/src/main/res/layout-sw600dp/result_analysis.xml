@@ -84,7 +84,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/sp_24"
                                 android:gravity="center"
-                                android:id="@+id/textView3" />
+                                android:id="@+id/correct_answers" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
                                 android:background="@drawable/circle_red"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/sp_35"
-                                android:id="@+id/textView5" />
+                                android:id="@+id/in_correct_answer" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                                 android:padding="@dimen/dp_10"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/sp_35"
-                                android:id="@+id/textView2" />
+                                android:id="@+id/tv_skipped_answer" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -151,6 +151,7 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
                                 <TextView
+                                    android:id="@+id/obtained_marks"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="20/30"
@@ -172,6 +173,7 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
                                 <TextView
+                                    android:id="@+id/percentage_of_marks"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="65%"
@@ -193,6 +195,7 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
                                 <TextView
+                                    android:id="@+id/time_spent"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="04:47/09:00"
@@ -238,6 +241,7 @@
                 android:background="@color/colorOrange"
                 android:textColor="@android:color/white"
                 android:text="Solutions"
+                android:visibility="gone"
                 android:gravity="center"
                 android:padding="@dimen/dp_10"
                 android:textSize="@dimen/sp_40"
