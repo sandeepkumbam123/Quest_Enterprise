@@ -110,6 +110,10 @@ public class QuestionFragment extends Fragment {
         mExamId.setText(models.get(0).getExamId());
         mSubjectId.setText(models.get(0).getExamTitle());
 
+        if(models.size()==1){
+            dataBinding.btSubmitExam.setVisibility(View.GONE);
+        }
+
     }
 
 

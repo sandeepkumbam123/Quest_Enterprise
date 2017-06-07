@@ -57,7 +57,21 @@ public class RetrofitRequestHandler implements RetrofitAPIRequests {
     }
 
     @Override
-    public Call<Object> enableExam(int requestID, @Body Map<String, Object> params, ResponseListener responseListener) {
+    public Call<Object> enableExam(int requestID, @Body Map<String, Object> params,final ResponseListener responseListener) {
+        RetrofitRequestUtil.OnRetrofitReqListener reqListener = new RetrofitRequestUtil.OnRetrofitReqListener() {
+
+            @Override
+            public void onResponse(int requestId, Headers responseHeaders, String response) {
+                responseListener.onSuccess(requestId, responseHeaders,new RetrofitResParser().parseResponse(requestId,response));
+            }
+
+            @Override
+            public void onErrorResponse(int requestId, Throwable error) {
+                responseListener.onFailure(requestId, error);
+
+            }
+        };
+        new RetrofitRequestUtil(mContext).retrofitEnqueueCall(requestID, "url", "POST",null, params, reqListener);
         return null;
     }
 

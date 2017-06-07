@@ -60,14 +60,18 @@ public class ExamEnableDisableFragment extends Fragment {
     public void enableClick(View v) {
         Map<String,Object> enableExamRequestData = new HashMap<>();
         enableExamRequestData.put("exam_id",
-                String.valueOf(PrefUtils.getExamIdDetailsfromSP(getContext(),ApiConstants.EXAM_ID)));
+                (PrefUtils.getExamIdDetailsfromSP(getContext(),ApiConstants.EXAM_ID)));
+        enableExamRequestData.put(ApiConstants.USER_ID,1);
+        enableExamRequestData.put(ApiConstants.BRANCH_ID,1);
         enableExam(enableExamRequestData);
     }
 
     public void disableClick(View v) {
         Map<String,Object> disableExamRequestData = new HashMap<>();
         disableExamRequestData.put("exam_id",
-                String.valueOf(PrefUtils.getExamIdDetailsfromSP(getContext(),ApiConstants.EXAM_ID)));
+                (PrefUtils.getExamIdDetailsfromSP(getContext(),ApiConstants.EXAM_ID)));
+        disableExamRequestData.put(ApiConstants.USER_ID,1);
+        disableExamRequestData.put(ApiConstants.BRANCH_ID,1);
         disableExam(disableExamRequestData);
     }
 
