@@ -40,10 +40,10 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/input_enter_student_name"
+                android:id="@+id/input_student_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter the student Name"
+                android:hint="Enter the student ID"
                 android:layout_weight="1"
                 android:inputType="text"
                 android:drawablePadding="@dimen/dp_10"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/input_student_id"
+                android:id="@+id/input_exam_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter ExamID"

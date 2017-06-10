@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,50 +16,72 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Headers;
+import quest.com.quest.Adapters.PreviousAnswersRecyclerAdapter;
 import quest.com.quest.NetworkUtils.ApiConstants;
 import quest.com.quest.NetworkUtils.RequestConstants;
 import quest.com.quest.NetworkUtils.RetrofitAPIRequests;
 import quest.com.quest.NetworkUtils.RetrofitRequestHandler;
 import quest.com.quest.R;
 import quest.com.quest.Utils.PrefUtils;
-import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.AnswersListLayoutBinding;
 import quest.com.quest.dialog.QuestDialog;
-import quest.com.quest.fragments.QuestionFragment;
-import quest.com.quest.models.ListofExams;
+import quest.com.quest.models.PreviousExamsListModel;
 import quest.com.quest.models.StartExamModel;
 
 /**
- * Created by kumbh on 26-03-2017.
+ * Created by kumbh on 10-06-2017.
  */
 
-public class AnswerDetailsFragment extends Fragment {
+public class PreviousAnswersFragment extends Fragment{
 
-
-    private static final String TAG = AnswerDetailsFragment.class.getSimpleName();
+    private static final String TAG = PreviousAnswersFragment.class.getSimpleName();
     private AnswersListLayoutBinding dataBinding;
     private RecyclerView recyclerAnswersList;
-    private AnswersRecyclerAdapter adapter;
+    private PreviousAnswersRecyclerAdapter adapter;
     private String examId;
     private Map<String , Object> requestData;
+    public static final String ANSWERS_MODEL = "answers_model";
+    private PreviousExamsListModel modelData = null;
 
-    public static AnswerDetailsFragment getInstance(Activity activity, Bundle bundle){
-        AnswerDetailsFragment fragment = new AnswerDetailsFragment();
+
+
+    public static PreviousAnswersFragment getInstance(Activity activity, Bundle bundle){
+        PreviousAnswersFragment fragment = new PreviousAnswersFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
+
 
     @Override
     public void onStart() {
         super.onStart();
 
-       examId = getArguments().getString(ApiConstants.EXAM_ID) != null ? getArguments().getString(ApiConstants.EXAM_ID) : "" ;
-        if (examId.isEmpty()){
-            QuestDialog.showOkDialog(getActivity(),"Error" , " Please check your network connectivity and come back again .");
-        }else {
-            requestData = new HashMap<>();
-            requestData.put(ApiConstants.EXAM_ID , examId);
-            getExamDetails(requestData);
+        modelData = getArguments().getParcelable(ANSWERS_MODEL) != null ? (PreviousExamsListModel) getArguments().getParcelable(ANSWERS_MODEL) : null;
+        if(modelData!=null){
+            adapter = new PreviousAnswersRecyclerAdapter(getActivity(), modelData);
+            recyclerAnswersList.setAdapter(adapter);
+            dataBinding.tvStudentName.setText(modelData.getTitle());
+            dataBinding.tvCollegeName.setText(modelData.getDuration()+"");
+            dataBinding.studentCode.setText(modelData.getExam_manualID());
+            dataBinding.ivStudentProfilePic.setVisibility(View.VISIBLE);
+            int skippedAnswer =0;
+            int correctAnswer = 0;
+            int inCorrectAnswer = 0;
+            for(PreviousExamsListModel.QuestionListBean answersModel : modelData.getQuestion_list()){
+                if(answersModel.getAnswer().equalsIgnoreCase(answersModel.getUser_anser())){
+                    correctAnswer++;
+                }else {
+                    if(answersModel.getUser_anser().isEmpty() || answersModel.getUser_anser() == null){
+                        skippedAnswer++;
+                    }
+                    else{
+                        inCorrectAnswer++;
+                    }
+                }
+            }
+            dataBinding.inCorrectAnswerCount.setText(""+inCorrectAnswer);
+            dataBinding.tvCorrectAnswerCount.setText(""+ correctAnswer);
+            dataBinding.tvSkippedAnswerCount.setText(""+ skippedAnswer);
         }
 
 
@@ -81,29 +102,26 @@ public class AnswerDetailsFragment extends Fragment {
     private void setToolBar() {
 
         ((TeacherDashBoardActivity) getActivity())
-                .setToolbarTitle(PrefUtils.getDetailsfromSP(getActivity(),ApiConstants.USER_NAME),"Answers");
+                .setToolbarTitle("Sandeep","Answers");
     }
 
 
 
-    private void getExamDetails(Map<String ,Object> params){
+   /* private void getExamDetails(Map<String ,Object> params){
         new RetrofitRequestHandler(getActivity()).startExam(RequestConstants.REQ_START_EXAM,
                 params, new RetrofitAPIRequests.ResponseListener<StartExamModel>() {
                     @Override
                     public void onSuccess(int requestId, Headers headers, StartExamModel response) {
                         if(response.isIsSuccess()){
-                            adapter = new AnswersRecyclerAdapter(getActivity(), response);
+                            adapter = new Pre(getActivity(), response);
                             recyclerAnswersList.setAdapter(adapter);
                             dataBinding.tvStudentName.setText(response.getExamTitle());
                             dataBinding.tvCollegeName.setText(response.getDuration()+"");
                             dataBinding.tvCorrectAnswerCount.setText(response.getQuestionsList().size());
                             dataBinding.tvCorrectAnswer.setText("Number of Questions");
-                            dataBinding.tvSkippedAnswer.setVisibility(View.GONE);
-                            dataBinding.tvIncorrectAnswer.setVisibility(View.GONE);
-                            dataBinding.inCorrectAnswerCount.setVisibility(View.GONE);
-                            dataBinding.tvSkippedAnswerCount.setVisibility(View.GONE);
 
 
+l
 
                         }else {
                             QuestDialog.showOkDialog(getActivity(),
@@ -116,5 +134,5 @@ public class AnswerDetailsFragment extends Fragment {
                         Log.d(TAG,error.toString());
                     }
                 });
-    }
+    }*/
 }

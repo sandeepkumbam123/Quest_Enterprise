@@ -16,6 +16,10 @@ public class PrefUtils {
         return sharedPreferences;
     }
 
+    public static void writeExamIdDetaisinSP(Context context, SharedPreferences sp, String key , String value){
+        getInstance(context).edit().putString(key, value).apply();
+    }
+
     public static void writeExamIdDetaisinSP(Context context, SharedPreferences sp, String key , int value){
         getInstance(context).edit().putInt(key, value).apply();
     }
@@ -23,5 +27,8 @@ public class PrefUtils {
     public static int getExamIdDetailsfromSP(Context context , String key){
         return getInstance(context).getInt(key,0);
     }
+    public static String getDetailsfromSP(Context context , String key){
+        return getInstance(context).getString(key,"");
 
+    }
 }

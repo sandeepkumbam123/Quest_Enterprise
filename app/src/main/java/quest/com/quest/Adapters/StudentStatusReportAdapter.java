@@ -11,6 +11,7 @@ import java.util.List;
 
 import quest.com.quest.R;
 import quest.com.quest.models.CreatedExamsModel;
+import quest.com.quest.models.ListofExams;
 
 /**
  * Created by kumbh on 02-04-2017.
@@ -19,9 +20,9 @@ import quest.com.quest.models.CreatedExamsModel;
 public class StudentStatusReportAdapter extends BaseAdapter {
 
     private Context ctx;
-    private List<CreatedExamsModel> examsList;
+    private ListofExams examsList;
     private int layoutId;
-    public StudentStatusReportAdapter(Context ctx, List<CreatedExamsModel> examsList, int layoutId){
+    public StudentStatusReportAdapter(Context ctx, ListofExams examsList, int layoutId){
         this.ctx= ctx;
         this.examsList = examsList;
         this.layoutId = layoutId;
@@ -31,12 +32,12 @@ public class StudentStatusReportAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return examsList.size();
+        return examsList.getListOfScheduledExams().size();
     }
 
     @Override
-    public CreatedExamsModel getItem(int position) {
-        return examsList.get(position);
+    public ListofExams.ListOfScheduledExamsBean getItem(int position) {
+        return examsList.getListOfScheduledExams().get(position);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class StudentStatusReportAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(ctx);
         TextView examTitle,examClass,examDate;
-        CreatedExamsModel examData = getItem(position);
+        ListofExams.ListOfScheduledExamsBean examData = getItem(position);
         if(convertView==null){
             convertView = inflater.inflate(layoutId,null,false);
         }
@@ -56,9 +57,9 @@ public class StudentStatusReportAdapter extends BaseAdapter {
 //        examClass   = (TextView)convertView.findViewById(R.id.class_name);
         examDate =(TextView)convertView.findViewById(R.id.tv_date_of_exam);
 
-        examTitle.setText(examData.getExamTitle());
+        examTitle.setText(examData.getTitle());
 //        examClass.setText(examData.getClassOfExam());
-        examDate.setText(examData.getDateofExam());
+        examDate.setText(examData.getExam_date());
 
         return convertView;
     }

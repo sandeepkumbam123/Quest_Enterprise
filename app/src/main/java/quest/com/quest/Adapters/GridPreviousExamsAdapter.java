@@ -5,25 +5,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import quest.com.quest.R;
-import quest.com.quest.models.CreatedExamsModel;
 import quest.com.quest.models.ListofExams;
+import quest.com.quest.models.PreviousExamsListModel;
 
 /**
- * Created by kumbh on 22-03-2017.
+ * Created by kumbh on 10-06-2017.
  */
 
-public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHolder> {
+public class GridPreviousExamsAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHolder>  {
     private Context ctx;
-    private ListofExams examsList;
-    private examClick clickListner;
-    public GridAdapter(Context ctx, ListofExams examsList, examClick clickListner){
+    private List<PreviousExamsListModel> examsList;
+    private GridPreviousExamsAdapter.PreviousExamclick clickListner;
+    public GridPreviousExamsAdapter(Context ctx, List<PreviousExamsListModel> examsList, PreviousExamclick clickListner){
         this.ctx= ctx;
         this.examsList = examsList;
         this.clickListner = clickListner;
@@ -44,23 +43,23 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
     }
 
     @Override
-    public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GridAdapter.SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(ctx).inflate(R.layout.previous_exam_card, parent, false);
-        return new SimpleViewHolder(view);
+        return new GridAdapter.SimpleViewHolder(view);
     }
 
-    public ListofExams.ListOfScheduledExamsBean getExamData(int position){
-        return examsList !=null ? examsList.getListOfScheduledExams().get(position) : null ;
+    public PreviousExamsListModel getExamData(int position){
+        return examsList !=null ? examsList.get(position) : null ;
     }
 
     @Override
-    public void onBindViewHolder(SimpleViewHolder holder, int position) {
-        ListofExams.ListOfScheduledExamsBean examBean = getExamData(position);
-       holder. examTitle.setText(examBean.getTitle());
-       holder. examClass.setText(examBean.getClassX());
+    public void onBindViewHolder(GridAdapter.SimpleViewHolder holder, int position) {
+        PreviousExamsListModel examBean = getExamData(position);
+        holder. examTitle.setText(examBean.getTitle());
+        holder. examClass.setText(examBean.getExam_manualID());
         holder.examDate.setText(examBean.getExam_date());
 
-         holder.examDate.setOnClickListener(clickListner(position));
+        holder.examDate.setOnClickListener(clickListner(position));
         holder.examClass.setOnClickListener(clickListner(position));
         holder.examTitle.setOnClickListener(clickListner(position));
         holder.examLayout.setOnClickListener(clickListner(position));
@@ -68,11 +67,11 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
     }
 
     private View.OnClickListener clickListner(final int position){
-       return new View.OnClickListener(){
+        return new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                clickListner.onCreatedExamClick(position);
+                clickListner.examData(getExamData(position));
 
             }
         };
@@ -86,11 +85,11 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
 
     @Override
     public int getItemCount() {
-        return examsList != null ? examsList.getListOfScheduledExams().size() : 0;
+        return examsList != null ? examsList.size() : 0;
     }
 
 
-    public  interface  examClick{
-        void onCreatedExamClick(int position);
+    public interface  PreviousExamclick {
+        void examData(PreviousExamsListModel bean);
     }
 }

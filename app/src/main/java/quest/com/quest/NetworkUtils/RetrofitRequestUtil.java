@@ -65,7 +65,7 @@ public class RetrofitRequestUtil {
         Call<Object> call = null;
         switch (requestID) {
             case RequestConstants.REQ_LOGIN_USER:
-                call = apiService.loginUser(params/*, CookieManager.getInstance().getCookie(Constants.APPLICATION_WEB_URL)*/);
+                call = apiService.loginUser(params);
                 break;
             case RequestConstants.REQ_FORGOT_PASSWORD:
                 call = apiService.forgotPassword(params);
@@ -75,7 +75,7 @@ public class RetrofitRequestUtil {
                 call = apiService.enableExam(params);
                 break;
             case RequestConstants.REQ_DISABLE_EXAM:
-                call = apiService.disableExam(params/*, CookieManager.getInstance().getCookie(Constants.APPLICATION_WEB_URL)*/);
+                call = apiService.disableExam(params);
                 break;
             case RequestConstants.REQ_START_EXAM:
                 call = apiService.startExam(params);
@@ -86,6 +86,17 @@ public class RetrofitRequestUtil {
             case RequestConstants.REQ_EXAMS_LIST:
                 call = apiService.examsList(params);
                 break;
+            case RequestConstants.REQ_PAST_EXAMS:
+                call = apiService.pastExamsList(params);
+                break;
+            case RequestConstants.REQ_PAST_EXAMS_RESULT:
+                call = apiService.pastExamsResult(params);
+                break;
+            case RequestConstants.REQ_STUDENT_PAST_EXAMS:
+                call = apiService.studentExamResult(params);
+                break;
+
+
         }
         return call;
     }

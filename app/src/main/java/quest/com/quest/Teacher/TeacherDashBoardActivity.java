@@ -24,7 +24,9 @@ import android.widget.TextView;
 
 import quest.com.quest.Adapters.DrawerMenuAdapter;
 import quest.com.quest.Adapters.DrawerModel;
+import quest.com.quest.NetworkUtils.ApiConstants;
 import quest.com.quest.R;
+import quest.com.quest.Utils.PrefUtils;
 import quest.com.quest.activities.BaseActivity;
 import quest.com.quest.activities.LoginActivity;
 import quest.com.quest.databinding.ActivityTeacherDashBoardBinding;
@@ -127,7 +129,7 @@ public class TeacherDashBoardActivity extends BaseActivity
                 fragment = CreatedExamsFragment.getInstance(TeacherDashBoardActivity.this, new Bundle());
                 break;
             case 1:
-                fragment = StudentPreviousExamsFragment.getInstance(TeacherDashBoardActivity.this, new Bundle());
+                fragment = StudentStatsFragment.getInstance(TeacherDashBoardActivity.this, new Bundle());
                 break;
             case 2:
                 fragment = SearchStudentFragment.getInstance(TeacherDashBoardActivity.this, new Bundle());
@@ -156,7 +158,7 @@ navigatetoNextActivity(this,new LoginActivity());
     }
 
     public  void setToolbarTitle(String userName,String fragmentName){
-        this.userName.setText(userName);
+        this.userName.setText(PrefUtils.getDetailsfromSP(this, ApiConstants.USER_NAME));
         this.fragmentName.setText(fragmentName);
     }
 

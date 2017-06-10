@@ -74,8 +74,8 @@ public class CreatedExamsFragment  extends Fragment implements View.OnClickListe
     public void onStart() {
         super.onStart();
         examsCreated = new ArrayList<>();
-        examListRequestData.put(ApiConstants.BRANCH_ID,1/*PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.BRANCH_ID*/);
-        examListRequestData.put(ApiConstants.USER_ID, 4/*PrefUtils.getExamIdDetailsfromSP(getActivity(), ApiConstants.USER_ID*/);
+        examListRequestData.put(ApiConstants.BRANCH_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.BRANCH_ID));
+        examListRequestData.put(ApiConstants.USER_ID, PrefUtils.getExamIdDetailsfromSP(getActivity(), ApiConstants.USER_ID));
         getExamsList(examListRequestData);
 
       /*  mGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,7 +120,7 @@ public class CreatedExamsFragment  extends Fragment implements View.OnClickListe
     private void setToolBar() {
 
         ((TeacherDashBoardActivity) getActivity())
-                .setToolbarTitle("Sandeep","Created Exams");
+                .setToolbarTitle(PrefUtils.getDetailsfromSP(getActivity(),ApiConstants.USER_NAME),"Created Exams");
     }
 
     private void getExamsList(Map<String,Object> params){
@@ -144,13 +144,13 @@ public class CreatedExamsFragment  extends Fragment implements View.OnClickListe
 
     private void setUpCreatedExams(ListofExams examAvailable) {
 
-        for(ListofExams.ListOfScheduledExamsBean examBean :examAvailable.getListOfScheduledExams()) {
+       /* for(ListofExams.ListOfScheduledExamsBean examBean :examAvailable.getListOfScheduledExams()) {
                 CreatedExamsModel model = new CreatedExamsModel(examBean.getSubjects().get(0).getSubject(), examBean.getClassX(),
                         ""+Utilities.returnDatefromString(examBean.getExam_date()),examBean.getExam_manualID());
                 examsCreated.add(model);
-        }
+        }*/
 
-        adapter = new GridAdapter(getActivity(),examsCreated,this);
+        adapter = new GridAdapter(getActivity(),examAvailable,this);
 
         mGrid.setAdapter(adapter);
     }

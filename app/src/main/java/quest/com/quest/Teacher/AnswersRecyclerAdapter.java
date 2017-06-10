@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import quest.com.quest.R;
+import quest.com.quest.models.ListofExams;
+import quest.com.quest.models.StartExamModel;
 
 /**
  * Created by kumbh on 11-03-2017.
@@ -15,11 +17,18 @@ import quest.com.quest.R;
 
 public class AnswersRecyclerAdapter extends RecyclerView.Adapter<AnswersRecyclerAdapter.HolderView>{
     private Context ctx;
+    private StartExamModel examsBean;
 
 
     public AnswersRecyclerAdapter(Context context){
 
         this.ctx =context;
+    }
+
+    public AnswersRecyclerAdapter(Context context , StartExamModel examsBean){
+        this.ctx = ctx;
+        this.examsBean = examsBean;
+
     }
 
     @Override
@@ -31,14 +40,22 @@ public class AnswersRecyclerAdapter extends RecyclerView.Adapter<AnswersRecycler
 
     @Override
     public void onBindViewHolder(HolderView holder, int position) {
+        if(getExamQuestion(position) != null){
+            StartExamModel.QuestionModel examsBean = getExamQuestion(position);
+            holder.questionName .setText(examsBean.getQuestion());
+            holder.answerForQuestion.setText(examsBean.getCorrectAnswer());
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return examsBean != null ? examsBean.getQuestionsList().size() : 0 ;
     }
 
+    private StartExamModel.QuestionModel getExamQuestion(int position){
+        return examsBean != null ? examsBean.getQuestionsList().get(position) : null ;
+    }
 
 
     public  class HolderView extends RecyclerView.ViewHolder{

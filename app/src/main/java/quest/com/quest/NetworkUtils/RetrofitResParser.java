@@ -16,7 +16,9 @@ import java.util.List;
 import quest.com.quest.models.ExamStatusModel;
 import quest.com.quest.models.ListofExams;
 import quest.com.quest.models.LoginResponseModel;
+import quest.com.quest.models.PreviousExamsListModel;
 import quest.com.quest.models.StartExamModel;
+import quest.com.quest.models.SubmitResult;
 
 @SuppressWarnings("unchecked")
 public class RetrofitResParser <T> {
@@ -37,9 +39,142 @@ public class RetrofitResParser <T> {
                 return parseSubmitExam(response);
             case RequestConstants.REQ_EXAMS_LIST:
                 return parseExamsList(response);
+            case RequestConstants.REQ_PAST_EXAMS:
+                return parseExamsList(response);
+            case RequestConstants.REQ_PAST_EXAMS_RESULT:
+                return parsePastExamResult(response);
+            case RequestConstants.REQ_STUDENT_PAST_EXAMS:
+                return parseStudentPastExams(response);
+
+
             default: return (T) response;
 
         }
+
+    }
+
+    private T parseStudentPastExams(String response) {
+
+        return  null;
+    }
+
+
+
+    private T parsePastExamResult(String response) {
+        PreviousExamsListModel model = null;
+        List<PreviousExamsListModel> listofPreviousExams  = new ArrayList<>();
+        try {
+            JSONArray listofResultExams = new JSONArray(response);
+            for(int i =0; i<listofResultExams.length();i++){
+
+                JSONObject previousExam = listofResultExams.optJSONObject(i);
+                if(previousExam!=null){
+                    String examMannualId = previousExam.optString("exam_manualID");
+                    String title = previousExam.optString("title");
+                    String criticalLevel = previousExam.optString("critical_level");
+                    int totalMarks = previousExam.optInt("total_marks");
+                    int passPercentage = previousExam.optInt("pass_percentage");
+                    String examDate = previousExam.optString("exam_date");
+                    int negativeMark = previousExam.optInt("negative_mark");
+                    int duration = previousExam.optInt("duration");
+                    String note = previousExam.optString("note");
+                    boolean isSuccess = previousExam.optBoolean("user_anser");
+                    String errorCode = previousExam.optString("ErrorCode");
+                    String errorMessage = previousExam.optString("ErrorMessage");
+
+
+                    JSONArray subjectsJSON = previousExam.optJSONArray("subjects");
+                    List<PreviousExamsListModel.SubjectsBean> subjectsBeanList = new ArrayList<>();
+                    for(int j=0;j<subjectsJSON.length();j++){
+                        PreviousExamsListModel.SubjectsBean  subjectsBean = null;
+                        JSONObject subjectJSONObject = subjectsJSON.optJSONObject(i);
+                        if(subjectJSONObject!= null){
+                            int subjectId = subjectJSONObject.optInt("subjectID");
+                            int classNameClassId = subjectJSONObject.optInt("class_names_classID");
+                            String subject = subjectJSONObject.optString("subject");
+                            String createdBy = subjectJSONObject.optString("created_by");
+                            String createdAt = subjectJSONObject.optString("created_at");
+                            String deletedAt = subjectJSONObject.optString("deleted_at");
+                            String updatedAt = subjectJSONObject.optString("updated_at");
+                            subjectsBean = new PreviousExamsListModel.SubjectsBean(subjectId,classNameClassId,subject,createdBy,createdAt,deletedAt,updatedAt);
+                            subjectsBeanList.add(subjectsBean);
+                        }
+
+                    }
+
+                    JSONArray chaptersJSON = previousExam.optJSONArray("chapters");
+                    List<PreviousExamsListModel.ChaptersBean> chaptersBeenList = new ArrayList<>();
+                    for(int j=0;j<chaptersJSON.length();j++){
+                        PreviousExamsListModel.ChaptersBean  chaptersBean = null;
+                        JSONObject chapterJSONObject = chaptersJSON.optJSONObject(i);
+                        if(chapterJSONObject!= null){
+                            int subjectId = chapterJSONObject.optInt("chapterID");
+                            int classNameClassId = chapterJSONObject.optInt("subjects_subjectID");
+                            String subject = chapterJSONObject.optString("chapter");
+                            String createdBy = chapterJSONObject.optString("created_by");
+                            String createdAt = chapterJSONObject.optString("created_at");
+                            String deletedAt = chapterJSONObject.optString("deleted_at");
+                            String updatedAt = chapterJSONObject.optString("updated_at");
+                            chaptersBean = new PreviousExamsListModel.ChaptersBean(subjectId,classNameClassId,subject,createdBy,createdAt,deletedAt,updatedAt);
+                            chaptersBeenList.add(chaptersBean);
+                        }
+
+                    }
+
+
+                    JSONArray questionList = previousExam.optJSONArray("question_list");
+                    List<PreviousExamsListModel.QuestionListBean> questionListBeanList = new ArrayList<>();
+
+                    for (int k = 0 ;k< questionList.length(); k++){
+                        PreviousExamsListModel.QuestionListBean questionBean = null;
+                        JSONObject questionJSON = questionList.optJSONObject(i);
+                        if(questionJSON != null){
+                            int questionID = questionJSON.optInt("questionID");
+                            int subjectSubjectID = questionJSON.optInt("subjects_subjectID");
+                            int chaptersChapterID = questionJSON.optInt("chapters_chapterID");
+                            int sylabiSyllabiID = questionJSON.optInt("syllabuses_syllabuseID");
+                            int classClasId = questionJSON.optInt("class_names_classID");
+                            String question = questionJSON.optString("question");
+                            int mark = questionJSON.optInt("mark");
+                            String criticality = questionJSON.optString("critical_level");
+                            String isImage = questionJSON.optString("is_image");
+                            String createdBy = questionJSON.optString("createdby");
+                            String createdAt = questionJSON.optString("created_at");
+                            String deletedAt = questionJSON.optString("deleted_at");
+                            String updatedAt = questionJSON.optString("updated_at");
+                            int questionOptionId = questionJSON.optInt("question_optionsID");
+                            int questionQuestionId = questionJSON.optInt("questions_questionID");
+                            String option1 = questionJSON.optString("option1");
+                            String option1Image = questionJSON.optString("is_option1_image");
+                            String option2 = questionJSON.optString("option2");
+                            String option2_Image = questionJSON.optString("is_option2_image");
+                            String option3 = questionJSON.optString("option3");
+                            String option3_Image = questionJSON.optString("is_option3_image");
+                            String option4 = questionJSON.optString("option4");
+                            String option4_Image = questionJSON.optString("is_option4_image");
+                            String answer = questionJSON.optString("answer");
+                            String notes = questionJSON.optString("notes");
+                            String userAnswer = questionJSON.optString("user_anser");
+
+                            questionBean = new PreviousExamsListModel.QuestionListBean(questionID,subjectSubjectID,chaptersChapterID,sylabiSyllabiID,
+                                    classClasId,question,mark,criticality,isImage,createdBy,createdAt,deletedAt,updatedAt,
+                                    questionOptionId,questionQuestionId,option1,option1Image,option2,option2_Image,option3,
+                                    option3_Image,option4,option4_Image,answer,notes,userAnswer);
+
+
+                            questionListBeanList.add(questionBean);
+                        }
+
+                        model = new PreviousExamsListModel(examMannualId,title,criticalLevel,totalMarks,passPercentage,examDate,
+                                negativeMark,duration,note,isSuccess,errorCode,errorMessage,subjectsBeanList,chaptersBeenList,questionListBeanList);
+                       listofPreviousExams.add(model);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return (T) listofPreviousExams;
 
     }
 
@@ -55,6 +190,7 @@ public class RetrofitResParser <T> {
 
 
             for(int i = 0;i<ListofScheduledExams.length();i++){
+                int examID = ListofScheduledExams.optJSONObject(i).optInt("examID");
                 String exam_mannual_Id = ListofScheduledExams.optJSONObject(i).optString("exam_manualID");
                 String classname = ListofScheduledExams.optJSONObject(i).optString("class");
                 int class_id = ListofScheduledExams.optJSONObject(i).optInt("class_id");
@@ -103,7 +239,7 @@ public class RetrofitResParser <T> {
                         chaptersBeanList.add(chaptersBean);}
                 }
                 scheduledExamsBean = new ListofExams.ListOfScheduledExamsBean(exam_mannual_Id,classname ,class_id,title , duration , exam_status,
-                        numberOfQuestions,totalMarks,topicCovered,examDate,userNote,subjectList,chaptersBeanList);
+                        numberOfQuestions,totalMarks,topicCovered,examDate,userNote,subjectList,chaptersBeanList , examID);
 
                 listofExamsBean.add(scheduledExamsBean);
 
@@ -250,7 +386,17 @@ public class RetrofitResParser <T> {
         return (T) startExamResponse;
     }
 
-    private T parseSubmitExam(String response){
+    private T parseSubmitExam(String response) {
+        try {
+            JSONObject submitJSONData = new JSONObject(response);
+            boolean isSuccess = submitJSONData.optBoolean("is_success");
+            String errorCode = submitJSONData.optString("ErrorCode");
+            String errorMessage = submitJSONData.optString("ErrorMessage");
+            return (T) new SubmitResult(isSuccess,errorCode,errorMessage);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }

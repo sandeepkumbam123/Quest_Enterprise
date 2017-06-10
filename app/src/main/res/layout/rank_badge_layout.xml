@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             fontPath ="fonts/Ubuntu-B.ttf"
             android:text="28/30"
+            android:visibility="gone"
             android:textColor="@android:color/black"
             android:layout_marginLeft="@dimen/dp_20"
             android:textSize="@dimen/sp_35"

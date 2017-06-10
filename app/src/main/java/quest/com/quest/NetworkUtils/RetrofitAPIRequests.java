@@ -23,6 +23,13 @@ public interface RetrofitAPIRequests {
 
     Call<Object> examsList(int requestID, @Body Map<String, Object> params, RetrofitAPIRequests.ResponseListener responseListener);
 
+    Call<Object> pastExamList(int requestID , @Body Map<String , Object> params , ResponseListener responseListener);
+
+    Call<Object> pastExamResult(int requestID , @Body Map<String , Object> params , ResponseListener responseListener);
+
+    Call<Object> studentResult(int requestID , @Body Map<String , Object> params , ResponseListener responseListener);
+
+
     interface ResponseListener<T> {
         void onSuccess(int requestId, Headers headers, T response);
 

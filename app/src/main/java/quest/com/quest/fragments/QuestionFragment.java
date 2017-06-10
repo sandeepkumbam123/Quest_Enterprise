@@ -10,10 +10,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,9 +29,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Headers;
 import quest.com.quest.NetworkUtils.ApiConstants;
+import quest.com.quest.NetworkUtils.RequestConstants;
+import quest.com.quest.NetworkUtils.RetrofitAPIRequests;
+import quest.com.quest.NetworkUtils.RetrofitRequestHandler;
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
+import quest.com.quest.Utils.PrefUtils;
 import quest.com.quest.activities.BaseActivity;
 import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.FragmentQuestionBinding;
@@ -37,6 +46,7 @@ import quest.com.quest.models.FastestAnswersModel;
 import quest.com.quest.models.QuestionModel;
 import quest.com.quest.models.ResultData;
 import quest.com.quest.models.StartExamModel;
+import quest.com.quest.models.SubmitResult;
 
 /**
  * Created by skumbam on 03-03-2017.
@@ -52,6 +62,7 @@ public class QuestionFragment extends Fragment {
     CountDownTimer countDownTimer;
     public  int questionPosition =0;
     private AttemptedQuestionModel attemptedQuestionModel;
+    HashMap<String , Object> requestData  = new HashMap<>();
 
     private Database mDB;
 
@@ -191,7 +202,7 @@ public class QuestionFragment extends Fragment {
                 .commit();
     }
     public  void countDownTimer(int timer, final TextView textView){
-        countDownTimer = new CountDownTimer(timer, 1000) {
+        countDownTimer = new CountDownTimer(timer*1000, 1000) {
 
             public void onTick(long millis) {
                 long second = (millis / 1000) % 60;
@@ -230,6 +241,7 @@ public class QuestionFragment extends Fragment {
         int attemptedAnswers =0;
         int obtainedMarks =0;
         List<FastestAnswersModel> fastestCorrectAnswers = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject();
         for(AttemptedQuestionModel model : modelList){
 
             if(model.getAttemptedAnswer() == model.getCorrectAnswer()){
@@ -258,17 +270,60 @@ public class QuestionFragment extends Fragment {
                 obtainedMarks = obtainedMarks-model.getNegativeMarks();
 
             }
+
             listofAnswersData.put(Integer.parseInt(model.getQuestionNumber()),model.getAttemptedAnswer());
 
+            try {
+                switch (model.getAttemptedAnswer()){
+                    case 0:
+                        jsonObject.put(model.getQuestionNumber(),"");
+                        break;
+                    case 1:
+                        jsonObject.put(model.getQuestionNumber(),ApiConstants.OPTION_1);
+                        break;
+                    case 2:
+                        jsonObject.put(model.getQuestionNumber(),ApiConstants.OPTION_2);
+                        break;
+                    case 3:
+                        jsonObject.put(model.getQuestionNumber(),ApiConstants.OPTION_3);
+                        break;
+                    case 4:
+                        jsonObject.put(model.getQuestionNumber(),ApiConstants.OPTION_4);
+                        break;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
         }
 
+        requestData.put(ApiConstants.USer_ANSWER_DATA , jsonObject);
+        requestData.put(ApiConstants.EXAM_ID ,modelList.get(0).getExamId());
+        requestData.put(ApiConstants.STUDENT_ID , PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID));
+        requestData.put(ApiConstants.TOTAL , modelList.get(0).getTotalMarks());
+        requestData.put(ApiConstants.IS_PASS , (obtainedMarks/modelList.get(0).getTotalMarks() >= .35 ? 1 :0));
+        submitResult(requestData);
         return  new ResultData(examId,examTitle,modelList.get(0).getExamDuration(),modelList.get(0).getTotalMarks(),obtainedMarks,attemptedAnswers,
                 correctAnswers,"",fastestCorrectAnswers , modelList.size(),listofAnswersData);
 
     }
 
+    private void submitResult(Map<String , Object> params){
+        new RetrofitRequestHandler(getActivity()).submitExam(RequestConstants.REQ_SUBMIT_EXAM, params, new RetrofitAPIRequests.ResponseListener<SubmitResult>() {
+            @Override
+            public void onSuccess(int requestId, Headers headers, SubmitResult response) {
+                if(!response.ismSuccess()){
+                    QuestDialog.showOkDialog(getActivity(),response.getmErrorCode(),response.getmErrorMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int requestId, Throwable error) {
+                Log.d(TAG ,error.toString());
+            }
+        });
+    }
 
 
 

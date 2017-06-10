@@ -19,8 +19,7 @@ public interface GraysAPIRequests {
 
     @POST(Constants.FORGOT_PASSWORD)
     @Headers("Content-Type:application/json")
-    Call<Object> forgotPassword(@Body Map<String, Object> jsonObj/*, @Header("Cookie") String cookie*/);
-    //Call<Object> checkLogin(@Body Map<String,String> jsonObj);
+    Call<Object> forgotPassword(@Body Map<String, Object> jsonObj);
 
 
     @POST(Constants.ENABLE_EXAM)
@@ -38,5 +37,13 @@ public interface GraysAPIRequests {
     @POST(Constants.EXAMS)
     Call<Object> examsList(@Body Map<String,Object> jsonObj);
 
+    @POST(Constants.PAST_EXAMS)
+    Call<Object> pastExamsList(@Body Map<String , Object> jsonObj);
+
+    @POST(Constants.PAST_EXAMS_RESULT)
+    Call<Object> pastExamsResult(@Body Map<String , Object> jsonObj);
+
+    @POST(Constants.STUDENT_EXAMS_RESULT)
+    Call<Object> studentExamResult(@Body Map<String , Object> jsonObj);
 
 }

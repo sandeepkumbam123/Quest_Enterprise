@@ -17,4 +17,16 @@ public class ApiConstants {
     public static final String UPDATED_AT ="updated_at";
     public static final String CREATED_AT ="created_at";
 
+    public static final String CURRENT_USR_ID ="current_userid";
+
+    public static final String USER_NAME = "user_name";
+
+    public static final String TOTAL ="total";
+
+
+    public static final String OPTION_1 ="option1";
+    public static final String OPTION_2 ="option2";
+    public static final String OPTION_3 ="option3";
+    public static final String OPTION_4 ="option4";
+
 }

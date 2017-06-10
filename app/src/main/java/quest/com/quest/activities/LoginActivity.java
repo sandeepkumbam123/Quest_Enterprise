@@ -54,10 +54,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (id){
             case R.id.btn_login:
                 if(isNetworkConnected(LoginActivity.this)){
-                     if(validateFields()) {
-                         loginHit(inputParams());
-                         dataBinding.pbProgresbar.setVisibility(View.VISIBLE);
-                     }// write the action to be performed whenever network is connected
+                    if(validateFields()) {
+                        loginHit(inputParams());
+                        dataBinding.pbProgresbar.setVisibility(View.VISIBLE);
+                    }// write the action to be performed whenever network is connected
 
                 }
                 else {
@@ -86,7 +86,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             QuestDialog.showOkDialog(this,"Error","Please Enter username/password");
             return false;
         }
-         else return true;
+        else return true;
     }
 
     private void loginHit(Map<String,Object> params) {
@@ -96,20 +96,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             public void onSuccess(int requestId, Headers headers, LoginResponseModel response) {
                 dataBinding.pbProgresbar.setVisibility(View.INVISIBLE);
                 Toast.makeText(LoginActivity.this,response.getSession_id()+" status , success : "+response.isIs_success(), Toast.LENGTH_SHORT).show();
-               if(response.isIs_success()) {
-                   PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
-                           PrefUtils.getInstance(getApplicationContext()),ApiConstants.USER_ID,response.getUser_id());
-                   PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
-                           PrefUtils.getInstance(getApplicationContext()),ApiConstants.BRANCH_ID,response.getBranch_id());
-                   if (!response.getRole().equalsIgnoreCase("teacher"))
-                       navigatetoNextActivity(LoginActivity.this, new DashBoardActivity());
-                   else
-                   navigatetoNextActivity(LoginActivity.this, new TeacherDashBoardActivity());
+                if(response.isIs_success()) {
+                    PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
+                            PrefUtils.getInstance(getApplicationContext()),ApiConstants.USER_ID,response.getUser_id());
+                    PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),
+                            PrefUtils.getInstance(getApplicationContext()),ApiConstants.BRANCH_ID,response.getBranch_id());
+                    PrefUtils.writeExamIdDetaisinSP(getApplicationContext(),PrefUtils.getInstance(getApplicationContext()),ApiConstants.USER_NAME,response.getUser_name());
+                    if (!response.getRole().equalsIgnoreCase("teacher"))
+                        navigatetoNextActivity(LoginActivity.this, new DashBoardActivity());
+                    else
+                        navigatetoNextActivity(LoginActivity.this, new TeacherDashBoardActivity());
 
-               }
+                }
                 else{
-                   QuestDialog.showOkDialog(LoginActivity.this,"Error",response.getSession_id());
-               }
+                    QuestDialog.showOkDialog(LoginActivity.this,"Error",response.getSession_id());
+                }
             }
 
             @Override

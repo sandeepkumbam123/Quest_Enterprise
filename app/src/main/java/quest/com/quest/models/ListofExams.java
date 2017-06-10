@@ -72,7 +72,7 @@ public class ListofExams {
         public ListOfScheduledExamsBean(String exam_manualID, String classX, int class_id, String title, int duration, boolean exam_status,
                                         int number_of_questions,
                                         int total_marks, String topics_covered, String exam_date, String usernote, List<SubjectsBean> subjects,
-                                        List<ChaptersBean> chapters) {
+                                        List<ChaptersBean> chapters , int examID) {
             this.exam_manualID = exam_manualID;
             this.classX = classX;
             this.class_id = class_id;
@@ -86,6 +86,7 @@ public class ListofExams {
             this.usernote = usernote;
             this.subjects = subjects;
             this.chapters = chapters;
+            this.examID = examID;
         }
 
         /**
@@ -103,6 +104,20 @@ public class ListofExams {
          * subjects : [{"subjectID":1,"class_names_classID":1,"subject":"branch one class one subject one","created_by":null,"created_at":"2017-05-20 19:54:55","deleted_at":"2017-05-20 20:21:56","updated_at":"2017-05-20 20:21:56"},{"subjectID":2,"class_names_classID":1,"subject":"branch one class one subject two","created_by":null,"created_at":"2017-05-20 20:32:25","deleted_at":null,"updated_at":"2017-05-20 21:02:45"}]
          * chapters : [{"chapterID":1,"subjects_subjectID":1,"chapter":"branch one class one subject one  chapter one","createdby":null,"created_at":null,"deleted_at":null,"updated_at":null},{"chapterID":3,"subjects_subjectID":1,"chapter":"branch one class one subject one  chapter two","createdby":null,"created_at":null,"deleted_at":null,"updated_at":null}]
          */
+
+        private int examID;
+
+        public int getExamID() {
+            return examID;
+        }
+
+        public void setExamID(int examID) {
+            this.examID = examID;
+        }
+
+        public boolean isExam_status() {
+            return exam_status;
+        }
 
         private String exam_manualID;
         @SerializedName("class")
