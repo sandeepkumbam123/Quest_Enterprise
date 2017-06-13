@@ -48,6 +48,8 @@ import quest.com.quest.models.ResultData;
 import quest.com.quest.models.StartExamModel;
 import quest.com.quest.models.SubmitResult;
 
+import static android.view.View.GONE;
+
 /**
  * Created by skumbam on 03-03-2017.
  */
@@ -69,7 +71,7 @@ public class QuestionFragment extends Fragment {
     private TextView mExamId;
     private TextView mSubjectId;
 
-    private int examId;
+    private String mExamIDString;
 
 
     public static QuestionFragment getInstance(Bundle bundle){
@@ -81,9 +83,9 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(getArguments().getInt(ApiConstants.EXAM_ID) !=0){
-            examId = getArguments().getInt(ApiConstants.EXAM_ID);
-            dataBinding.examId.setText(examId+"");
+        if(getArguments().getString(ApiConstants.EXAM_ID) !=null){
+            mExamIDString = getArguments().getString(ApiConstants.EXAM_ID);
+            dataBinding.examId.setText(mExamIDString+"");
 
         }
         mDB = new Database(getActivity());
@@ -127,53 +129,75 @@ public class QuestionFragment extends Fragment {
         mSubjectId.setText(models.get(0).getExamTitle());
 
         if(models.size()==1){
-            dataBinding.btSubmitExam.setVisibility(View.GONE);
+            dataBinding.btSubmitExam.setVisibility(View.VISIBLE);
+        }else{
+            dataBinding.btSubmitExam.setVisibility(GONE);
         }
 
     }
 
 
     public void getNextQuestion(View v){
+        questionPosition++;
+       /* questionPosition = questionPosition +1;
+        if(questionPosition < models.size()-1){*/
+        models = null;
+        models = mDB.getQuestions(database);
+        dataBinding.btnNextQuestion.setEnabled(true);
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,  R.anim.enter_from_left, R.anim.exit_to_right);
 
-        questionPosition = questionPosition +1;
-        if(questionPosition <= models.size()){
-            dataBinding.btnNextQuestion.setEnabled(true);
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,  R.anim.enter_from_left, R.anim.exit_to_right);
-            transaction.replace(R.id.fl_question_container,QuestionTagFragment.getInstance(models.get(questionPosition)));
-            transaction.commit();
-        }else{
+        transaction.replace(R.id.fl_question_container,QuestionTagFragment.getInstance(models.get(questionPosition),mExamIDString));
+        transaction.commit();
+       /* }else{
             dataBinding.btnNextQuestion.setEnabled(false);
 
         }
-
-        if(models.size() == questionPosition){
+*/
+        if(questionPosition+1 == models.size()){
             dataBinding.btSubmitExam.setVisibility(View.VISIBLE);
-        }else {
-            dataBinding.btSubmitExam.setVisibility(View.GONE);
+            dataBinding.btnNextQuestion.setEnabled(false);
+            dataBinding.btnPreviousquestion.setEnabled(true);
+        }else{
+            dataBinding.btSubmitExam.setVisibility(GONE);
+            dataBinding.btnNextQuestion.setEnabled(true);
+            dataBinding.btnPreviousquestion.setEnabled(true);
         }
+
 
     }
 
     public void getPreviousQuestion(View v){
-        questionPosition = questionPosition -1 ;
+        models.set(questionPosition,((DashBoardActivity)getActivity()).attemptedQuestionModel);
+        questionPosition--;
+        models = null;
+        models = mDB.getQuestions(database);
+       /* questionPosition = questionPosition -1 ;
         if(questionPosition<0){
             dataBinding.btnPreviousquestion.setEnabled(false);
         }
-        else {
+        else {*/
+        dataBinding.btnPreviousquestion.setEnabled(true);
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+        transaction.replace(R.id.fl_question_container, QuestionTagFragment.getInstance(models.get(questionPosition),mExamIDString));
+        transaction.commit();
+        if(questionPosition-1 < 0){
+            dataBinding.btnPreviousquestion.setEnabled(false);
+            dataBinding.btnNextQuestion.setEnabled(true);
+        }else{
             dataBinding.btnPreviousquestion.setEnabled(true);
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-            transaction.replace(R.id.fl_question_container, QuestionTagFragment.getInstance(models.get(questionPosition)));
-            transaction.commit();
+            dataBinding.btnNextQuestion.setEnabled(true);
         }
+
+//        }
     }
 
     public  void createQuestionFragment(int position , AttemptedQuestionModel model){
         if(countDownTimer!=null){
             countDownTimer.cancel();
         }
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_question_container, QuestionTagFragment.getInstance(model)).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_question_container, QuestionTagFragment.getInstance(model,mExamIDString)).commit();
     }
 
 
@@ -183,8 +207,10 @@ public class QuestionFragment extends Fragment {
         attemptedQuestionModel = ((DashBoardActivity)getActivity()).getAttemptedModel();
         if(attemptedQuestionModel != null ) {
             mDB.updateAttemptedAnswer(mDB, attemptedQuestionModel, attemptedQuestionModel.getCriticality(), attemptedQuestionModel.getExamDuration()
-                    , attemptedQuestionModel.getExamTitle(), attemptedQuestionModel.getTotalMarks(), attemptedQuestionModel.getNegativeMarks());
+                    , attemptedQuestionModel.getExamTitle(), attemptedQuestionModel.getTotalMarks(), attemptedQuestionModel.getNegativeMarks() ,mExamIDString);
         }
+
+
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, ResultsFragment.getInstance(resultCalculation()))
                 .addToBackStack(null)
@@ -193,8 +219,6 @@ public class QuestionFragment extends Fragment {
 
 
     public void submitResult(){
-
-
         countDownTimer.cancel();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, ResultsFragment.getInstance(resultCalculation()))
@@ -242,6 +266,7 @@ public class QuestionFragment extends Fragment {
         int obtainedMarks =0;
         List<FastestAnswersModel> fastestCorrectAnswers = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
+        int timeTakentoAttempt = 0;
         for(AttemptedQuestionModel model : modelList){
 
             if(model.getAttemptedAnswer() == model.getCorrectAnswer()){
@@ -265,7 +290,7 @@ public class QuestionFragment extends Fragment {
                     }
                 }
             }
-            else if(model.getAttemptedAnswer() != model.getCorrectAnswer()){
+            else if(model.getAttemptedAnswer() != model.getCorrectAnswer() && model.getAttemptedAnswer()!=0){
                 attemptedAnswers=attemptedAnswers+1;
                 obtainedMarks = obtainedMarks-model.getNegativeMarks();
 
@@ -294,18 +319,17 @@ public class QuestionFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
+            timeTakentoAttempt = timeTakentoAttempt + model.getTimeTakentoAttempt();
         }
 
-        requestData.put(ApiConstants.USer_ANSWER_DATA , jsonObject);
-        requestData.put(ApiConstants.EXAM_ID ,modelList.get(0).getExamId());
+        requestData.put(ApiConstants.USer_ANSWER_DATA , jsonObject.toString());
+        requestData.put(ApiConstants.EXAM_ID ,Integer.parseInt(modelList.get(0).getExamId()));
         requestData.put(ApiConstants.STUDENT_ID , PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID));
         requestData.put(ApiConstants.TOTAL , modelList.get(0).getTotalMarks());
-        requestData.put(ApiConstants.IS_PASS , (obtainedMarks/modelList.get(0).getTotalMarks() >= .35 ? 1 :0));
+        requestData.put(ApiConstants.IS_PASS , (obtainedMarks/modelList.get(0).getTotalMarks() >= 0.35 ? "yes" :"no"));
         submitResult(requestData);
         return  new ResultData(examId,examTitle,modelList.get(0).getExamDuration(),modelList.get(0).getTotalMarks(),obtainedMarks,attemptedAnswers,
-                correctAnswers,"",fastestCorrectAnswers , modelList.size(),listofAnswersData);
+                correctAnswers,"",fastestCorrectAnswers , modelList.size(),listofAnswersData,modelList.get(0).getTimeTakentoAttempt());
 
     }
 

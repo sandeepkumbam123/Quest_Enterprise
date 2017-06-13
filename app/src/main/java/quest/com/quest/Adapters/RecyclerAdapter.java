@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 import quest.com.quest.R;
 import quest.com.quest.Teacher.AnswersRecyclerAdapter;
 import quest.com.quest.Utils.Utilities;
@@ -45,8 +47,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
     @Override
     public void onBindViewHolder(HolderView holder, int position) {
         final ListofExams.ListOfScheduledExamsBean exambean = listofExams.getListOfScheduledExams().get(position);
-        holder.dateOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).getDate()+"");
-        holder.dayOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).getDay()+"");
+        holder.dateOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).get(Calendar.DAY_OF_MONTH)+"");
+        holder.dayOfExam.setText(Utilities.returnDatefromString(exambean.getExam_date()).get(Calendar.DAY_OF_WEEK)+"");
         holder.durationOfExam.setText(Utilities.returnDuration(exambean.getDuration())+"");
         holder.examCOde.setText(exambean.getExam_manualID()+"");
         holder.examTitle.setText(exambean.getTitle());

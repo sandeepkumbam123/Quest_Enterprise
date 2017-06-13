@@ -47,10 +47,10 @@ public class DashboardFragment extends Fragment {
     }
 
     public  void startExam(View v){
-        getActivity().getSupportFragmentManager()
+       /* getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fl_container,new PremiumExamsFragment()).commit();
-//        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_container,new StartTestFragment()).commit();
+                .replace(R.id.fl_container,new PremiumExamsFragment()).commit();*/
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl_container,new StartTestFragment()).commit();
     }
 
     public void openPremiumExams(View v){

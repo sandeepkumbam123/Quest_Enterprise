@@ -131,9 +131,9 @@ public class DashBoardActivity extends BaseActivity
     }
 
     @Override
-    public void onDataChanged(AttemptedQuestionModel model) {
+    public void onDataChanged(AttemptedQuestionModel model ,String examId) {
         mDB.updateAttemptedAnswer(mDB,model,model.getCriticality(),model.getExamDuration()
-                ,model.getExamTitle(),model.getTotalMarks(),model.getNegativeMarks());
+                ,model.getExamTitle(),model.getTotalMarks(),model.getNegativeMarks() , examId);
         attemptedQuestionModel = model;
     }
 }

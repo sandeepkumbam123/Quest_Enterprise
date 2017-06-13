@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import quest.com.quest.NetworkUtils.ApiConstants;
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
 import quest.com.quest.activities.DashBoardActivity;
@@ -35,14 +36,17 @@ private FragmentQuestiongroupBinding mBinding;
     private RadioButton optionD;
     private long startTime;
 
+    private String examID;
+
     private DataChangedListener dataChangedListener;
 
 
 
-    public static QuestionTagFragment getInstance(AttemptedQuestionModel model){
+    public static QuestionTagFragment getInstance(AttemptedQuestionModel model ,String examID){
         QuestionTagFragment fragment = new QuestionTagFragment();
         Bundle b = new Bundle();
         b.putParcelable(QUESTIONS_MODEL ,model);
+        b.putString(ApiConstants.EXAM_ID,examID);
         fragment.setArguments(b);
         return fragment;
     }
@@ -52,6 +56,7 @@ private FragmentQuestiongroupBinding mBinding;
         super.onCreate(savedInstanceState);
         if(getArguments().getParcelable(QUESTIONS_MODEL)!=null){
             model = getArguments().getParcelable(QUESTIONS_MODEL);
+            examID = getArguments().getString(ApiConstants.EXAM_ID);
         }
     }
 
@@ -59,7 +64,6 @@ private FragmentQuestiongroupBinding mBinding;
     public void onStart() {
         super.onStart();
         mDB = new Database(getActivity());
-        dataChangedListener = (DashBoardActivity)getActivity();
 
     }
 
@@ -68,7 +72,7 @@ private FragmentQuestiongroupBinding mBinding;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mBinding = DataBindingUtil.bind(inflater.inflate(R.layout.fragment_questiongroup,container,false));
-
+        dataChangedListener = (DashBoardActivity)getActivity();
        startTime = System.currentTimeMillis();
         initViews();
 
@@ -87,17 +91,29 @@ private FragmentQuestiongroupBinding mBinding;
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int answer =0;
                 long time = countTime(startTime,System.currentTimeMillis());
-                if(optionA.isSelected()){
+                if(optionA.getId() == checkedId){
+                    if(!optionA.isChecked())
                     answer =1;
+                    else
+                        answer =0;
                 }
-                else  if(optionB.isSelected()){
-                    answer =2;
+                else  if(optionB.getId() == checkedId){
+                    if(optionB.isChecked())
+                    answer =0;
+                    else
+                        answer =2;
                 }
-                else  if(optionC.isSelected()){
+                else  if(optionC.getId() == checkedId){
+                    if(optionC.isChecked())
                     answer =3;
+                    else
+                        answer=0;
                 }
-                else  if(optionD.isSelected()){
+                else  if(optionD.getId() == checkedId){
+                    if(optionD.isChecked())
                     answer =4;
+                    else
+                        answer =0;
                 }
                 else {
                     answer =0;
@@ -111,15 +127,15 @@ private FragmentQuestiongroupBinding mBinding;
 
               model.setAttemptedAnswer(answer);
 
-                dataChangedListener.onDataChanged(model);
+                dataChangedListener.onDataChanged(model ,examID);
             }
         });
         if(model!= null){
             questionText.setText(model.getQuestionNumber());
-            optionA.setText(model.getOptionA());
-            optionB.setText(model.getOptionB());
-            optionC.setText(model.getOptionC());
-            optionD.setText(model.getOptionD());
+            optionA.setText( "1. "+model.getOptionA());
+            optionB.setText("2. "+model.getOptionB());
+            optionC.setText("3. "+model.getOptionC());
+            optionD.setText("4. "+model.getOptionD());
 
              if(model.getAttemptedAnswer()!=0){
                  switch (model.getAttemptedAnswer()){
@@ -135,6 +151,11 @@ private FragmentQuestiongroupBinding mBinding;
                      case 4 :
                          optionA.setChecked(true);
                          break;
+                     default:
+                         optionA.setChecked(false);
+                         optionB.setChecked(false);
+                         optionC.setChecked(false);
+                         optionD.setChecked(false);
                  }
              }
         }
@@ -179,6 +200,6 @@ private FragmentQuestiongroupBinding mBinding;
 
 
     public interface  DataChangedListener{
-        void onDataChanged(AttemptedQuestionModel model);
+        void onDataChanged(AttemptedQuestionModel model , String examID);
     }
 }

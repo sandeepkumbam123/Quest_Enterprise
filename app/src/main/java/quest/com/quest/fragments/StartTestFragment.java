@@ -64,7 +64,7 @@ public class StartTestFragment extends Fragment {
     }
     public void startTest(View v){
         Map<String,Object> startTestRequestData = new HashMap<>();
-        startTestRequestData.put(ApiConstants.EXAM_ID, dataBinding.inputEnterCode.getText().toString().trim()+"");
+        startTestRequestData.put(ApiConstants.EXAM_ID,dataBinding.inputEnterCode.getText().toString().trim());
         startTest(startTestRequestData);
     }
 
@@ -75,10 +75,11 @@ public class StartTestFragment extends Fragment {
                     @Override
                     public void onSuccess(int requestId, Headers headers, StartExamModel response) {
                         if(response.isIsSuccess()){
-
+                                 Bundle b = new Bundle();
+                            b.putString(ApiConstants.EXAM_ID ,dataBinding.inputEnterCode.getText().toString().trim());
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
-                                    .replace(R.id.fl_container,new QuestionFragment())
+                                    .replace(R.id.fl_container, QuestionFragment.getInstance(b))
                                     .commit();
                             mDB.deleteQuestionsListFromTable(mDB);
                             mDB.insertQuestionsintoTable(mDB,response);

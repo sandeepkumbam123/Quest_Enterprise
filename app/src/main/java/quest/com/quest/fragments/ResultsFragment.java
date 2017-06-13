@@ -29,6 +29,7 @@ import quest.com.quest.NetworkUtils.RequestConstants;
 import quest.com.quest.NetworkUtils.RetrofitAPIRequests;
 import quest.com.quest.NetworkUtils.RetrofitRequestHandler;
 import quest.com.quest.R;
+import quest.com.quest.SqliteDb.Database;
 import quest.com.quest.Utils.PrefUtils;
 import quest.com.quest.Utils.Utilities;
 import quest.com.quest.activities.DashBoardActivity;
@@ -45,6 +46,7 @@ public class ResultsFragment extends Fragment {
     private PieChart mOverallStatsGraph;
     private ResultData resultModel;
     private static final String RESULT_DATA = "RESULT_DATA";
+    private Database mDB;
 
     public static ResultsFragment getInstance(ResultData model){
         ResultsFragment fragment = new ResultsFragment();
@@ -59,21 +61,23 @@ public class ResultsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         if(getArguments().getParcelable(RESULT_DATA)!= null){
-            resultModel = getArguments().getParcelable(RESULT_DATA);
-            Map<String ,Object> remoteRequestData = new HashMap<>();
+           resultModel = getArguments().getParcelable(RESULT_DATA);
+           /*  Map<String ,Object> remoteRequestData = new HashMap<>();
             remoteRequestData.put(ApiConstants.STUDENT_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID));
             remoteRequestData.put(ApiConstants.IS_PASS ,(resultModel.getObtainedMarks()/resultModel.getExamTotalMarks() >= .35  ));
             remoteRequestData.put(ApiConstants.CREATED_AT, Utilities.returnDatefromMillis(System.currentTimeMillis()));
             remoteRequestData.put(ApiConstants.UPDATED_AT , Utilities.returnDatefromMillis(System.currentTimeMillis()));
             remoteRequestData.put(ApiConstants.EXAM_ID,Integer.parseInt(resultModel.getExamId()));
             remoteRequestData.put(ApiConstants.USer_ANSWER_DATA,resultModel.getListofAnswersAttempted());
-            submitDatatoRemote(remoteRequestData);
+            submitDatatoRemote(remoteRequestData);*/
         }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDB = new Database(getActivity());
+        mDB.deleteQuestionsListFromTable(mDB);
         setToolBar();
         setHasOptionsMenu(false);
     }
@@ -83,7 +87,8 @@ public class ResultsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         dataBinding = DataBindingUtil.bind(inflater.inflate(R.layout.result_analysis,null,false));
         dataBinding.setFragment(this);
-
+        if(getArguments().getParcelable(RESULT_DATA)!= null)
+            resultModel = getArguments().getParcelable(RESULT_DATA);
         mOverallStatsGraph = dataBinding.pieChart;
         addDatatoGraph();
         return dataBinding.getRoot();
@@ -119,11 +124,11 @@ public class ResultsFragment extends Fragment {
 
         if(resultModel!=null){
             dataBinding.tvExamtitle.setText(resultModel.getExamTitle());
-            dataBinding.timeSpent.setText(resultModel.getExamDuration());
+            dataBinding.timeSpent.setText(Utilities.returnTime(resultModel.getTimeTakentoAttempt()));
             dataBinding.obtainedMarks.setText(resultModel.getObtainedMarks()+" / "+resultModel.getExamTotalMarks());
             int percentage = resultModel.getObtainedMarks()*100/resultModel.getExamTotalMarks();
             dataBinding.percentageOfMarks.setText(""+percentage);
-            dataBinding.correctAnswers.setText(resultModel.getNumberofCorrectAnswers());
+            dataBinding.correctAnswers.setText(resultModel.getNumberofCorrectAnswers()+"");
             dataBinding.inCorrectAnswer.setText(""+(resultModel.getNumberofAttemptedAnswers()-resultModel.getNumberofCorrectAnswers()));
             dataBinding.tvSkippedAnswer.setText((resultModel.getTotalQuestions()-resultModel.getNumberofAttemptedAnswers())+"");
         }
@@ -140,7 +145,7 @@ public class ResultsFragment extends Fragment {
 
 
 
-    private void submitDatatoRemote(Map<String,Object> params){
+   /* private void submitDatatoRemote(Map<String,Object> params){
         new RetrofitRequestHandler(getActivity()).submitExam(RequestConstants.REQ_SUBMIT_EXAM, params,
                 new RetrofitAPIRequests.ResponseListener() {
                     @Override
@@ -153,5 +158,5 @@ public class ResultsFragment extends Fragment {
 
                     }
                 });
-    }
+    }*/
 }

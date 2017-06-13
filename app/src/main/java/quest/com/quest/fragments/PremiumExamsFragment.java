@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,16 +65,16 @@ private  PremiumExamBinding dataBinding;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         dataBinding = DataBindingUtil.bind(inflater.inflate(R.layout.premium_exam,null,false));
         dataBinding.setFragment(this);
-        examListRequestData.put(ApiConstants.BRANCH_ID,1);
-        examListRequestData.put(ApiConstants.USER_ID,4);
+        examListRequestData.put(ApiConstants.BRANCH_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.BRANCH_ID));
+        examListRequestData.put(ApiConstants.USER_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID));
         getExamsList(examListRequestData);
         return dataBinding.getRoot();
 
     }
 
     private void initViews(ListofExams.ListOfScheduledExamsBean examBean) {
-        dataBinding.examDate.setText(Utilities.returnDatefromString(examBean.getExam_date()).getDate()+"");
-        dataBinding.examDay.setText(Utilities.returnDatefromString(examBean.getExam_date()).getDay()+"");
+        dataBinding.examDate.setText(Utilities.returnDatefromString(examBean.getExam_date()).get(Calendar.DAY_OF_MONTH)+"");
+        dataBinding.examDay.setText(Utilities.returnDatefromString(examBean.getExam_date()).get(Calendar.DAY_OF_WEEK)+"");
         dataBinding.examTitle.setText(examBean.getTitle());
         dataBinding.duration.setText(examBean.getDuration()+"");
         dataBinding.topicsRelatedTo.setText(examBean.getTopics_covered());
@@ -81,7 +82,7 @@ private  PremiumExamBinding dataBinding;
         dataBinding.numberOfQuestions.setText(examBean.getNumber_of_questions()+" Questions");
         dataBinding.numberOfMarks.setText(examBean.getTotal_marks()+" Marks");
 
-        PrefUtils.writeExamIdDetaisinSP(getActivity(),PrefUtils.getInstance(getActivity()),ApiConstants.EXAM_ID,examBean.getClass_id());
+        PrefUtils.writeExamIdDetaisinSP(getActivity(),PrefUtils.getInstance(getActivity()),ApiConstants.EXAM_ID,examBean.getExam_manualID());
     }
 
     private void setUpcomingExams() {
@@ -115,7 +116,7 @@ private  PremiumExamBinding dataBinding;
     public void startExam(View v){
 
         HashMap<String , Object> params = new HashMap<>();
-        params.put(ApiConstants.EXAM_ID ,"EXAM2017-1");
+        params.put(ApiConstants.EXAM_ID ,PrefUtils.getDetailsfromSP(getActivity(),ApiConstants.EXAM_ID));
         startTest(params);
 
     }
@@ -154,7 +155,7 @@ private  PremiumExamBinding dataBinding;
                     public void onSuccess(int requestId, Headers headers, StartExamModel response) {
                         if(response.isIsSuccess()){
                             Bundle b = new Bundle();
-                            b.putInt(ApiConstants.EXAM_ID , PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.EXAM_ID));
+                            b.putString(ApiConstants.EXAM_ID , PrefUtils.getDetailsfromSP(getActivity(),ApiConstants.EXAM_ID));
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.fl_container,QuestionFragment.getInstance(b))

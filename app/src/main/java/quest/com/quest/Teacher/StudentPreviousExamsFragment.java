@@ -50,6 +50,7 @@ public class StudentPreviousExamsFragment extends Fragment implements View.OnCli
 
     public  static StudentPreviousExamsFragment getInstance(Activity activity , Bundle bundle){
         StudentPreviousExamsFragment fragment = new StudentPreviousExamsFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -72,7 +73,7 @@ public class StudentPreviousExamsFragment extends Fragment implements View.OnCli
 
         int currentUserId = getArguments().getInt(ApiConstants.CURRENT_USR_ID) == 0 ? 0 : getArguments().getInt(ApiConstants.CURRENT_USR_ID);
         int examID = getArguments().getInt(ApiConstants.EXAM_ID) == 0 ? 0 : getArguments().getInt(ApiConstants.EXAM_ID);
-        int userID = getArguments().getInt(ApiConstants.USER_ID) == 0 ? 0 : getArguments().getInt(ApiConstants.USER_ID);
+        int userID = getArguments().getInt(ApiConstants.STUDENT_ID) == 0 ? 0 : getArguments().getInt(ApiConstants.STUDENT_ID);
 
         pastExamsRequestData = new HashMap<>();
         pastExamsRequestData.put(ApiConstants.STUDENT_ID ,userID);
@@ -95,7 +96,7 @@ public class StudentPreviousExamsFragment extends Fragment implements View.OnCli
 
 
     private void getPreviousExamsDetails(Map<String , Object> params){
-        new RetrofitRequestHandler(getActivity()).pastExamList(RequestConstants.REQ_PAST_EXAMS_RESULT, params, new RetrofitAPIRequests.ResponseListener<List<PreviousExamsListModel>>() {
+        new RetrofitRequestHandler(getActivity()).pastExamResult(RequestConstants.REQ_PAST_EXAMS_RESULT, params, new RetrofitAPIRequests.ResponseListener<List<PreviousExamsListModel>>() {
             @Override
             public void onSuccess(int requestId, Headers headers, List<PreviousExamsListModel> response) {
                 if(response.get(0).isIsSuccess()){

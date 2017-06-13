@@ -32,11 +32,14 @@ import quest.com.quest.models.ExamStatusModel;
 public class ExamEnableDisableFragment extends Fragment {
     private EnableDisableExamBinding dataBinding;
     private static Activity context;
+    private int examId;
 
 
     public static ExamEnableDisableFragment getInstance(Activity activity, Bundle data) {
         context = activity;
-        return new ExamEnableDisableFragment();
+        ExamEnableDisableFragment fragment = new ExamEnableDisableFragment();
+        fragment.setArguments(data);
+        return fragment;
     }
 
     @Nullable
@@ -53,25 +56,25 @@ public class ExamEnableDisableFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        examId = getArguments().getInt(ApiConstants.EXAM_ID);
 
     }
 
 
     public void enableClick(View v) {
         Map<String,Object> enableExamRequestData = new HashMap<>();
-        enableExamRequestData.put("exam_id",
-                (PrefUtils.getExamIdDetailsfromSP(getContext(),ApiConstants.EXAM_ID)));
-        enableExamRequestData.put(ApiConstants.USER_ID,1);
-        enableExamRequestData.put(ApiConstants.BRANCH_ID,1);
+        enableExamRequestData.put(ApiConstants.EXAM_ID,examId);
+        enableExamRequestData.put(ApiConstants.USER_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID));
+        enableExamRequestData.put(ApiConstants.BRANCH_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.BRANCH_ID));
         enableExam(enableExamRequestData);
     }
 
     public void disableClick(View v) {
         Map<String,Object> disableExamRequestData = new HashMap<>();
-        disableExamRequestData.put("exam_id",
-                (PrefUtils.getExamIdDetailsfromSP(getContext(),ApiConstants.EXAM_ID)));
-        disableExamRequestData.put(ApiConstants.USER_ID,1);
-        disableExamRequestData.put(ApiConstants.BRANCH_ID,1);
+        disableExamRequestData.put(ApiConstants.EXAM_ID,
+                examId);
+        disableExamRequestData.put(ApiConstants.USER_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID));
+        disableExamRequestData.put(ApiConstants.BRANCH_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.BRANCH_ID));
         disableExam(disableExamRequestData);
     }
 

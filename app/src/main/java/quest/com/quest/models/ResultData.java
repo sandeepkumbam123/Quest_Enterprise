@@ -3,6 +3,7 @@ package quest.com.quest.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +24,14 @@ public class ResultData implements Parcelable{
     private int numberofCorrectAnswers;
     private int totalQuestions;
     private String subject;
+    private int timeTakentoAttempt;
     private List<FastestAnswersModel> fastestAttemptedAnswers;
     private Map<Integer , Integer> listofAnswersAttempted ;
 
     public ResultData(String examId, String examTitle, int examDuration, int examTotalMarks,
                       int obtainedMarks, int numberofAttemptedAnswers, int numberofCorrectAnswers,
                       String subject, List<FastestAnswersModel> fastestAttemptedAnswers , int totalQuestions ,
-                      Map<Integer , Integer> listofAnswersAttempted) {
+                      Map<Integer , Integer> listofAnswersAttempted , int timeTakentoAttempt) {
         this.examId = examId;
         this.examTitle = examTitle;
         this.examDuration = examDuration;
@@ -41,30 +43,8 @@ public class ResultData implements Parcelable{
         this.fastestAttemptedAnswers = fastestAttemptedAnswers;
         this.totalQuestions = totalQuestions;
         this.listofAnswersAttempted =listofAnswersAttempted;
+        this.timeTakentoAttempt = timeTakentoAttempt;
     }
-
-    protected ResultData(Parcel in) {
-        examId = in.readString();
-        examTitle = in.readString();
-        examDuration = in.readInt();
-        examTotalMarks = in.readInt();
-        obtainedMarks = in.readInt();
-        numberofAttemptedAnswers = in.readInt();
-        numberofCorrectAnswers = in.readInt();
-        subject = in.readString();
-    }
-
-    public static final Creator<ResultData> CREATOR = new Creator<ResultData>() {
-        @Override
-        public ResultData createFromParcel(Parcel in) {
-            return new ResultData(in);
-        }
-
-        @Override
-        public ResultData[] newArray(int size) {
-            return new ResultData[size];
-        }
-    };
 
     public String getExamTitle() {
         return examTitle;
@@ -92,6 +72,14 @@ public class ResultData implements Parcelable{
 
     public int getExamTotalMarks() {
         return examTotalMarks;
+    }
+
+    public int getTimeTakentoAttempt() {
+        return timeTakentoAttempt;
+    }
+
+    public void setTimeTakentoAttempt(int timeTakentoAttempt) {
+        this.timeTakentoAttempt = timeTakentoAttempt;
     }
 
     public Map<Integer, Integer> getListofAnswersAttempted() {
@@ -165,14 +153,55 @@ public class ResultData implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
-        dest.writeString(examId);
-        dest.writeString(examTitle);
-        dest.writeInt(examDuration);
-        dest.writeInt(examTotalMarks);
-        dest.writeInt(obtainedMarks);
-        dest.writeInt(numberofAttemptedAnswers);
-        dest.writeInt(numberofCorrectAnswers);
-        dest.writeString(subject);
+        dest.writeString(this.examId);
+        dest.writeString(this.examTitle);
+        dest.writeInt(this.examDuration);
+        dest.writeInt(this.examTotalMarks);
+        dest.writeInt(this.obtainedMarks);
+        dest.writeInt(this.numberofAttemptedAnswers);
+        dest.writeInt(this.numberofCorrectAnswers);
+        dest.writeInt(this.totalQuestions);
+        dest.writeString(this.subject);
+        dest.writeInt(this.timeTakentoAttempt);
+        dest.writeList(this.fastestAttemptedAnswers);
+        dest.writeInt(this.listofAnswersAttempted.size());
+        for (Map.Entry<Integer, Integer> entry : this.listofAnswersAttempted.entrySet()) {
+            dest.writeValue(entry.getKey());
+            dest.writeValue(entry.getValue());
+        }
     }
+
+    protected ResultData(Parcel in) {
+        this.examId = in.readString();
+        this.examTitle = in.readString();
+        this.examDuration = in.readInt();
+        this.examTotalMarks = in.readInt();
+        this.obtainedMarks = in.readInt();
+        this.numberofAttemptedAnswers = in.readInt();
+        this.numberofCorrectAnswers = in.readInt();
+        this.totalQuestions = in.readInt();
+        this.subject = in.readString();
+        this.timeTakentoAttempt = in.readInt();
+        this.fastestAttemptedAnswers = new ArrayList<FastestAnswersModel>();
+        in.readList(this.fastestAttemptedAnswers, FastestAnswersModel.class.getClassLoader());
+        int listofAnswersAttemptedSize = in.readInt();
+        this.listofAnswersAttempted = new HashMap<Integer, Integer>(listofAnswersAttemptedSize);
+        for (int i = 0; i < listofAnswersAttemptedSize; i++) {
+            Integer key = (Integer) in.readValue(Integer.class.getClassLoader());
+            Integer value = (Integer) in.readValue(Integer.class.getClassLoader());
+            this.listofAnswersAttempted.put(key, value);
+        }
+    }
+
+    public static final Creator<ResultData> CREATOR = new Creator<ResultData>() {
+        @Override
+        public ResultData createFromParcel(Parcel source) {
+            return new ResultData(source);
+        }
+
+        @Override
+        public ResultData[] newArray(int size) {
+            return new ResultData[size];
+        }
+    };
 }

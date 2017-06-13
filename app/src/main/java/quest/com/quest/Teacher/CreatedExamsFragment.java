@@ -103,6 +103,8 @@ public class CreatedExamsFragment  extends Fragment implements View.OnClickListe
 
     @Override
     public void onCreatedExamClick(int position) {
+        Bundle b = new Bundle();
+        b.putInt(ApiConstants.EXAM_ID , upComingExamsList.getListOfScheduledExams().get(position).getExamID());
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.teacher_frame,ExamEnableDisableFragment.getInstance(getActivity(),new Bundle()))

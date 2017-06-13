@@ -176,10 +176,10 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void updateAttemptedAnswer(Database database ,AttemptedQuestionModel model,
-                                      String criticality,int duration, String title ,int totalMarks , int negativeMarks ){
+                                      String criticality,int duration, String title ,int totalMarks , int negativeMarks ,String examID ){
         SQLiteDatabase mDB = database.getWritableDatabase();
         ContentValues columnValues = new ContentValues();
-        columnValues.put(COLUMN_EXAM_ID,model.getExamId());
+        columnValues.put(COLUMN_EXAM_ID,examID);
         columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
         columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
         columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
@@ -195,7 +195,7 @@ public class Database extends SQLiteOpenHelper {
         columnValues.put(COLUMN_TITLE , title);
         columnValues.put(COLUMN_TOTAL_MARKS ,totalMarks);
         columnValues.put(COLUMN_NEGATIVE_MARKS,negativeMarks);
-        mDB.update(TABLE_ANSWERS_ATTEMPTED,columnValues,COLUMN_EXAM_ID,new String[]{model.getExamId()});
+        mDB.update(TABLE_ANSWERS_ATTEMPTED,columnValues,COLUMN_EXAM_ID +" =? ",new String[]{model.getExamId()});
         mDB.close();
     }
 
