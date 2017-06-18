@@ -3,27 +3,21 @@ package quest.com.quest.Teacher;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import quest.com.quest.Adapters.DrawerMenuAdapter;
-import quest.com.quest.Adapters.DrawerModel;
 import quest.com.quest.NetworkUtils.ApiConstants;
 import quest.com.quest.R;
 import quest.com.quest.Utils.PrefUtils;
@@ -42,6 +36,7 @@ public class TeacherDashBoardActivity extends BaseActivity
     private TextView userName;
     private TextView fragmentName;
     private Toolbar toolbar;
+    ListView mDrawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +47,7 @@ public class TeacherDashBoardActivity extends BaseActivity
 
         //init toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mDrawerList=(ListView)findViewById(R.id.drawerList);
         setSupportActionBar(toolbar);
         userName = (TextView) findViewById(R.id.tv_user_name);
         fragmentName = (TextView) findViewById(R.id.tv_header);
@@ -72,10 +68,19 @@ public class TeacherDashBoardActivity extends BaseActivity
             }
         };
         drawer.setDrawerListener(toggle);
+        mDrawerList.setAdapter(new DrawerMenuAdapter());
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                drawer.closeDrawers();
+                selectItem(position);
+            }
+        });
+
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+ /*       NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);*/
 
     }
 
@@ -135,7 +140,7 @@ public class TeacherDashBoardActivity extends BaseActivity
                 fragment = SearchStudentFragment.getInstance(TeacherDashBoardActivity.this, new Bundle());
                 break;
             case 3:
-navigatetoNextActivity(this,new LoginActivity());
+                navigatetoNextActivity(this,new LoginActivity());
 
             default:
                 break;

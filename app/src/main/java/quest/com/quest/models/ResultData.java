@@ -163,7 +163,6 @@ public class ResultData implements Parcelable{
         dest.writeInt(this.totalQuestions);
         dest.writeString(this.subject);
         dest.writeInt(this.timeTakentoAttempt);
-        dest.writeList(this.fastestAttemptedAnswers);
         dest.writeInt(this.listofAnswersAttempted.size());
         for (Map.Entry<Integer, Integer> entry : this.listofAnswersAttempted.entrySet()) {
             dest.writeValue(entry.getKey());

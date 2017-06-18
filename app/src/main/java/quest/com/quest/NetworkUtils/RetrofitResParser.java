@@ -350,7 +350,7 @@ public class RetrofitResParser <T> {
                 String question = questionArrayJSON.optJSONObject(i).optString("question");
                 int mark = questionArrayJSON.optJSONObject(i).optInt("mark");
                 int criticalLevel = questionArrayJSON.optJSONObject(i).optInt("critical_level");
-                boolean isImage = questionArrayJSON.optJSONObject(i).optBoolean("is_image");
+                String isImage = questionArrayJSON.optJSONObject(i).optString("is_image");
                 String  createdBy = questionArrayJSON.optJSONObject(i).optString("createdby");
                 String  created_at = questionArrayJSON.optJSONObject(i).optString("created_at");
                 String  deletedAt = questionArrayJSON.optJSONObject(i).optString("deleted_at");
@@ -361,10 +361,10 @@ public class RetrofitResParser <T> {
                 String option2 = questionArrayJSON.optJSONObject(i).optString("option2");
                 String option3 = questionArrayJSON.optJSONObject(i).optString("option3");
                 String option4 = questionArrayJSON.optJSONObject(i).optString("option4");
-                boolean isOptionImage1 = questionArrayJSON.optJSONObject(i).optBoolean("is_option1_image");
-                boolean isOptionImage2 = questionArrayJSON.optJSONObject(i).optBoolean("is_option2_image");
-                boolean isOptionImage3 = questionArrayJSON.optJSONObject(i).optBoolean("is_option3_image");
-                boolean isOptionImage4 = questionArrayJSON.optJSONObject(i).optBoolean("is_option4_image");
+                String isOptionImage1 = questionArrayJSON.optJSONObject(i).optString("is_option1_image");
+                String isOptionImage2 = questionArrayJSON.optJSONObject(i).optString("is_option2_image");
+                String isOptionImage3 = questionArrayJSON.optJSONObject(i).optString("is_option3_image");
+                String isOptionImage4 = questionArrayJSON.optJSONObject(i).optString("is_option4_image");
 
                 String answer = questionArrayJSON.optJSONObject(i).optString("answer");
                 String notes = questionArrayJSON.optJSONObject(i).optString("notes");

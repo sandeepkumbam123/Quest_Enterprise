@@ -127,17 +127,18 @@ public class StartExamModel {
         private int questionNumber;
         private String question;
 
+
         private String criticallity;
-        private  boolean isImage;
+        private String isImage;
         private int subjectId;
         private  int chapterId;
         private int classId;
         private String notes;
 
-        public    QuestionModel(int questionId, int examId, int questionNumber, String question, String criticallity, boolean isImage,
+        public    QuestionModel(int questionId, int examId, int questionNumber, String question, String criticallity, String isImage,
                              int subjectId, int chapterId, int classId, String notes, String createAt, String updatedAt, String deletedAt,
-                             String updatedBy, String optionA, String optionB, String optionC, String optionD, boolean hasOption1Image,
-                             boolean hasOption2Image, boolean hasOption3Image, boolean hasOption4Image, int correctAnswer, String  answer,
+                             String updatedBy, String optionA, String optionB, String optionC, String optionD, String hasOption1Image,
+                             String hasOption2Image, String hasOption3Image, String hasOption4Image, int correctAnswer, String  answer,
                              int negativeMark) {
             this.questionId = questionId;
             this.examId = examId;
@@ -174,11 +175,11 @@ public class StartExamModel {
             this.criticallity = criticallity;
         }
 
-        public boolean isImage() {
+        public String isImage() {
             return isImage;
         }
 
-        public void setImage(boolean image) {
+        public void setImage(String image) {
             isImage = image;
         }
 
@@ -246,35 +247,35 @@ public class StartExamModel {
             this.updatedBy = updatedBy;
         }
 
-        public boolean isHasOption1Image() {
+        public String isHasOption1Image() {
             return hasOption1Image;
         }
 
-        public void setHasOption1Image(boolean hasOption1Image) {
+        public void setHasOption1Image(String hasOption1Image) {
             this.hasOption1Image = hasOption1Image;
         }
 
-        public boolean isHasOption2Image() {
+        public String isHasOption2Image() {
             return hasOption2Image;
         }
 
-        public void setHasOption2Image(boolean hasOption2Image) {
+        public void setHasOption2Image(String hasOption2Image) {
             this.hasOption2Image = hasOption2Image;
         }
 
-        public boolean isHasOption3Image() {
+        public String isHasOption3Image() {
             return hasOption3Image;
         }
 
-        public void setHasOption3Image(boolean hasOption3Image) {
+        public void setHasOption3Image(String hasOption3Image) {
             this.hasOption3Image = hasOption3Image;
         }
 
-        public boolean isHasOption4Image() {
+        public String isHasOption4Image() {
             return hasOption4Image;
         }
 
-        public void setHasOption4Image(boolean hasOption4Image) {
+        public void setHasOption4Image(String hasOption4Image) {
             this.hasOption4Image = hasOption4Image;
         }
 
@@ -288,10 +289,10 @@ public class StartExamModel {
         private String optionB;
         private String optionC;
         private String optionD;
-        private boolean hasOption1Image;
-        private boolean hasOption2Image;
-        private boolean hasOption3Image;
-        private boolean hasOption4Image;
+        private String hasOption1Image;
+        private String hasOption2Image;
+        private String hasOption3Image;
+        private String hasOption4Image;
         private String correctAnswer;
         private int answerMark;
         private int negativeMark;

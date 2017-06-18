@@ -18,6 +18,78 @@ public class AttemptedQuestionModel implements Parcelable {
     private int correctAnswer;
     private int timeTakentoAttempt;
 
+    private String hasImage;
+    private String option1Image;
+    private String option2Image;
+    private String option3Image;
+
+    public AttemptedQuestionModel(String questionNumber, String examId, String optionA, String optionB, String optionC, String optionD, int attemptedAnswer,
+                                 int correctAnswer, int timeTakentoAttempt, String hasImage, String option1Image, String option2Image, String option3Image,
+                                  String option4Image, String examTitle, int examDuration, int totalMarks, int negativeMarks, String criticality, int answerMark) {
+        this.questionNumber = questionNumber;
+        this.examId = examId;
+        this.optionA = optionA;
+        this.optionB = optionB;
+        this.optionC = optionC;
+        this.optionD = optionD;
+        this.attemptedAnswer = attemptedAnswer;
+        this.correctAnswer = correctAnswer;
+        this.timeTakentoAttempt = timeTakentoAttempt;
+        this.hasImage = hasImage;
+        this.option1Image = option1Image;
+        this.option2Image = option2Image;
+        this.option3Image = option3Image;
+        this.option4Image = option4Image;
+        this.examTitle = examTitle;
+        this.examDuration = examDuration;
+        this.totalMarks = totalMarks;
+        this.negativeMarks = negativeMarks;
+        this.criticality = criticality;
+        this.answerMark = answerMark;
+    }
+
+    public String getHasImage() {
+        return hasImage;
+    }
+
+    public void setHasImage(String hasImage) {
+        this.hasImage = hasImage;
+    }
+
+    public String getOption1Image() {
+        return option1Image;
+    }
+
+    public void setOption1Image(String option1Image) {
+        this.option1Image = option1Image;
+    }
+
+    public String getOption2Image() {
+        return option2Image;
+    }
+
+    public void setOption2Image(String option2Image) {
+        this.option2Image = option2Image;
+    }
+
+    public String getOption3Image() {
+        return option3Image;
+    }
+
+    public void setOption3Image(String option3Image) {
+        this.option3Image = option3Image;
+    }
+
+    public String getOption4Image() {
+        return option4Image;
+    }
+
+    public void setOption4Image(String option4Image) {
+        this.option4Image = option4Image;
+    }
+
+    private String option4Image;
+
     private String examTitle;
     private int examDuration;
     private int totalMarks;
@@ -32,35 +104,6 @@ public class AttemptedQuestionModel implements Parcelable {
     public void setAnswerMark(int answerMark) {
         this.answerMark = answerMark;
     }
-
-    protected AttemptedQuestionModel(Parcel in) {
-        questionNumber = in.readString();
-        examId = in.readString();
-        optionA = in.readString();
-        optionB = in.readString();
-        optionC = in.readString();
-        optionD = in.readString();
-        attemptedAnswer = in.readInt();
-        correctAnswer = in.readInt();
-        timeTakentoAttempt = in.readInt();
-        examTitle = in.readString();
-        examDuration = in.readInt();
-        totalMarks = in.readInt();
-        negativeMarks = in.readInt();
-        criticality = in.readString();
-    }
-
-    public static final Creator<AttemptedQuestionModel> CREATOR = new Creator<AttemptedQuestionModel>() {
-        @Override
-        public AttemptedQuestionModel createFromParcel(Parcel in) {
-            return new AttemptedQuestionModel(in);
-        }
-
-        @Override
-        public AttemptedQuestionModel[] newArray(int size) {
-            return new AttemptedQuestionModel[size];
-        }
-    };
 
 
     public AttemptedQuestionModel(int timeTakentoAttempt , int attemptedAnswer ){
@@ -105,46 +148,11 @@ public class AttemptedQuestionModel implements Parcelable {
         return criticality;
     }
 
-    public AttemptedQuestionModel(String questionNumber, String examId, String optionA, String optionB,
-                                  String optionC, String optionD, int attemptedAnswer, int correctAnswer,
-                                  int timeTakentoAttempt,
-                                  String examTitle, int examDuration, int totalMarks,
-                                  int negativeMarks, String criticality , int answerMark) {
-        this.questionNumber = questionNumber;
-        this.examId = examId;
-        this.optionA = optionA;
-        this.optionB = optionB;
-        this.optionC = optionC;
-        this.optionD = optionD;
-        this.attemptedAnswer = attemptedAnswer;
-        this.correctAnswer = correctAnswer;
-        this.timeTakentoAttempt = timeTakentoAttempt;
-        this.examTitle = examTitle;
-        this.examDuration = examDuration;
-        this.totalMarks = totalMarks;
-        this.negativeMarks = negativeMarks;
-        this.criticality = criticality;
-        this.answerMark = answerMark;
-    }
+
 
     public void setCriticality(String criticality) {
         this.criticality = criticality;
 
-    }
-
-    public AttemptedQuestionModel(String questionNumber, String examId,
-                                  String optionA, String optionB, String optionC,
-                                  String optionD, int attemptedAnswer, int correctAnswer,
-                                  int timeTakentoAttempt) {
-        this.questionNumber = questionNumber;
-        this.examId = examId;
-        this.optionA = optionA;
-        this.optionB = optionB;
-        this.optionC = optionC;
-        this.optionD = optionD;
-        this.attemptedAnswer = attemptedAnswer;
-        this.correctAnswer = correctAnswer;
-        this.timeTakentoAttempt = timeTakentoAttempt;
     }
 
     public String getQuestionNumber() {
@@ -227,19 +235,60 @@ public class AttemptedQuestionModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(questionNumber);
-        dest.writeString(examId);
-        dest.writeString(optionA);
-        dest.writeString(optionB);
-        dest.writeString(optionC);
-        dest.writeString(optionD);
-        dest.writeInt(attemptedAnswer);
-        dest.writeInt(correctAnswer);
-        dest.writeInt(timeTakentoAttempt);
-        dest.writeString(examTitle);
-        dest.writeInt(examDuration);
-        dest.writeInt(totalMarks);
-        dest.writeInt(negativeMarks);
-        dest.writeString(criticality);
+        dest.writeString(this.questionNumber);
+        dest.writeString(this.examId);
+        dest.writeString(this.optionA);
+        dest.writeString(this.optionB);
+        dest.writeString(this.optionC);
+        dest.writeString(this.optionD);
+        dest.writeInt(this.attemptedAnswer);
+        dest.writeInt(this.correctAnswer);
+        dest.writeInt(this.timeTakentoAttempt);
+        dest.writeString(this.hasImage);
+        dest.writeString(this.option1Image);
+        dest.writeString(this.option2Image);
+        dest.writeString(this.option3Image);
+        dest.writeString(this.option4Image);
+        dest.writeString(this.examTitle);
+        dest.writeInt(this.examDuration);
+        dest.writeInt(this.totalMarks);
+        dest.writeInt(this.negativeMarks);
+        dest.writeString(this.criticality);
+        dest.writeInt(this.answerMark);
     }
+
+    protected AttemptedQuestionModel(Parcel in) {
+        this.questionNumber = in.readString();
+        this.examId = in.readString();
+        this.optionA = in.readString();
+        this.optionB = in.readString();
+        this.optionC = in.readString();
+        this.optionD = in.readString();
+        this.attemptedAnswer = in.readInt();
+        this.correctAnswer = in.readInt();
+        this.timeTakentoAttempt = in.readInt();
+        this.hasImage = in.readString();
+        this.option1Image = in.readString();
+        this.option2Image = in.readString();
+        this.option3Image = in.readString();
+        this.option4Image = in.readString();
+        this.examTitle = in.readString();
+        this.examDuration = in.readInt();
+        this.totalMarks = in.readInt();
+        this.negativeMarks = in.readInt();
+        this.criticality = in.readString();
+        this.answerMark = in.readInt();
+    }
+
+    public static final Creator<AttemptedQuestionModel> CREATOR = new Creator<AttemptedQuestionModel>() {
+        @Override
+        public AttemptedQuestionModel createFromParcel(Parcel source) {
+            return new AttemptedQuestionModel(source);
+        }
+
+        @Override
+        public AttemptedQuestionModel[] newArray(int size) {
+            return new AttemptedQuestionModel[size];
+        }
+    };
 }

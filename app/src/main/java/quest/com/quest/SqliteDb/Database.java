@@ -46,6 +46,12 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_ANSWER_MARK = "ANSWER_MARK";
     private static final String COLUMN_DURATION = "DURATION";
 
+    private static final String COLUMN_IMAGE_OPTION_A = "OPTION_A_IMAGE";
+    private static final String COLUMN_IMAGE_OPTION_B = "OPTION_B_IMAGE";
+    private static final String COLUMN_IMAGE_OPTION_C = "OPTION_C_IMAGE";
+    private static final String COLUMN_IMAGE_OPTION_D = "OPTION_D_IMAGE";
+
+
 
     private static final int DATABASE_TABLE_VERSION =1;
 
@@ -65,7 +71,11 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_QUESTION_OPTION_B+" TEXT NOT NULL ,"+
                 COLUMN_QUESTION_OPTION_C+" TEXT NOT NULL ,"+
                 COLUMN_QUESTION_OPTION_D+" TEXT NOT NULL ,"+
-                COLUMN_HAS_IMAGES +" BOOLEAN NOT NULL , "+
+                COLUMN_HAS_IMAGES +" TEXT  , "+
+                COLUMN_IMAGE_OPTION_A + " TEXT , "+
+                COLUMN_IMAGE_OPTION_B + " TEXT , "+
+                COLUMN_IMAGE_OPTION_C + " TEXT , "+
+                COLUMN_IMAGE_OPTION_D + " TEXT , "+
                 COLUMN_CORRECT_ANSWER+" INTEGER NOT NULL )";
 
         String EXAM_ANSWERS_ATTEMPTED_TABLE ="CREATE TABLE "+TABLE_ANSWERS_ATTEMPTED+
@@ -76,7 +86,11 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_QUESTION_OPTION_B+" TEXT NOT NULL ,"+
                 COLUMN_QUESTION_OPTION_C+" TEXT NOT NULL ,"+
                 COLUMN_QUESTION_OPTION_D+" TEXT NOT NULL ,"+
-                COLUMN_HAS_IMAGES +" BOOLEAN  , "+
+                COLUMN_HAS_IMAGES +" TEXT  , "+
+                COLUMN_IMAGE_OPTION_A + " TEXT , "+
+                COLUMN_IMAGE_OPTION_B + " TEXT , "+
+                COLUMN_IMAGE_OPTION_C + " TEXT , "+
+                COLUMN_IMAGE_OPTION_D + " TEXT , "+
                 COLUMN_ANSWER_ATTEMPTED+" INTEGER , "+
                 COLUMN_TIME_TAKEN_TO_ATTEMPT+" INTEGER ,"+
                 COLUMN_CORRECT_ANSWER+" INTEGER NOT NULL ,"+
@@ -85,6 +99,7 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_CRITICALITY +" TEXT , " +
                 COLUMN_TOTAL_MARKS + " INTEGER , "+
                 COLUMN_ANSWER_MARK + " INTEGER , "+
+
                 COLUMN_TITLE+" TEXT NOT NULL  "+")";
 
 
@@ -102,25 +117,29 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void insertQuestionsintoTable(Database database,StartExamModel modelList){
+    public void insertQuestionsintoTable(Database database,StartExamModel modelList , String examId){
         SQLiteDatabase mDB = database.getWritableDatabase();
 
         for (StartExamModel.QuestionModel model: modelList.getQuestionsList()){
             ContentValues columnValues = new ContentValues();
-            columnValues.put(COLUMN_EXAM_ID,model.getExamId());
+            columnValues.put(COLUMN_EXAM_ID,examId);
             columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
             columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
             columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
             columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
             columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
             columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
+            columnValues.put(COLUMN_IMAGE_OPTION_A,model.isHasOption1Image());
+            columnValues.put(COLUMN_IMAGE_OPTION_B,model.isHasOption2Image());
+            columnValues.put(COLUMN_IMAGE_OPTION_C,model.isHasOption3Image());
+            columnValues.put(COLUMN_IMAGE_OPTION_D,model.isHasOption4Image());
             columnValues.put(COLUMN_HAS_IMAGES,false);
             columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
 
             mDB.insert(DATABASE_STUDENT_QUESTION_TABLE,null,columnValues);
 
             insertQuestionintoAttemptedTable(database,model ,modelList.getCritical_level(),modelList.getDuration()
-            ,modelList.getExamTitle(),modelList.getTotalMarks() , model.getNegativeMark(),model.getAnswerMark());
+            ,modelList.getExamTitle(),modelList.getTotalMarks() , model.getNegativeMark(),model.getAnswerMark(),examId);
         }
         mDB.close();
     }
@@ -132,16 +151,20 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void insertQuestionintoAttemptedTable(Database database , StartExamModel.QuestionModel model,
-                                                 String criticality,int duration, String title ,int totalMarks , int negativeMarks ,int answerMark){
+                                                 String criticality,int duration, String title ,int totalMarks , int negativeMarks ,int answerMark , String examID){
         SQLiteDatabase mDB = database.getWritableDatabase();
         ContentValues columnValues = new ContentValues();
-        columnValues.put(COLUMN_EXAM_ID,model.getExamId());
+        columnValues.put(COLUMN_EXAM_ID,examID);
         columnValues.put(COLUMN_NUMBER_OF_QUESTION,model.getQuestionNumber());
         columnValues.put(COLUMN_QUESTION,model.getQuestionNumber());
         columnValues.put(COLUMN_QUESTION_OPTION_A,model.getOptionA());
         columnValues.put(COLUMN_QUESTION_OPTION_B,model.getOptionB());
         columnValues.put(COLUMN_QUESTION_OPTION_C,model.getOptionC());
         columnValues.put(COLUMN_QUESTION_OPTION_D,model.getOptionD());
+        columnValues.put(COLUMN_IMAGE_OPTION_A,model.isHasOption1Image());
+        columnValues.put(COLUMN_IMAGE_OPTION_B,model.isHasOption2Image());
+        columnValues.put(COLUMN_IMAGE_OPTION_C,model.isHasOption3Image());
+        columnValues.put(COLUMN_IMAGE_OPTION_D,model.isHasOption4Image());
         columnValues.put(COLUMN_HAS_IMAGES,false);
         columnValues.put(COLUMN_CORRECT_ANSWER,model.getCorrectAnswer());
         columnValues.put(COLUMN_ANSWER_ATTEMPTED,0);
@@ -214,6 +237,11 @@ public class Database extends SQLiteOpenHelper {
             String optionB = c.getString(c.getColumnIndex(COLUMN_QUESTION_OPTION_B));
             String optionC = c.getString(c.getColumnIndex(COLUMN_QUESTION_OPTION_C));
             String optionD = c.getString(c.getColumnIndex(COLUMN_QUESTION_OPTION_D));
+            String imageOptionA = c.getString(c.getColumnIndex(COLUMN_IMAGE_OPTION_A));
+            String imageOptionB = c.getString(c.getColumnIndex(COLUMN_IMAGE_OPTION_B));
+            String imageOptionC = c.getString(c.getColumnIndex(COLUMN_IMAGE_OPTION_C));
+            String imageOptionD = c.getString(c.getColumnIndex(COLUMN_IMAGE_OPTION_D));
+            String imageQuestion = c.getString(c.getColumnIndex(COLUMN_HAS_IMAGES));
             int correctAnswer = c.getInt(c.getColumnIndex(COLUMN_CORRECT_ANSWER));
             int answerAttempted = c.getInt(c.getColumnIndex(COLUMN_ANSWER_ATTEMPTED));
             int timetakentoAttempt = c.getInt(c.getColumnIndex(COLUMN_TIME_TAKEN_TO_ATTEMPT));
@@ -225,7 +253,8 @@ public class Database extends SQLiteOpenHelper {
             int answerMark = c.getInt(c.getColumnIndex(COLUMN_ANSWER_MARK));
 
             AttemptedQuestionModel model = new AttemptedQuestionModel(question,examId,optionA,
-                    optionB,optionC,optionD,answerAttempted,correctAnswer,timetakentoAttempt ,title,
+                    optionB,optionC,optionD,answerAttempted,correctAnswer,timetakentoAttempt ,imageQuestion,
+                    imageOptionA,imageOptionB,imageOptionC,imageOptionD ,title,
                     duration,totalMarks,negativeMarks,criticality ,answerMark);
             questionModels.add(model);
         }while ( (c.moveToNext()));

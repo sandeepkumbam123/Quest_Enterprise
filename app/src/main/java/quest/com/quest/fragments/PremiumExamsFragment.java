@@ -161,7 +161,7 @@ private  PremiumExamBinding dataBinding;
                                     .replace(R.id.fl_container,QuestionFragment.getInstance(b))
                                     .commit();
                             mDB.deleteQuestionsListFromTable(mDB);
-                            mDB.insertQuestionsintoTable(mDB,response);
+                            mDB.insertQuestionsintoTable(mDB,response ,PrefUtils.getDetailsfromSP(getActivity(),ApiConstants.EXAM_ID));
 
                         }else {
                             QuestDialog.showOkDialog(getActivity(),

@@ -1,6 +1,8 @@
 package quest.com.quest.fragments;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,7 +13,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
 import quest.com.quest.NetworkUtils.ApiConstants;
+import quest.com.quest.NetworkUtils.Constants;
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
 import quest.com.quest.activities.DashBoardActivity;
@@ -24,7 +31,7 @@ import quest.com.quest.models.AttemptedQuestionModel;
 
 public class QuestionTagFragment extends Fragment /*implements QuestionFragment.AnswerSubmitted*/{
 
-private FragmentQuestiongroupBinding mBinding;
+    private FragmentQuestiongroupBinding mBinding;
     private AttemptedQuestionModel model;
     public static final String QUESTIONS_MODEL  = "questions_model";
     private Database mDB;
@@ -73,7 +80,7 @@ private FragmentQuestiongroupBinding mBinding;
 
         mBinding = DataBindingUtil.bind(inflater.inflate(R.layout.fragment_questiongroup,container,false));
         dataChangedListener = (DashBoardActivity)getActivity();
-       startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         initViews();
 
         return mBinding.getRoot();
@@ -93,25 +100,25 @@ private FragmentQuestiongroupBinding mBinding;
                 long time = countTime(startTime,System.currentTimeMillis());
                 if(optionA.getId() == checkedId){
                     if(!optionA.isChecked())
-                    answer =1;
+                        answer =1;
                     else
                         answer =0;
                 }
                 else  if(optionB.getId() == checkedId){
                     if(optionB.isChecked())
-                    answer =0;
+                        answer =0;
                     else
                         answer =2;
                 }
                 else  if(optionC.getId() == checkedId){
                     if(optionC.isChecked())
-                    answer =3;
+                        answer =3;
                     else
                         answer=0;
                 }
                 else  if(optionD.getId() == checkedId){
                     if(optionD.isChecked())
-                    answer =4;
+                        answer =4;
                     else
                         answer =0;
                 }
@@ -125,7 +132,7 @@ private FragmentQuestiongroupBinding mBinding;
                 else
                     model.setTimeTakentoAttempt((int)time);
 
-              model.setAttemptedAnswer(answer);
+                model.setAttemptedAnswer(answer);
 
                 dataChangedListener.onDataChanged(model ,examID);
             }
@@ -136,28 +143,86 @@ private FragmentQuestiongroupBinding mBinding;
             optionB.setText("2. "+model.getOptionB());
             optionC.setText("3. "+model.getOptionC());
             optionD.setText("4. "+model.getOptionD());
+            if(!model.getHasImage().equalsIgnoreCase("no")){
+                Glide.with(questionText.getContext())
+                        .load((Constants.IMAGE_URL +model.getHasImage()))
+                                .asBitmap()
+                                .into(new SimpleTarget<Bitmap>(100,100) {
+                                    @Override
+                                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                        questionText.setCompoundDrawablesWithIntrinsicBounds(null, null, null , new BitmapDrawable(questionText.getResources(),resource));
+                                    }
+                                });
+            }
 
-             if(model.getAttemptedAnswer()!=0){
-                 switch (model.getAttemptedAnswer()){
-                     case 1:
-                         optionA.setChecked(true);
-                         break;
-                     case 2:
-                         optionB.setChecked(true);
-                         break;
-                     case 3:
-                         optionC.setChecked(true);
-                         break;
-                     case 4 :
-                         optionA.setChecked(true);
-                         break;
-                     default:
-                         optionA.setChecked(false);
-                         optionB.setChecked(false);
-                         optionC.setChecked(false);
-                         optionD.setChecked(false);
-                 }
-             }
+            if(!model.getOption1Image().equalsIgnoreCase("no")){
+                Glide.with(optionA.getContext())
+                        .load((Constants.IMAGE_URL +model.getHasImage()))
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>(100,100) {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                optionA.setCompoundDrawablesWithIntrinsicBounds(null, new BitmapDrawable(optionA.getResources(),resource), null, null );
+                            }
+                        });
+            }
+
+            if(!model.getOption2Image().equalsIgnoreCase("no")){
+                Glide.with(optionB.getContext())
+                        .load((Constants.IMAGE_URL +model.getHasImage()))
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>(100,100) {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                optionB.setCompoundDrawablesWithIntrinsicBounds(null, new BitmapDrawable(optionB.getResources(),resource), null, null );
+                            }
+                        });
+            }
+
+            if(!model.getOption3Image().equalsIgnoreCase("no")){
+                Glide.with(optionC.getContext())
+                        .load((Constants.IMAGE_URL +model.getHasImage()))
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>(100,100) {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                optionC.setCompoundDrawablesWithIntrinsicBounds(null, new BitmapDrawable(optionC.getResources(),resource), null, null );
+                            }
+                        });
+            }
+
+            if(!model.getOption4Image().equalsIgnoreCase("no")){
+                Glide.with(optionD.getContext())
+                        .load((Constants.IMAGE_URL +model.getHasImage()))
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>(100,100) {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                optionD.setCompoundDrawablesWithIntrinsicBounds(null, new BitmapDrawable(optionD.getResources(),resource), null, null );
+                            }
+                        });
+            }
+            if(model.getAttemptedAnswer()!=0){
+                switch (model.getAttemptedAnswer()){
+                    case 1:
+                        optionA.setChecked(true);
+                        break;
+                    case 2:
+                        optionB.setChecked(true);
+                        break;
+                    case 3:
+                        optionC.setChecked(true);
+                        break;
+                    case 4 :
+                        optionA.setChecked(true);
+                        break;
+                    default:
+                        optionA.setChecked(false);
+                        optionB.setChecked(false);
+                        optionC.setChecked(false);
+                        optionD.setChecked(false);
+                }
+            }
         }
 
     }
@@ -195,7 +260,7 @@ private FragmentQuestiongroupBinding mBinding;
 
 
     private long countTime(long start ,long end){
-       return   (end - start);
+        return   (end - start);
     }
 
 

@@ -69,7 +69,7 @@ public class StartTestFragment extends Fragment {
     }
 
 
-    public void startTest(Map<String,Object> params){
+    public void startTest(final Map<String,Object> params){
         new RetrofitRequestHandler(getActivity()).startExam(RequestConstants.REQ_START_EXAM,
                 params, new RetrofitAPIRequests.ResponseListener<StartExamModel>() {
                     @Override
@@ -82,7 +82,7 @@ public class StartTestFragment extends Fragment {
                                     .replace(R.id.fl_container, QuestionFragment.getInstance(b))
                                     .commit();
                             mDB.deleteQuestionsListFromTable(mDB);
-                            mDB.insertQuestionsintoTable(mDB,response);
+                            mDB.insertQuestionsintoTable(mDB,response , (String) params.get(ApiConstants.EXAM_ID));
                         }else {
                             QuestDialog.showOkDialog(getActivity(),
                                     response.getErrorCode()+"",response.getErrorMessage());

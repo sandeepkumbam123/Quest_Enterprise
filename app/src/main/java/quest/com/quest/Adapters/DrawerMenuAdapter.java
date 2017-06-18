@@ -1,12 +1,9 @@
 package quest.com.quest.Adapters;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,38 +13,37 @@ import quest.com.quest.R;
  * Created by skumbam on 30-03-2017.
  */
 
-public class DrawerMenuAdapter  extends ArrayAdapter<DrawerModel> {
-    private DrawerModel[] data;
-    private Context context;
-    private  int layoutID;
-
-    public DrawerMenuAdapter(Context context, int layoutID, DrawerModel[] data) {
-        super(context, layoutID, data);
-
-        this.data = data;
-        this.context = context;
-        this.layoutID = layoutID;
-
+public class DrawerMenuAdapter extends BaseAdapter {
+    private static String[] menuItemsText = {"Home", "Previous Exams", "Student Data", "Logout"};
+    private static int[] selectedMenuItemsDrawable = {R.drawable.teacher_home_ic, R.drawable.teacher_previousexam_ic, R.drawable.teacher_studentdata_ic,
+            R.drawable.teacher_logout_ic};
+    @Override
+    public int getCount() {
+        return menuItemsText.length;
     }
 
-    @NonNull
+    @Override
+    public Object getItem(int position) {
+        return menuItemsText[position];
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View listItem = convertView;
+        TextView mMenuText;
+        ImageView mMenuImage;
+        if (convertView == null) {
 
-        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        listItem = inflater.inflate(layoutID, parent, false);
-
-        ImageView imageViewIcon = (ImageView) listItem.findViewById(R.id.iv_item_view);
-        TextView textViewName = (TextView) listItem.findViewById(R.id.tv_home_view);
-
-        DrawerModel folder = data[position];
-
-
-        imageViewIcon.setImageResource(folder.getIcon());
-        textViewName.setText(folder.getName());
-
-        return listItem;
-
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_side_menu_items, parent, false);
+            mMenuText = (TextView) convertView.findViewById(R.id.tv_menuItem);
+            mMenuImage = (ImageView) convertView.findViewById(R.id.iv_menuImage);
+            mMenuText.setText(menuItemsText[position]);
+            mMenuImage.setImageResource(selectedMenuItemsDrawable[position]);
+        }
+        return convertView;
     }
 }
