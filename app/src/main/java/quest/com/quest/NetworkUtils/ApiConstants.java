@@ -31,4 +31,6 @@ public class ApiConstants {
 
     public static final String MANUAL_ID = "manual_id";
 
+    public static final String TITLE = "title";
+
 }

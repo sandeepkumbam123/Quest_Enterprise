@@ -239,7 +239,7 @@ public class QuestionFragment extends Fragment {
                 .commit();
     }
     public  void countDownTimer(int timer, final TextView textView){
-        countDownTimer = new CountDownTimer(timer*1000, 1000) {
+        countDownTimer = new CountDownTimer(timer*60*1000, 1000) {
 
             public void onTick(long millis) {
                 long second = (millis / 1000) % 60;

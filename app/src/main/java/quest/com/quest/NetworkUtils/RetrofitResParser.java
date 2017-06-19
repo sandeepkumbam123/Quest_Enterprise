@@ -213,64 +213,65 @@ public class RetrofitResParser <T> {
             String errorMessage = new JSONArray(response).optJSONObject(0).optString("ErrorMessage");
             boolean isSuccess = new JSONArray(response).optJSONObject(0).optBoolean("is_success");
 
+           if(ListofScheduledExams != null) {
+               for (int i = 0; i < ListofScheduledExams.length(); i++) {
+                   int examID = ListofScheduledExams.optJSONObject(i).optInt("examID");
+                   String exam_mannual_Id = ListofScheduledExams.optJSONObject(i).optString("exam_manualID");
+                   String classname = ListofScheduledExams.optJSONObject(i).optString("class");
+                   int class_id = ListofScheduledExams.optJSONObject(i).optInt("class_id");
+                   String title = ListofScheduledExams.optJSONObject(i).optString("title");
+                   int duration = ListofScheduledExams.optJSONObject(i).optInt("duration");
+                   boolean exam_status = ListofScheduledExams.optJSONObject(i).optBoolean("exam_status");
+                   int numberOfQuestions = ListofScheduledExams.optJSONObject(i).optInt("number_of_questions");
+                   int totalMarks = ListofScheduledExams.optJSONObject(i).optInt("total_marks");
+                   String topicCovered = ListofScheduledExams.optJSONObject(i).optString("topics_covered");
+                   String examDate = ListofScheduledExams.optJSONObject(i).optString("exam_date");
+                   String userNote = ListofScheduledExams.optJSONObject(i).optString("usernote");
 
-            for(int i = 0;i<ListofScheduledExams.length();i++){
-                int examID = ListofScheduledExams.optJSONObject(i).optInt("examID");
-                String exam_mannual_Id = ListofScheduledExams.optJSONObject(i).optString("exam_manualID");
-                String classname = ListofScheduledExams.optJSONObject(i).optString("class");
-                int class_id = ListofScheduledExams.optJSONObject(i).optInt("class_id");
-                String title = ListofScheduledExams.optJSONObject(i).optString("title");
-                int duration = ListofScheduledExams.optJSONObject(i).optInt("duration");
-                boolean exam_status = ListofScheduledExams.optJSONObject(i).optBoolean("exam_status");
-                int numberOfQuestions = ListofScheduledExams.optJSONObject(i).optInt("number_of_questions");
-                int totalMarks = ListofScheduledExams.optJSONObject(i).optInt("total_marks");
-                String topicCovered = ListofScheduledExams.optJSONObject(i).optString("topics_covered");
-                String examDate = ListofScheduledExams.optJSONObject(i).optString("exam_date");
-                String userNote = ListofScheduledExams.optJSONObject(i).optString("usernote");
-
-                List<ListofExams.ListOfScheduledExamsBean.SubjectsBean> subjectList = new ArrayList<>();
-                JSONArray subjectsArray = ListofScheduledExams.optJSONObject(i).optJSONArray("subjects");
-                for (int j =0 ;j< subjectsArray.length();j++) {
-                    ListofExams.ListOfScheduledExamsBean.SubjectsBean subject = null;
-                    if(subjectsArray.optJSONObject(j)!=null){
-                        int subjectID =     subjectsArray.optJSONObject(j).optInt("subjectID");
-                        int subjectClassId = subjectsArray.optJSONObject(j).optInt("class_names_classID");
-                        String subjectName = subjectsArray.optJSONObject(j).optString("subject");
-                        String created_At = subjectsArray.optJSONObject(j).optString("created_at");
-                        String update_At = subjectsArray.optJSONObject(j).optString("updated_at");
-                        String created_by = subjectsArray.optJSONObject(j).optString("created_by");
-                        String deletedAt = subjectsArray.optJSONObject(j).optString("deleted_at");
-                        subject = new ListofExams.ListOfScheduledExamsBean.SubjectsBean(subjectID,subjectClassId,subjectName,created_by,created_At,deletedAt,update_At);
-                        subjectList.add(subject);
-                    }
-                }
-
-
-                List<ListofExams.ListOfScheduledExamsBean.ChaptersBean> chaptersBeanList = new ArrayList<>();
-                JSONArray chapterArray = ListofScheduledExams.optJSONObject(i).optJSONArray("chapters");
-                for(int k =0;k<chapterArray.length();k++){
-                    ListofExams.ListOfScheduledExamsBean.ChaptersBean chaptersBean = null;
-                    if( subjectsArray.optJSONObject(k)!=null){
-                        int chapterId =     subjectsArray.optJSONObject(k).optInt("chapterID");
-                        int subjectSubjectId = subjectsArray.optJSONObject(k).optInt("subjects_subjectID");
-                        String chapterName = subjectsArray.optJSONObject(k).optString("chapter");
-                        String created_At = subjectsArray.optJSONObject(k).optString("created_at");
-                        String update_At = subjectsArray.optJSONObject(k).optString("updated_at");
-                        String created_by = subjectsArray.optJSONObject(k).optString("created_by");
-                        String deletedAt = subjectsArray.optJSONObject(k).optString("deleted_at");
-
-                        chaptersBean = new ListofExams.ListOfScheduledExamsBean.ChaptersBean(chapterId,subjectSubjectId,chapterName,created_by
-                                ,created_At,deletedAt,update_At);
-                        chaptersBeanList.add(chaptersBean);}
-                }
-                scheduledExamsBean = new ListofExams.ListOfScheduledExamsBean(exam_mannual_Id,classname ,class_id,title , duration , exam_status,
-                        numberOfQuestions,totalMarks,topicCovered,examDate,userNote,subjectList,chaptersBeanList , examID);
-
-                listofExamsBean.add(scheduledExamsBean);
-
-            }
+                   List<ListofExams.ListOfScheduledExamsBean.SubjectsBean> subjectList = new ArrayList<>();
+                   JSONArray subjectsArray = ListofScheduledExams.optJSONObject(i).optJSONArray("subjects");
+                   for (int j = 0; j < subjectsArray.length(); j++) {
+                       ListofExams.ListOfScheduledExamsBean.SubjectsBean subject = null;
+                       if (subjectsArray.optJSONObject(j) != null) {
+                           int subjectID = subjectsArray.optJSONObject(j).optInt("subjectID");
+                           int subjectClassId = subjectsArray.optJSONObject(j).optInt("class_names_classID");
+                           String subjectName = subjectsArray.optJSONObject(j).optString("subject");
+                           String created_At = subjectsArray.optJSONObject(j).optString("created_at");
+                           String update_At = subjectsArray.optJSONObject(j).optString("updated_at");
+                           String created_by = subjectsArray.optJSONObject(j).optString("created_by");
+                           String deletedAt = subjectsArray.optJSONObject(j).optString("deleted_at");
+                           subject = new ListofExams.ListOfScheduledExamsBean.SubjectsBean(subjectID, subjectClassId, subjectName, created_by, created_At, deletedAt, update_At);
+                           subjectList.add(subject);
+                       }
+                   }
 
 
+                   List<ListofExams.ListOfScheduledExamsBean.ChaptersBean> chaptersBeanList = new ArrayList<>();
+                   JSONArray chapterArray = ListofScheduledExams.optJSONObject(i).optJSONArray("chapters");
+                   for (int k = 0; k < chapterArray.length(); k++) {
+                       ListofExams.ListOfScheduledExamsBean.ChaptersBean chaptersBean = null;
+                       if (subjectsArray.optJSONObject(k) != null) {
+                           int chapterId = subjectsArray.optJSONObject(k).optInt("chapterID");
+                           int subjectSubjectId = subjectsArray.optJSONObject(k).optInt("subjects_subjectID");
+                           String chapterName = subjectsArray.optJSONObject(k).optString("chapter");
+                           String created_At = subjectsArray.optJSONObject(k).optString("created_at");
+                           String update_At = subjectsArray.optJSONObject(k).optString("updated_at");
+                           String created_by = subjectsArray.optJSONObject(k).optString("created_by");
+                           String deletedAt = subjectsArray.optJSONObject(k).optString("deleted_at");
+
+                           chaptersBean = new ListofExams.ListOfScheduledExamsBean.ChaptersBean(chapterId, subjectSubjectId, chapterName, created_by
+                                   , created_At, deletedAt, update_At);
+                           chaptersBeanList.add(chaptersBean);
+                       }
+                   }
+                   scheduledExamsBean = new ListofExams.ListOfScheduledExamsBean(exam_mannual_Id, classname, class_id, title, duration, exam_status,
+                           numberOfQuestions, totalMarks, topicCovered, examDate, userNote, subjectList, chaptersBeanList, examID);
+
+                   listofExamsBean.add(scheduledExamsBean);
+
+               }
+
+           }
 
             examsList = new ListofExams(isSuccess,errorCode,errorMessage,listofExamsBean);
 

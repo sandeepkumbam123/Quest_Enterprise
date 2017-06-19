@@ -46,6 +46,7 @@
                 android:text="College Name"
                 android:gravity="center_horizontal"/>
             <LinearLayout
+                android:id="@+id/correct_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -71,6 +72,7 @@
                     android:gravity="center_horizontal|center_vertical"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/incorrect_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -96,6 +98,7 @@
                     android:gravity="center_horizontal|center_vertical"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/skipped_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

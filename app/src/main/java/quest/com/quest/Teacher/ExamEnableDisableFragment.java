@@ -31,12 +31,11 @@ import quest.com.quest.models.ExamStatusModel;
 
 public class ExamEnableDisableFragment extends Fragment {
     private EnableDisableExamBinding dataBinding;
-    private static Activity context;
     private int examId;
+    private String examTitle;
 
 
     public static ExamEnableDisableFragment getInstance(Activity activity, Bundle data) {
-        context = activity;
         ExamEnableDisableFragment fragment = new ExamEnableDisableFragment();
         fragment.setArguments(data);
         return fragment;
@@ -57,6 +56,8 @@ public class ExamEnableDisableFragment extends Fragment {
     public void onStart() {
         super.onStart();
         examId = getArguments().getInt(ApiConstants.EXAM_ID);
+        examTitle = getArguments().getString(ApiConstants.TITLE);
+        dataBinding.tvTitleOfExam.setText(examTitle);
 
     }
 

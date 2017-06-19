@@ -99,7 +99,7 @@ public class StudentStatsFragment extends Fragment {
                                     Bundle b = new Bundle();
                                     b.putString(ApiConstants.EXAM_ID,response.getListOfScheduledExams().get(position).getExam_manualID());
                                     getActivity().getSupportFragmentManager()
-                                            .beginTransaction().replace(R.id.teacher_frame,AnswerDetailsFragment.getInstance(getActivity(),new Bundle()))
+                                            .beginTransaction().replace(R.id.teacher_frame,AnswerDetailsFragment.getInstance(getActivity(),b))
                                             .commit();
                                 }
                             });

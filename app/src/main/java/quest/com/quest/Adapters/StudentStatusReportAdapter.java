@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import quest.com.quest.R;
+import quest.com.quest.Utils.Utilities;
 import quest.com.quest.models.CreatedExamsModel;
 import quest.com.quest.models.ListofExams;
 
@@ -59,7 +60,7 @@ public class StudentStatusReportAdapter extends BaseAdapter {
 
         examTitle.setText(examData.getTitle());
 //        examClass.setText(examData.getClassOfExam());
-        examDate.setText(examData.getExam_date());
+        examDate.setText(Utilities.returnDatefromString(examData.getExam_date())+"");
 
         return convertView;
     }

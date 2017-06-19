@@ -42,8 +42,8 @@ public class AnswersRecyclerAdapter extends RecyclerView.Adapter<AnswersRecycler
     public void onBindViewHolder(HolderView holder, int position) {
         if(getExamQuestion(position) != null){
             StartExamModel.QuestionModel examsBean = getExamQuestion(position);
-            holder.questionName .setText(examsBean.getQuestion());
-            holder.answerForQuestion.setText(examsBean.getCorrectAnswer());
+            holder.questionName .setText(position+1 +" . "+ examsBean.getQuestion());
+            holder.answerForQuestion.setText("Answer " + examsBean.getCorrectAnswer());
         }
 
     }

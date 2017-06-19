@@ -54,14 +54,10 @@ public class AnswerDetailsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-       examId = getArguments().getString(ApiConstants.EXAM_ID) != null ? getArguments().getString(ApiConstants.EXAM_ID) : "" ;
-        if (examId.isEmpty()){
-            QuestDialog.showOkDialog(getActivity(),"Error" , " Please check your network connectivity and come back again .");
-        }else {
-            requestData = new HashMap<>();
-            requestData.put(ApiConstants.EXAM_ID , examId);
-            getExamDetails(requestData);
-        }
+        examId = getArguments().getString(ApiConstants.EXAM_ID) != null ? getArguments().getString(ApiConstants.EXAM_ID) : "" ;
+        requestData = new HashMap<>();
+        requestData.put(ApiConstants.EXAM_ID , examId);
+        getExamDetails(requestData);
 
 
     }
@@ -73,6 +69,14 @@ public class AnswerDetailsFragment extends Fragment {
         recyclerAnswersList = dataBinding.answersList;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerAnswersList.setLayoutManager(layoutManager);
+        dataBinding.tvSkippedAnswer.setVisibility(View.GONE);
+        dataBinding.tvIncorrectAnswer.setVisibility(View.GONE);
+        dataBinding.inCorrectAnswerCount.setVisibility(View.GONE);
+        dataBinding.tvSkippedAnswerCount.setVisibility(View.GONE);
+        dataBinding.correctLayout.setVisibility(View.INVISIBLE);
+        dataBinding.incorrectLayout.setVisibility(View.INVISIBLE);
+        dataBinding.skippedLayout.setVisibility(View.INVISIBLE);
+        dataBinding.studentCode.setVisibility(View.GONE);
         setToolBar();
 
 
@@ -95,13 +99,10 @@ public class AnswerDetailsFragment extends Fragment {
                             adapter = new AnswersRecyclerAdapter(getActivity(), response);
                             recyclerAnswersList.setAdapter(adapter);
                             dataBinding.tvStudentName.setText(response.getExamTitle());
-                            dataBinding.tvCollegeName.setText(response.getDuration()+"");
+                            dataBinding.tvCollegeName.setText(response.getDuration()+" Minutes");
                             dataBinding.tvCorrectAnswerCount.setText(response.getQuestionsList().size());
                             dataBinding.tvCorrectAnswer.setText("Number of Questions");
-                            dataBinding.tvSkippedAnswer.setVisibility(View.GONE);
-                            dataBinding.tvIncorrectAnswer.setVisibility(View.GONE);
-                            dataBinding.inCorrectAnswerCount.setVisibility(View.GONE);
-                            dataBinding.tvSkippedAnswerCount.setVisibility(View.GONE);
+
 
 
 
