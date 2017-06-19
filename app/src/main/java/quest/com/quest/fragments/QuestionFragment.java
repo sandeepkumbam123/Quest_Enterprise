@@ -42,6 +42,7 @@ import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.FragmentQuestionBinding;
 import quest.com.quest.dialog.QuestDialog;
 import quest.com.quest.models.AttemptedQuestionModel;
+import quest.com.quest.models.ExamIDModel;
 import quest.com.quest.models.FastestAnswersModel;
 import quest.com.quest.models.QuestionModel;
 import quest.com.quest.models.ResultData;
@@ -65,6 +66,8 @@ public class QuestionFragment extends Fragment {
     public  int questionPosition =0;
     private AttemptedQuestionModel attemptedQuestionModel;
     HashMap<String , Object> requestData  = new HashMap<>();
+    private int internalExamID;
+    HashMap<String , Object> examData  = new HashMap<>();
 
     private Database mDB;
 
@@ -83,12 +86,7 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(getArguments().getString(ApiConstants.EXAM_ID) !=null){
-            mExamIDString = getArguments().getString(ApiConstants.EXAM_ID);
-            dataBinding.examId.setText(mExamIDString+"");
 
-        }
-        mDB = new Database(getActivity());
     }
 
     @Override
@@ -112,10 +110,20 @@ public class QuestionFragment extends Fragment {
         dataBinding = DataBindingUtil.bind(inflater.inflate(R.layout.fragment_question,null,false));
         dataBinding.setFragment(this);
         initViews();
+        if(getArguments().getString(ApiConstants.EXAM_ID) !=null){
+            mExamIDString = getArguments().getString(ApiConstants.EXAM_ID);
+            dataBinding.examId.setText(mExamIDString+"");
+
+        }
+
+        examData.put(ApiConstants.MANUAL_ID , mExamIDString );
+        getExamID(examData);
+
+        mDB = new Database(getActivity());
         Collections.shuffle(models);
         createQuestionFragment(0,models.get(0));
 
-              //sample for branch push
+        //sample for branch push
 
         countDownTimer(models.get(0).getExamDuration(),dataBinding.timerCountdown);
         return dataBinding.getRoot();
@@ -130,9 +138,14 @@ public class QuestionFragment extends Fragment {
 
         if(models.size()==1){
             dataBinding.btSubmitExam.setVisibility(View.VISIBLE);
+            dataBinding.btnNextQuestion.setVisibility(GONE);
+            dataBinding.btnPreviousquestion.setVisibility(GONE);
         }else{
             dataBinding.btSubmitExam.setVisibility(GONE);
+            dataBinding.btnNextQuestion.setVisibility(View.VISIBLE);
+            dataBinding.btnPreviousquestion.setVisibility(View.VISIBLE);
         }
+
 
     }
 
@@ -141,14 +154,14 @@ public class QuestionFragment extends Fragment {
         questionPosition++;
        /* questionPosition = questionPosition +1;
         if(questionPosition < models.size()-1){*/
-        models = null;
-        models = mDB.getQuestions(database);
-        dataBinding.btnNextQuestion.setEnabled(true);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,  R.anim.enter_from_left, R.anim.exit_to_right);
+        if(questionPosition <=models.size()){
+            dataBinding.btnNextQuestion.setEnabled(true);
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,  R.anim.enter_from_left, R.anim.exit_to_right);
 
-        transaction.replace(R.id.fl_question_container,QuestionTagFragment.getInstance(models.get(questionPosition),mExamIDString));
-        transaction.commit();
+            transaction.replace(R.id.fl_question_container,QuestionTagFragment.getInstance(models.get(questionPosition),mExamIDString));
+            transaction.commit();
+        }
        /* }else{
             dataBinding.btnNextQuestion.setEnabled(false);
 
@@ -168,10 +181,10 @@ public class QuestionFragment extends Fragment {
     }
 
     public void getPreviousQuestion(View v){
-        models.set(questionPosition,((DashBoardActivity)getActivity()).attemptedQuestionModel);
+//        models.set(questionPosition,((DashBoardActivity)getActivity()).attemptedQuestionModel);
         questionPosition--;
-        models = null;
-        models = mDB.getQuestions(database);
+//        models = null;
+//        models = mDB.getQuestions(database);
        /* questionPosition = questionPosition -1 ;
         if(questionPosition<0){
             dataBinding.btnPreviousquestion.setEnabled(false);
@@ -323,7 +336,7 @@ public class QuestionFragment extends Fragment {
         }
 
         requestData.put(ApiConstants.USer_ANSWER_DATA , jsonObject.toString());
-        requestData.put(ApiConstants.EXAM_ID ,Integer.parseInt(modelList.get(0).getExamId()));
+        requestData.put(ApiConstants.EXAM_ID ,internalExamID);
         requestData.put(ApiConstants.STUDENT_ID , PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID));
         requestData.put(ApiConstants.TOTAL , modelList.get(0).getTotalMarks());
         requestData.put(ApiConstants.IS_PASS , (obtainedMarks/modelList.get(0).getTotalMarks() >= 0.35 ? "yes" :"no"));
@@ -350,6 +363,23 @@ public class QuestionFragment extends Fragment {
     }
 
 
+    private void getExamID(Map<String , Object> params){
+        new RetrofitRequestHandler(getActivity()).getExamId(RequestConstants.REQ_GET_EXAM_ID, params, new RetrofitAPIRequests.ResponseListener<ExamIDModel>() {
+            @Override
+            public void onSuccess(int requestId, Headers headers, ExamIDModel response) {
+                if(response != null && response.isSuccess()){
+                    internalExamID = response.getExamId();
+                }
+            }
+
+            @Override
+            public void onFailure(int requestId, Throwable error) {
+                Log.d(TAG , error.toString());
+
+
+            }
+        });
+    }
 
 
 }

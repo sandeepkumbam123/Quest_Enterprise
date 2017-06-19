@@ -29,4 +29,6 @@ public class ApiConstants {
     public static final String OPTION_3 ="option3";
     public static final String OPTION_4 ="option4";
 
+    public static final String MANUAL_ID = "manual_id";
+
 }

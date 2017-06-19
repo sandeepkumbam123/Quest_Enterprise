@@ -29,6 +29,7 @@ public interface RetrofitAPIRequests {
 
     Call<Object> studentResult(int requestID , @Body Map<String , Object> params , ResponseListener responseListener);
 
+    Call<Object> getExamId(int requestID , @Body Map<String , Object> params , ResponseListener responseListener);
 
     interface ResponseListener<T> {
         void onSuccess(int requestId, Headers headers, T response);

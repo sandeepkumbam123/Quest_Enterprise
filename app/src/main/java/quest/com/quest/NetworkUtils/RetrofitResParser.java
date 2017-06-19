@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import quest.com.quest.models.ExamIDModel;
 import quest.com.quest.models.ExamStatusModel;
 import quest.com.quest.models.ListofExams;
 import quest.com.quest.models.LoginResponseModel;
@@ -45,11 +46,35 @@ public class RetrofitResParser <T> {
                 return parsePastExamResult(response);
             case RequestConstants.REQ_STUDENT_PAST_EXAMS:
                 return parseStudentPastExams(response);
+            case RequestConstants.REQ_GET_EXAM_ID:
+                return parseGetExamId(response);
 
 
             default: return (T) response;
 
         }
+
+    }
+
+    private T parseGetExamId(String response) {
+        ExamIDModel examModel = null;
+
+        try {
+            JSONObject examModelObject = new JSONArray(response).optJSONObject(0);
+            if(examModelObject != null) {
+                boolean isSuccess = examModelObject.optBoolean("is_success");
+                int examID = examModelObject.optInt("examID");
+                String errorCode = examModelObject.optString("ErrorCode");
+                String errorMessage = examModelObject.optString("ErrorMessage");
+
+                examModel = new ExamIDModel(isSuccess, errorCode, errorMessage, examID);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return (T) examModel;
 
     }
 
@@ -167,7 +192,7 @@ public class RetrofitResParser <T> {
 
                         model = new PreviousExamsListModel(examMannualId,title,criticalLevel,totalMarks,passPercentage,examDate,
                                 negativeMark,duration,note,isSuccess,errorCode,errorMessage,subjectsBeanList,chaptersBeenList,questionListBeanList);
-                       listofPreviousExams.add(model);
+                        listofPreviousExams.add(model);
                     }
                 }
             }

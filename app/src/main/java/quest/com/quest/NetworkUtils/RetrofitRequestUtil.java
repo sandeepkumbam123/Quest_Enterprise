@@ -96,6 +96,9 @@ public class RetrofitRequestUtil {
                 call = apiService.studentExamResult(params);
                 break;
 
+            case RequestConstants.REQ_GET_EXAM_ID:
+                call = apiService.getExamID(params);
+
 
         }
         return call;

@@ -18,4 +18,6 @@ public class RequestConstants {
     public static final int REQ_PAST_EXAMS_RESULT =9;
     public static final int REQ_STUDENT_PAST_EXAMS = 10;
 
+    public static final int REQ_GET_EXAM_ID = 11;
+
 }

@@ -46,4 +46,7 @@ public interface GraysAPIRequests {
     @POST(Constants.STUDENT_EXAMS_RESULT)
     Call<Object> studentExamResult(@Body Map<String , Object> jsonObj);
 
+    @POST(Constants.EXAMS)
+    Call<Object> getExamID(@Body Map<String , Object > jsonObj);
+
 }

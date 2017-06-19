@@ -79,7 +79,7 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_CORRECT_ANSWER+" INTEGER NOT NULL )";
 
         String EXAM_ANSWERS_ATTEMPTED_TABLE ="CREATE TABLE "+TABLE_ANSWERS_ATTEMPTED+
-                "( "+COLUMN_EXAM_ID+"  INTEGER NOT NULL UNIQUE ,"+
+                "( "+COLUMN_EXAM_ID+"  INTEGER NOT NULL  ,"+
                 COLUMN_NUMBER_OF_QUESTION+" INTEGER NOT NULL , "+
                 COLUMN_QUESTION+" TEXT NOT NULL , "+
                 COLUMN_QUESTION_OPTION_A+" TEXT NOT NULL ,"+
@@ -147,6 +147,7 @@ public class Database extends SQLiteOpenHelper {
     public void deleteQuestionsListFromTable(Database db){
         SQLiteDatabase mDB = db.getWritableDatabase();
         mDB.delete(DATABASE_STUDENT_QUESTION_TABLE,null,null);
+        mDB.delete(TABLE_ANSWERS_ATTEMPTED,null,null);
         mDB.close();
     }
 
