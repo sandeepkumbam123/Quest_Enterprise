@@ -212,6 +212,14 @@
                                             android:text="Time Spent"/>
                                     </LinearLayout>
                                 </LinearLayout>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Fastest Attempted Questions"/>
+                                <ListView
+                                    android:id="@+id/fastest_questions"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"></ListView>
 
                             </LinearLayout>
                         </ScrollView>

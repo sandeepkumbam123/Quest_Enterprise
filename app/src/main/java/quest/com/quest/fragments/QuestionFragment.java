@@ -288,7 +288,7 @@ public class QuestionFragment extends Fragment {
                 obtainedMarks =model.getAnswerMark()+obtainedMarks;
                 if(fastestCorrectAnswers.size()<5){
                     FastestAnswersModel fastModel = new FastestAnswersModel(model.getQuestionNumber(),
-                            model.getTimeTakentoAttempt(),model.getQuestionNumber());
+                            model.getTimeTakentoAttempt(),model.getQuestionNumber() , model.getAttemptedAnswer());
                     fastestCorrectAnswers.add(fastModel);
 
                 }
@@ -297,7 +297,7 @@ public class QuestionFragment extends Fragment {
                         if(model.getTimeTakentoAttempt() < fastavailablemodel.getTimeDuration()){
                             fastestCorrectAnswers.remove(fastavailablemodel);
                             fastestCorrectAnswers.add(new FastestAnswersModel(model.getQuestionNumber(),
-                                    model.getTimeTakentoAttempt(),model.getQuestionNumber()));
+                                    model.getTimeTakentoAttempt(),model.getQuestionNumber(),model.getAttemptedAnswer()));
                             break;
                         }
                     }

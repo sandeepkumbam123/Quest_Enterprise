@@ -76,7 +76,7 @@ private  PremiumExamBinding dataBinding;
         dataBinding.examDate.setText(Utilities.returnDatefromString(examBean.getExam_date()).get(Calendar.DAY_OF_MONTH)+"");
         dataBinding.examDay.setText(Utilities.returnDatefromString(examBean.getExam_date()).get(Calendar.DAY_OF_WEEK)+"");
         dataBinding.examTitle.setText(examBean.getTitle());
-        dataBinding.duration.setText(examBean.getDuration()+"");
+        dataBinding.duration.setText(examBean.getDuration()+" Minutes");
         dataBinding.topicsRelatedTo.setText(examBean.getTopics_covered());
         dataBinding.topicName.setText(examBean.getTitle());
         dataBinding.numberOfQuestions.setText(examBean.getNumber_of_questions()+" Questions");
