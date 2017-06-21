@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-   >
+    >
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -56,8 +56,8 @@
                     android:id="@+id/tv_correct_answer_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:background="@drawable/circle_green"
                     android:text="20"
                     android:textSize="@dimen/sp_30"
                     android:padding="@dimen/dp_10"/>
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:background="@drawable/circle_red"
+                    android:textColor="@android:color/black"
                     android:text="20"
                     android:id="@+id/in_correct_answer_count"
                     android:textSize="@dimen/sp_30"
@@ -109,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:background="@drawable/circle_gray"
+                    android:textColor="@android:color/black"
                     android:text="20"
                     android:textSize="@dimen/sp_30"
                     android:padding="@dimen/dp_10"/>
