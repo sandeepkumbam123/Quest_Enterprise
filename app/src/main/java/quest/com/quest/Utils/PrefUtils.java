@@ -16,6 +16,9 @@ public class PrefUtils {
         return sharedPreferences;
     }
 
+    public static void clearPreferences(Context ctx){
+        getInstance(ctx).edit().clear().apply();
+    }
     public static void writeExamIdDetaisinSP(Context context, SharedPreferences sp, String key , String value){
         getInstance(context).edit().putString(key, value).apply();
     }

@@ -121,31 +121,41 @@ public class QuestionFragment extends Fragment {
 
         mDB = new Database(getActivity());
         Collections.shuffle(models);
-        createQuestionFragment(0,models.get(0));
+        if(models.size() != 0) {
+            createQuestionFragment(0, models.get(0));
 
-        //sample for branch push
+            //sample for branch push
 
-        countDownTimer(models.get(0).getExamDuration(),dataBinding.timerCountdown);
+            countDownTimer(models.get(0).getExamDuration(), dataBinding.timerCountdown);
+        }
         return dataBinding.getRoot();
     }
 
     private void initViews() {
         mExamId = dataBinding.examId;
         mSubjectId = dataBinding.subjectId;
+        if(models.size() != 0) {
+            mExamId.setText(models.get(0).getExamId());
+            mSubjectId.setText(models.get(0).getExamTitle());
 
-        mExamId.setText(models.get(0).getExamId());
-        mSubjectId.setText(models.get(0).getExamTitle());
-
-        if(models.size()==1){
-            dataBinding.btSubmitExam.setVisibility(View.VISIBLE);
-            dataBinding.btnNextQuestion.setVisibility(GONE);
-            dataBinding.btnPreviousquestion.setVisibility(GONE);
-        }else{
-            dataBinding.btSubmitExam.setVisibility(GONE);
-            dataBinding.btnNextQuestion.setVisibility(View.VISIBLE);
-            dataBinding.btnPreviousquestion.setVisibility(View.VISIBLE);
+            if (models.size() == 1) {
+                dataBinding.btSubmitExam.setVisibility(View.VISIBLE);
+                dataBinding.btnNextQuestion.setVisibility(GONE);
+                dataBinding.btnPreviousquestion.setVisibility(GONE);
+            } else {
+                dataBinding.btSubmitExam.setVisibility(GONE);
+                dataBinding.btnNextQuestion.setVisibility(View.VISIBLE);
+                dataBinding.btnPreviousquestion.setVisibility(View.VISIBLE);
+            }
+        }else {
+            QuestDialog.showDialogwithPostiveNegativeButtons(getActivity(), " Error " ,
+                    "Questions Not Available in the Exam " , new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            getActivity().onBackPressed();
+                        }
+                    },null);
         }
-
 
     }
 

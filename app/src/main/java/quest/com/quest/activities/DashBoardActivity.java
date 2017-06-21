@@ -2,6 +2,7 @@ package quest.com.quest.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
+import quest.com.quest.Utils.PrefUtils;
 import quest.com.quest.dialog.QuestDialog;
 import quest.com.quest.fragments.DashboardFragment;
 import quest.com.quest.fragments.QuestionTagFragment;
@@ -111,7 +113,10 @@ public class DashBoardActivity extends BaseActivity
 
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            startActivity(new Intent(this,LoginActivity.class));
+            finish();
+            PrefUtils.clearPreferences(this);
             return true;
         }
 

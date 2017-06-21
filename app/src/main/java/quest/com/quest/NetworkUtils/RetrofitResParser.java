@@ -325,7 +325,7 @@ public class RetrofitResParser <T> {
         ExamStatusModel enableResponse = null;
 
         try {
-            JSONObject jsonObject = new JSONObject(response);
+            JSONObject jsonObject = new JSONArray(response).optJSONObject(0);
             String errorMessage = jsonObject.optString("ErrorMessage");
             int errorCode = Integer.parseInt(jsonObject.optString("ErrorCode"));
             boolean isSuccess = jsonObject.optBoolean("is_success");
@@ -339,7 +339,7 @@ public class RetrofitResParser <T> {
     private T parseDisableExamResponse(String response){
         ExamStatusModel disableResponse = ExamStatusModel.objectFromData(response);
         try {
-            JSONObject jsonObject = new JSONObject(response);
+            JSONObject jsonObject = new JSONArray(response).optJSONObject(0);
             String errorMessage = jsonObject.optString("ErrorMessage");
             int errorCode = Integer.parseInt(jsonObject.optString("ErrorCode"));
             boolean isSuccess = jsonObject.optBoolean("is_success");
