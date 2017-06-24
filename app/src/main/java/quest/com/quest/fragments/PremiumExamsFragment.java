@@ -109,7 +109,7 @@ private  PremiumExamBinding dataBinding;
     private void setToolBar() {
 
         ((DashBoardActivity) getActivity())
-                .setToolbarTitle("Sandeep","Premium Exams");
+                .setToolbarTitle("Sandeep","Upcoming Exams");
     }
 
 

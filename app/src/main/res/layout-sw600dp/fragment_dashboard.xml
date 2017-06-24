@@ -15,22 +15,23 @@
         <ImageView
             android:id="@+id/dashBoard_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:background="@drawable/ic_examtype_bg"
             />
         <TextView
             android:id="@+id/tv_headerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_marginTop="@dimen/dp_10"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp_50"
+            android:textSize="@dimen/sp_35"
             android:text="@string/select_exam_type"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center_horizontal"
             android:layout_weight="1"
             android:layout_marginBottom="@dimen/dp_30"

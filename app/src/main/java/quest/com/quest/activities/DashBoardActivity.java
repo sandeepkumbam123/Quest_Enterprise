@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import quest.com.quest.NetworkUtils.ApiConstants;
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
 import quest.com.quest.Utils.PrefUtils;
@@ -131,7 +133,7 @@ public class DashBoardActivity extends BaseActivity
 
 
     public  void setToolbarTitle(String userName,String fragmentName){
-        this.userName.setText(userName);
+        this.userName.setText(PrefUtils.getExamIdDetailsfromSP(this, ApiConstants.USER_NAME));
         this.fragmentName.setText(fragmentName);
     }
 
