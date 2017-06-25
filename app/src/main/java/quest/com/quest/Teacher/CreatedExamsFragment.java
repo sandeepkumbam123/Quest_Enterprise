@@ -41,7 +41,6 @@ public class CreatedExamsFragment  extends Fragment implements View.OnClickListe
     public static final String TAG = CreatedExamsFragment.class.getSimpleName();
 
     private RecyclerView mGrid;
-    //    private GridView mGrid;
     private FragmentCreatedExamsBinding fragmentCreatedExamsBinding;
     private GridAdapter adapter;
     private List<CreatedExamsModel> examsCreated;

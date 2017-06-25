@@ -95,8 +95,7 @@ public class ExamEnableDisableFragment extends Fragment {
                             QuestDialog.showOkDialog(getActivity(),
                                     "Exam Status", "Exam has been Enabled successfully.");
                         } else {
-                            QuestDialog.showOkDialog(getActivity(), "Exam Status",
-                                    "Exam is currently not available for these operations.");
+                            QuestDialog.showOkDialog(getActivity(), "Exam Status", response.getErrorMessage());
 
                             dataBinding.disableExam.setEnabled(true);
                             dataBinding.enableExam.setEnabled(false);

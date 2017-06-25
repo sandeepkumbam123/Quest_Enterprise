@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,10 +26,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-
 import okhttp3.Headers;
 import quest.com.quest.NetworkUtils.ApiConstants;
 import quest.com.quest.NetworkUtils.RequestConstants;
@@ -37,25 +34,26 @@ import quest.com.quest.NetworkUtils.RetrofitRequestHandler;
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
 import quest.com.quest.Utils.PrefUtils;
-import quest.com.quest.activities.BaseActivity;
 import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.FragmentQuestionBinding;
 import quest.com.quest.dialog.QuestDialog;
+import quest.com.quest.dialog.QuestionsListPopupMenu;
 import quest.com.quest.models.AttemptedQuestionModel;
 import quest.com.quest.models.ExamIDModel;
 import quest.com.quest.models.FastestAnswersModel;
 import quest.com.quest.models.QuestionModel;
 import quest.com.quest.models.ResultData;
-import quest.com.quest.models.StartExamModel;
 import quest.com.quest.models.SubmitResult;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /**
  * Created by skumbam on 03-03-2017.
  */
 
-public class QuestionFragment extends Fragment {
+public class QuestionFragment extends Fragment implements QuestionsListPopupMenu.questionNumberClick{
+    public static final String QUESTION_COUNT = "question_count";
     private static String TAG = QuestionFragment.class.getSimpleName();
     private FragmentQuestionBinding dataBinding;
     QuestionModel qm;
@@ -73,7 +71,7 @@ public class QuestionFragment extends Fragment {
 
     private TextView mExamId;
     private TextView mSubjectId;
-
+    private QuestionsListPopupMenu dialog ;
     private String mExamIDString;
 
 
@@ -112,7 +110,6 @@ public class QuestionFragment extends Fragment {
         initViews();
         if(getArguments().getString(ApiConstants.EXAM_ID) !=null){
             mExamIDString = getArguments().getString(ApiConstants.EXAM_ID);
-            dataBinding.examId.setText(mExamIDString+"");
 
         }
 
@@ -135,17 +132,17 @@ public class QuestionFragment extends Fragment {
         mExamId = dataBinding.examId;
         mSubjectId = dataBinding.subjectId;
         if(models.size() != 0) {
-            mExamId.setText(models.get(0).getExamId());
-            mSubjectId.setText(models.get(0).getExamTitle());
+            mExamId.setText(models.get(0).getExamTitle());
+            mSubjectId.setVisibility(GONE);
 
             if (models.size() == 1) {
                 dataBinding.btSubmitExam.setVisibility(View.VISIBLE);
-                dataBinding.btnNextQuestion.setVisibility(GONE);
-                dataBinding.btnPreviousquestion.setVisibility(GONE);
+                dataBinding.btnNextQuestion.setEnabled(false);
+                dataBinding.btnPreviousquestion.setEnabled(false);
             } else {
                 dataBinding.btSubmitExam.setVisibility(GONE);
-                dataBinding.btnNextQuestion.setVisibility(View.VISIBLE);
-                dataBinding.btnPreviousquestion.setVisibility(View.VISIBLE);
+                dataBinding.btnNextQuestion.setEnabled(true);
+                dataBinding.btnPreviousquestion.setEnabled(true);
             }
         }else {
             QuestDialog.showDialogwithPostiveNegativeButtons(getActivity(), " Error " ,
@@ -200,6 +197,7 @@ public class QuestionFragment extends Fragment {
             dataBinding.btnPreviousquestion.setEnabled(false);
         }
         else {*/
+        dataBinding.btSubmitExam.setVisibility(GONE);
         dataBinding.btnPreviousquestion.setEnabled(true);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
@@ -392,4 +390,53 @@ public class QuestionFragment extends Fragment {
     }
 
 
+    public void onQuestionNumberClick(int position){
+        questionPosition = position;
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right,R.anim.exit_to_left,  R.anim.enter_from_left, R.anim.exit_to_right);
+
+        transaction.replace(R.id.fl_question_container,QuestionTagFragment.getInstance(models.get(position),mExamIDString));
+        transaction.commit();
+
+
+        if(position+1 == models.size()){
+            dataBinding.btnPreviousquestion.setEnabled(true);
+            dataBinding.btSubmitExam.setVisibility(View.VISIBLE);
+            dataBinding.btnNextQuestion.setEnabled(false);
+        }else if(position == 0) {
+            dataBinding.btnPreviousquestion.setEnabled(false);
+            dataBinding.btSubmitExam.setVisibility(View.GONE);
+            dataBinding.btnNextQuestion.setEnabled(true);
+        } else {
+            dataBinding.btnPreviousquestion.setEnabled(true);
+            dataBinding.btSubmitExam.setVisibility(View.GONE);
+            dataBinding.btnNextQuestion.setEnabled(true);
+        }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.action_questions_list :
+
+                dialog= new QuestionsListPopupMenu(QuestionFragment.this , models.size());
+
+                dialog.show(getActivity().getFragmentManager(), "Questions List");
+                return  true;
+
+        }
+
+        return false ;
+    }
+
+    @Override
+    public void onClick(int position) {
+        if(dialog != null){
+            onQuestionNumberClick(position);
+            dialog.dismiss();
+        }
+
+    }
 }

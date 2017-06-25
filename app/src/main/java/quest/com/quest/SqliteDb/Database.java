@@ -64,7 +64,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String EXAM_QUESTION_TABLE ="CREATE TABLE "+DATABASE_STUDENT_QUESTION_TABLE+
-                "( "+COLUMN_EXAM_ID+"  INTEGER NOT NULL UNIQUE ,"+
+                "( "+COLUMN_EXAM_ID+"  INTEGER NOT NULL  ,"+
                 COLUMN_NUMBER_OF_QUESTION+" INTEGER NOT NULL , "+
                 COLUMN_QUESTION+" TEXT NOT NULL , "+
                 COLUMN_QUESTION_OPTION_A+" TEXT NOT NULL ,"+
@@ -178,7 +178,6 @@ public class Database extends SQLiteOpenHelper {
         columnValues.put(COLUMN_ANSWER_MARK, answerMark);
         mDB.insert(TABLE_ANSWERS_ATTEMPTED,null,columnValues);
 
-        mDB.close();
     }
 
     public void insertQuestionintoAttemptedTable(Database database, AttemptedQuestionModel model){

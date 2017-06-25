@@ -8,12 +8,9 @@
         </shape>
     </item>
     <item
-        android:drawable="@drawable/ic_tickcircle"
+        android:drawable="@drawable/blackground_blue_with_border"
         android:gravity="right"
-        android:left="100dp"
-        android:right="@dimen/dp_20"
-        android:top="@dimen/dp_20"
-        android:bottom="@dimen/dp_20"/>
+       />
 
 </layer-list>
 <!--

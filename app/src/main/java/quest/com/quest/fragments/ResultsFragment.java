@@ -65,14 +65,7 @@ public class ResultsFragment extends Fragment {
         super.onStart();
         if(getArguments().getParcelable(RESULT_DATA)!= null){
             resultModel = getArguments().getParcelable(RESULT_DATA);
-           /*  Map<String ,Object> remoteRequestData = new HashMap<>();
-            remoteRequestData.put(ApiConstants.STUDENT_ID,PrefUtils.getExamIdDetailsfromSP(getActivity(),ApiConstants.USER_ID));
-            remoteRequestData.put(ApiConstants.IS_PASS ,(resultModel.getObtainedMarks()/resultModel.getExamTotalMarks() >= .35  ));
-            remoteRequestData.put(ApiConstants.CREATED_AT, Utilities.returnDatefromMillis(System.currentTimeMillis()));
-            remoteRequestData.put(ApiConstants.UPDATED_AT , Utilities.returnDatefromMillis(System.currentTimeMillis()));
-            remoteRequestData.put(ApiConstants.EXAM_ID,Integer.parseInt(resultModel.getExamId()));
-            remoteRequestData.put(ApiConstants.USer_ANSWER_DATA,resultModel.getListofAnswersAttempted());
-            submitDatatoRemote(remoteRequestData);*/
+
         }
     }
 

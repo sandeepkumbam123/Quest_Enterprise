@@ -160,14 +160,14 @@
                 android:padding="@dimen/dp_10"/>
 
             <Button
-                android:layout_width="379dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
-                android:padding="@dimen/dp_20"
+                android:padding="@dimen/dp_10"
                 fontPath="fonts/Ubuntu-M.ttf"
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/colorOrange"
-                android:textSize="@dimen/sp_35"
+                android:textSize="@dimen/sp_24"
                 android:onClick="@{fragment::startExam}"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center_horizontal"

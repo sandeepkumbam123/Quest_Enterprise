@@ -3,12 +3,13 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dp_15"
-    android:background="@drawable/border_line_black">
+    android:background="@drawable/rectangular_lime_green">
     <LinearLayout
+        android:id="@+id/badge_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:background="@drawable/blackground_blue_with_border">
+        android:background="@drawable/rectangular_lime_green">
           <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -28,25 +29,21 @@
             android:id="@+id/tv_badge_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            fontPath ="fonts/Ubuntu-B.ttf"
             android:text="Physics Exam"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp_35"
+            android:textSize="@dimen/sp_24"
             android:padding="@dimen/dp_20"/>
         <TextView
             android:id="@+id/tv_date_of_exam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            fontPath ="fonts/Ubuntu-M.ttf"
             android:text="Feb 05,2017"
-            android:layout_marginLeft="@dimen/dp_20"
             android:textSize="@dimen/sp_24"
             android:padding="@dimen/dp_20"/>
         <TextView
             android:id="@+id/tv_marks_scored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            fontPath ="fonts/Ubuntu-B.ttf"
             android:text="28/30"
             android:visibility="gone"
             android:textColor="@android:color/black"

@@ -133,7 +133,7 @@ public class DashBoardActivity extends BaseActivity
 
 
     public  void setToolbarTitle(String userName,String fragmentName){
-        this.userName.setText(PrefUtils.getExamIdDetailsfromSP(this, ApiConstants.USER_NAME));
+        this.userName.setText(PrefUtils.getDetailsfromSP(this, ApiConstants.USER_NAME));
         this.fragmentName.setText(fragmentName);
     }
 

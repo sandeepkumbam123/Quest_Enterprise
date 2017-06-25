@@ -52,11 +52,17 @@ public  class Utilities {
 
 
 
-    public static String returnDatefromMillis(long millis){
-            Date date = new Date();
-            date.setTime(millis);
-            String formattedDate=new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(date);
-            return formattedDate;
+   public static final String formattedDatefromString(String date){
 
-        }
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+       Date convertedDate = null;
+       try {
+           convertedDate = sdf.parse(date);
+       } catch (ParseException e) {
+           e.printStackTrace();
+       }
+       SimpleDateFormat formatedDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+
+       return formatedDateFormat.format(convertedDate);
+   }
 }

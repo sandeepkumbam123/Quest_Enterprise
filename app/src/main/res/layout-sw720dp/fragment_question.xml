@@ -28,11 +28,11 @@
                 android:paddingTop="@dimen/dp_30"
                 android:paddingLeft="@dimen/dp_50"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp_35"/>
+                android:textSize="@dimen/sp_24"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:gravity="center">
                 <TextView
                     android:id="@+id/subject_id"

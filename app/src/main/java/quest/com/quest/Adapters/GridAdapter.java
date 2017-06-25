@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import quest.com.quest.R;
+import quest.com.quest.Utils.Utilities;
 import quest.com.quest.models.CreatedExamsModel;
 import quest.com.quest.models.ListofExams;
 
@@ -58,7 +59,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.SimpleViewHold
         ListofExams.ListOfScheduledExamsBean examBean = getExamData(position);
        holder. examTitle.setText(examBean.getTitle());
        holder. examClass.setText(examBean.getClassX());
-        holder.examDate.setText(examBean.getExam_date());
+        holder.examDate.setText(Utilities.formattedDatefromString(examBean.getExam_date()));
 
          holder.examDate.setOnClickListener(clickListner(position));
         holder.examClass.setOnClickListener(clickListner(position));
