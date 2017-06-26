@@ -96,19 +96,19 @@ public class QuestionTagFragment extends Fragment /*implements QuestionFragment.
         mBinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int answer =0;
+                int answer =model.getAttemptedAnswer();
                 long time = countTime(startTime,System.currentTimeMillis());
                 if(optionA.getId() == checkedId){
-                    if(!optionA.isChecked())
+                    if(optionA.isChecked())
                         answer =1;
                     else
                         answer =0;
                 }
                 else  if(optionB.getId() == checkedId){
                     if(optionB.isChecked())
-                        answer =0;
-                    else
                         answer =2;
+                    else
+                        answer =0;
                 }
                 else  if(optionC.getId() == checkedId){
                     if(optionC.isChecked())
@@ -123,8 +123,8 @@ public class QuestionTagFragment extends Fragment /*implements QuestionFragment.
                         answer =0;
                 }
                 else {
-                    answer =0;
-                    time =0;
+                    answer =model.getAttemptedAnswer();
+                    time =model.getTimeTakentoAttempt();
                 }
                 if(model.getTimeTakentoAttempt()!=0){
                     model.setTimeTakentoAttempt(model.getTimeTakentoAttempt()+(int)time);

@@ -72,7 +72,7 @@ public class StudentPreviousExamsFragment extends Fragment implements View.OnCli
         fragmentCreatedExamsBinding.tvCreateExam.setVisibility(GONE);
 
         int currentUserId = getArguments().getInt(ApiConstants.CURRENT_USR_ID) == 0 ? 0 : getArguments().getInt(ApiConstants.CURRENT_USR_ID);
-        int examID = getArguments().getInt(ApiConstants.EXAM_ID) == 0 ? 0 : getArguments().getInt(ApiConstants.EXAM_ID);
+       String examID = getArguments().getString(ApiConstants.EXAM_ID) == null ? "" : getArguments().getString(ApiConstants.EXAM_ID);
         int userID = getArguments().getInt(ApiConstants.STUDENT_ID) == 0 ? 0 : getArguments().getInt(ApiConstants.STUDENT_ID);
 
         pastExamsRequestData = new HashMap<>();

@@ -55,11 +55,11 @@ public class SearchStudentFragment extends Fragment{
     public void searchStudentData(View v){
      Bundle b = new Bundle();
         int studentId = Integer.parseInt(dataBinding.inputStudentId.getText().toString().trim());
-        int examId = Integer.parseInt(dataBinding.inputExamId.getText().toString().trim());
+        String examId = dataBinding.inputExamId.getText().toString().trim();
         int teacherId = PrefUtils.getExamIdDetailsfromSP(getActivity(), ApiConstants.USER_ID);
 
         b.putInt(ApiConstants.STUDENT_ID , studentId);
-        b.putInt(ApiConstants.EXAM_ID , examId);
+        b.putString(ApiConstants.EXAM_ID , examId);
         b.putInt(ApiConstants.CURRENT_USR_ID , teacherId);
 
         /*if(isOnlyOneExam){

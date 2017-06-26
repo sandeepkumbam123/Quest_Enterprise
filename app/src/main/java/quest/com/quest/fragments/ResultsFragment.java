@@ -1,9 +1,7 @@
 package quest.com.quest.fragments;
 
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,27 +13,15 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import okhttp3.Headers;
 import quest.com.quest.Adapters.FastestAnswerModelAdapter;
-import quest.com.quest.NetworkUtils.ApiConstants;
-import quest.com.quest.NetworkUtils.RequestConstants;
-import quest.com.quest.NetworkUtils.RetrofitAPIRequests;
-import quest.com.quest.NetworkUtils.RetrofitRequestHandler;
 import quest.com.quest.R;
 import quest.com.quest.SqliteDb.Database;
-import quest.com.quest.Utils.PrefUtils;
 import quest.com.quest.Utils.Utilities;
 import quest.com.quest.activities.DashBoardActivity;
 import quest.com.quest.databinding.ResultAnalysisBinding;
-import quest.com.quest.models.FastestAnswersModel;
 import quest.com.quest.models.ResultData;
 
 /**
@@ -93,15 +79,16 @@ public class ResultsFragment extends Fragment {
 
 
     private  void addDatatoGraph(){
-        ArrayList<PieEntry> mPieChartData = new ArrayList<>();
+        ArrayList<Entry> mPieChartData = new ArrayList<>();
         if(resultModel!= null) {
-            mPieChartData.add(new PieEntry(resultModel.getNumberofCorrectAnswers(), 0));
 
-            mPieChartData.add(new PieEntry(resultModel.getNumberofAttemptedAnswers() - resultModel.getNumberofCorrectAnswers(), 1));
-            mPieChartData.add(new PieEntry(resultModel.getTotalQuestions() - resultModel.getNumberofAttemptedAnswers(), 2));
+            mPieChartData.add(new Entry(resultModel.getNumberofCorrectAnswers(), 0));
+            mPieChartData.add(new Entry(resultModel.getNumberofAttemptedAnswers() - resultModel.getNumberofCorrectAnswers(), 1));
+            mPieChartData.add(new Entry(resultModel.getTotalQuestions() - resultModel.getNumberofAttemptedAnswers(), 2));
+
         }
 
-        PieDataSet dataset = new PieDataSet(mPieChartData, "");
+        PieDataSet dataset = new PieDataSet(mPieChartData, " status of Answers");
         dataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
 
@@ -109,14 +96,13 @@ public class ResultsFragment extends Fragment {
         mXlabels.add("Correct");
         mXlabels.add("Incorrect");
         mXlabels.add("Not Attempted");
-        mXlabels.add("4");
-        mXlabels.add("5");
 
-        PieData data = new PieData(/*mXlabels*/ dataset);
+
+        PieData data = new PieData(mXlabels , dataset);
 
         mOverallStatsGraph.setData(data);
-        mOverallStatsGraph.setContentDescription("Overall Statistics of the Result");
-        mOverallStatsGraph.setEntryLabelColor(Color.BLACK);
+
+        mOverallStatsGraph.setDescription("Result Analysis");
 
         if(resultModel!=null){
             dataBinding.tvExamtitle.setText(resultModel.getExamTitle());
@@ -143,20 +129,4 @@ public class ResultsFragment extends Fragment {
         Toast.makeText(getActivity(), "Will be available later", Toast.LENGTH_SHORT).show();
     }
 
-
-
-   /* private void submitDatatoRemote(Map<String,Object> params){
-        new RetrofitRequestHandler(getActivity()).submitExam(RequestConstants.REQ_SUBMIT_EXAM, params,
-                new RetrofitAPIRequests.ResponseListener() {
-                    @Override
-                    public void onSuccess(int requestId, Headers headers, Object response) {
-
-                    }
-
-                    @Override
-                    public void onFailure(int requestId, Throwable error) {
-
-                    }
-                });
-    }*/
 }

@@ -11,12 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
 
 import quest.com.quest.R;
-import quest.com.quest.activities.DashBoardActivity;
-import quest.com.quest.fragments.QuestionFragment;
-import quest.com.quest.models.AttemptedQuestionModel;
 
 /**
  * Created by skumbam on 6/25/17.

@@ -3,12 +3,10 @@ package quest.com.quest.fragments;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -158,6 +155,11 @@ public class QuestionFragment extends Fragment implements QuestionsListPopupMenu
 
 
     public void getNextQuestion(View v){
+
+       //update the data of the present question and traverse to the next question
+        models.get(questionPosition).setTimeTakentoAttempt(((DashBoardActivity)getActivity()).attemptedQuestionModel.getTimeTakentoAttempt());
+        models.get(questionPosition).setAttemptedAnswer(((DashBoardActivity)getActivity()).attemptedQuestionModel.getAttemptedAnswer());
+//        models.set(questionPosition,((DashBoardActivity)getActivity()).attemptedQuestionModel);
         questionPosition++;
        /* questionPosition = questionPosition +1;
         if(questionPosition < models.size()-1){*/
@@ -188,6 +190,8 @@ public class QuestionFragment extends Fragment implements QuestionsListPopupMenu
     }
 
     public void getPreviousQuestion(View v){
+        models.get(questionPosition).setTimeTakentoAttempt(((DashBoardActivity)getActivity()).attemptedQuestionModel.getTimeTakentoAttempt());
+        models.get(questionPosition).setAttemptedAnswer(((DashBoardActivity)getActivity()).attemptedQuestionModel.getAttemptedAnswer());
 //        models.set(questionPosition,((DashBoardActivity)getActivity()).attemptedQuestionModel);
         questionPosition--;
 //        models = null;
