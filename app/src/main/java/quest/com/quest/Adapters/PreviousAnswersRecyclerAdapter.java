@@ -39,10 +39,24 @@ public class PreviousAnswersRecyclerAdapter extends RecyclerView.Adapter<Previou
     public void onBindViewHolder(PreviousAnswersRecyclerAdapter.HolderView holder, int position) {
         if (getExamQuestion(position) != null) {
             PreviousExamsListModel.QuestionListBean examsBean = getExamQuestion(position);
-            holder.questionName.setText(examsBean.getQuestion());
-            holder.answerForQuestion.setText(examsBean.getUser_anser());
+            holder.questionName.setText(position+1+ " . "+examsBean.getQuestion());
+            holder.answerForQuestion.setText("Student Answer : "+getAnswer(examsBean));
 
             if(examsBean.getUser_anser().equalsIgnoreCase(examsBean.getAnswer())){
+               String imageURL ="";
+                switch (examsBean.getUser_anser()){
+                    case "option1" :
+
+                    case "option2" :
+
+                    case "option3" :
+
+                    case "option4" :
+
+                    default:
+                        imageURL ="";
+                        break;
+                }
                 holder.answerForQuestion.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_tickcircle,0);
             }else {
                 if(examsBean.getUser_anser().isEmpty() || examsBean.getUser_anser() == null){
@@ -55,6 +69,22 @@ public class PreviousAnswersRecyclerAdapter extends RecyclerView.Adapter<Previou
 
         }
 
+    }
+
+
+    private String getAnswer(PreviousExamsListModel.QuestionListBean examData){
+        switch (examData.getUser_anser()){
+            case "option1" :
+                return examData.getOption1();
+            case "option2" :
+                return examData.getOption2();
+            case "option3" :
+                return examData.getOption3();
+            case "option4" :
+                return examData.getOption4();
+            default:
+                return "Not Attempted";
+        }
     }
 
     @Override

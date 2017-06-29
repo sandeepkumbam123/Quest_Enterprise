@@ -154,7 +154,7 @@ public class RetrofitResParser <T> {
                     PreviousExamsListModel.QuestionListBean questionBean = null;
                     if(questionList != null) {
                         for (int k = 0; k < questionList.length(); k++) {
-                            JSONObject questionJSON = questionList.optJSONObject(i);
+                            JSONObject questionJSON = questionList.optJSONObject(k);
                             if (questionJSON != null) {
                                 int questionID = questionJSON.optInt("questionID");
                                 int subjectSubjectID = questionJSON.optInt("subjects_subjectID");
