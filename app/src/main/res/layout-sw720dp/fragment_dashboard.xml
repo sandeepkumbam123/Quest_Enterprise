@@ -60,19 +60,22 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:gravity="center">
+                android:gravity="center"
+                >
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right|center"
                     android:paddingRight="@dimen/dp_40"
                     android:paddingTop="@dimen/dp_20"
+                    android:layout_gravity="center_vertical"
                     android:layout_margin="@dimen/dp_10"
-                    android:textSize="@dimen/sp_40"
+                    android:textSize="28sp"
+                    android:text="Upcoming Exams         "
                     android:onClick="@{fragment::openPremiumExams}"
                     android:textAllCaps="false"
                     fontPath="fonts/Ubuntu-M.ttf"
-                    android:background="@drawable/ic_testtype_but2"
+                    android:background="@drawable/testtype_but2"
                     />
             </LinearLayout>
         </LinearLayout>

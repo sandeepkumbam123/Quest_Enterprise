@@ -66,11 +66,12 @@
                     android:gravity="right|center"
                     android:paddingRight="@dimen/dp_40"
                     android:paddingTop="@dimen/dp_20"
-                    android:textSize="@dimen/sp_40"
+                    android:textSize="28sp"
                     android:onClick="@{fragment::openPremiumExams}"
                     android:textAllCaps="false"
                     fontPath="fonts/Ubuntu-M.ttf"
-                    android:background="@drawable/ic_testtype_but2"
+                    android:text="Upcoming Exams"
+                    android:background="@drawable/testtype_but2"
                     />
             </LinearLayout>
         </LinearLayout>
