@@ -105,7 +105,7 @@ public class StudentPreviousExamsFragment extends Fragment implements View.OnCli
                         b.putParcelable(PreviousAnswersFragment.ANSWERS_MODEL ,response.get(0));
                         getActivity().getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.teacher_frame,PreviousAnswersFragment.getInstance(getActivity(),new Bundle()))
+                                .replace(R.id.teacher_frame,PreviousAnswersFragment.getInstance(getActivity(),b))
                                 .commit();
                     }else {
                         updateAdapter(response);

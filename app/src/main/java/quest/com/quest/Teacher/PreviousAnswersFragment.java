@@ -63,7 +63,7 @@ public class PreviousAnswersFragment extends Fragment{
             dataBinding.tvStudentName.setText(modelData.getTitle());
             dataBinding.tvCollegeName.setText(modelData.getDuration()+"");
             dataBinding.studentCode.setText(modelData.getExam_manualID());
-            dataBinding.ivStudentProfilePic.setVisibility(View.VISIBLE);
+            dataBinding.ivStudentProfilePic.setVisibility(View.GONE);
             int skippedAnswer =0;
             int correctAnswer = 0;
             int inCorrectAnswer = 0;
@@ -94,6 +94,33 @@ public class PreviousAnswersFragment extends Fragment{
         recyclerAnswersList = dataBinding.answersList;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerAnswersList.setLayoutManager(layoutManager);
+
+        if(modelData!=null){
+            adapter = new PreviousAnswersRecyclerAdapter(getActivity(), modelData);
+            recyclerAnswersList.setAdapter(adapter);
+            dataBinding.tvStudentName.setText(modelData.getTitle());
+            dataBinding.tvCollegeName.setText(modelData.getDuration()+"");
+            dataBinding.studentCode.setText(modelData.getExam_manualID());
+            dataBinding.ivStudentProfilePic.setVisibility(View.GONE);
+            int skippedAnswer =0;
+            int correctAnswer = 0;
+            int inCorrectAnswer = 0;
+            for(PreviousExamsListModel.QuestionListBean answersModel : modelData.getQuestion_list()){
+                if(answersModel.getAnswer().equalsIgnoreCase(answersModel.getUser_anser())){
+                    correctAnswer++;
+                }else {
+                    if(answersModel.getUser_anser().isEmpty() || answersModel.getUser_anser() == null){
+                        skippedAnswer++;
+                    }
+                    else{
+                        inCorrectAnswer++;
+                    }
+                }
+            }
+            dataBinding.inCorrectAnswerCount.setText(""+inCorrectAnswer);
+            dataBinding.tvCorrectAnswerCount.setText(""+ correctAnswer);
+            dataBinding.tvSkippedAnswerCount.setText(""+ skippedAnswer);
+        }
         setToolBar();
 
 

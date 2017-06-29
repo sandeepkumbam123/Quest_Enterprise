@@ -7,7 +7,7 @@ package quest.com.quest.NetworkUtils;
 public class Constants {
 
     public static final String API = "api/";
-    public static final String LOCAL_SERVER_IP ="http://192.168.0.103/";
+    public static final String LOCAL_SERVER_IP ="http://192.168.0.101/";
     public static final String APPLICATION_BASE_URL = LOCAL_SERVER_IP+"Quest/" +API;
 
     public static final String QUEST_URL = LOCAL_SERVER_IP+"Quest/";

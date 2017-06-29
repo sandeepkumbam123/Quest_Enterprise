@@ -103,7 +103,7 @@ public class RetrofitResParser <T> {
                     int negativeMark = previousExam.optInt("negative_mark");
                     int duration = previousExam.optInt("duration");
                     String note = previousExam.optString("note");
-                    boolean isSuccess = previousExam.optBoolean("user_anser");
+                    boolean isSuccess = previousExam.optBoolean("isSuccess");
                     String errorCode = previousExam.optString("ErrorCode");
                     String errorMessage = previousExam.optString("ErrorMessage");
 
@@ -151,9 +151,9 @@ public class RetrofitResParser <T> {
 
                     JSONArray questionList = previousExam.optJSONArray("question_list");
                     List<PreviousExamsListModel.QuestionListBean> questionListBeanList = new ArrayList<>();
+                    PreviousExamsListModel.QuestionListBean questionBean = null;
                     if(questionList != null) {
                         for (int k = 0; k < questionList.length(); k++) {
-                            PreviousExamsListModel.QuestionListBean questionBean = null;
                             JSONObject questionJSON = questionList.optJSONObject(i);
                             if (questionJSON != null) {
                                 int questionID = questionJSON.optInt("questionID");
